@@ -1,11 +1,7 @@
 <template>
-    <div class="container">
-        <div>
-            <transition name="fade">
-                <router-view></router-view>
-            </transition>
-        </div>
-    </div>
+    <section id="tasks" class="section">
+        <TaskList />
+    </section>
 </template>
 
 <style>
@@ -18,9 +14,12 @@
 </style>
 
 <script>
+    import TaskList from './TaskList';
 
     export default {
-
+        components: {
+            TaskList
+        }
     }
 
 </script>

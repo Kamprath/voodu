@@ -1,15 +1,45 @@
 <template>
-    <h3 v-text="pageTitle"></h3>
+	<div class="task-list container">
+		<div class="content">
+			<h3 v-text="pageTitle"></h3>
             
-    <ul v-bind:class="listClass">
-        <li v-for="name in names" v-text="name" v-on:click="removeName"></li>
-    </ul>
+			<ul v-bind:class="listClass">
+			    <li v-for="name in names" v-text="name" v-on:click="removeName"></li>
+			</ul>
 
-    <input type="text" v-model="newName">
+			<div class="columns">
+				<div class="column is-four-fifths">
+					<input class="input" type="text" tabindex="0" v-model="newName" @keyup="handleKeyUp">
+				</div>
 
-    <button v-on:click="addName" v-bind:title="buttonTitle" v-bind:disabled="isDisabled">Add</button>
-
+				<div class="column">
+					<button class="button is-primary" v-on:click="addName" v-bind:title="buttonTitle" v-bind:disabled="isDisabled">Add</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </template>
+
+<style scoped>
+	body {
+	    font-family: Helvetica, sans-serif;
+	}
+	.color-high {
+	    color: red;
+	}
+	.color-medium {
+	    color: orange;
+	}
+	.color-low {
+	    color: green;
+	}
+	li:hover {
+	    cursor: pointer;
+	}
+	li:hover:after {
+	    content: ' (remove)';
+	}
+</style>
 
 <script>
     export default {
@@ -37,7 +67,7 @@
 	        pageTitle: function() {
 	            var length = this.names.length;
 
-	            return length + ' ' + (length === 1 ? 'Person' : 'People');
+	            return length + ' ' + (length === 1 ? 'Task' : 'Tasks');
 	        },
 
 	        buttonTitle: function() {
@@ -67,7 +97,7 @@
 	        /**
 	         * Add input string to list
 	         */
-	        addName: function() {
+	        addName() {
 	            this.names.push(this.newName);
 	            this.newName = '';
 	            this.focusInput();
@@ -77,13 +107,20 @@
 	         * Remove clicked name from list
 	         * @param  {Event} e
 	         */
-	        removeName: function(e) {
+	        removeName(e) {
 	            this.names.splice(this.names.indexOf(e.target.innerText), 1);
 	            this.focusInput();
 	        },
 
-	        focusInput: function() {
+	        focusInput() {
 	            document.querySelector('input').focus();
+	        },
+
+	        handleKeyUp(e) {
+        		if (e.keyCode !== 13) {
+    				return;
+        		}
+        		this.addName();
 	        }
 	    },
 
