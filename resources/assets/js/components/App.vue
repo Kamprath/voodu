@@ -20,7 +20,9 @@
 <script>
 
     export default {
-
+        mounted() {
+            console.log('App mounted!');
+        }
     }
 
 </script>

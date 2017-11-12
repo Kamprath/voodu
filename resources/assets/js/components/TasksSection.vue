@@ -1,7 +1,9 @@
 <template>
+
     <section id="tasks" class="section">
         <TaskList />
     </section>
+
 </template>
 
 <style>
@@ -21,5 +23,4 @@
             TaskList
         }
     }
-
 </script>
