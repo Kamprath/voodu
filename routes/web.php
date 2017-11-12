@@ -11,8 +11,4 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome', [
-        'message' => 'Hello'
-    ]);
-});
+Route::get('/', 'IndexController@index');
