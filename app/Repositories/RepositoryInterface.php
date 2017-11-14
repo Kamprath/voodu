@@ -2,18 +2,23 @@
 
 namespace App\Repositories;
 
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+
 interface RepositoryInterface {
 
-    /**
-     * Get all models
-     */
-    public function all();
+    public function all($columns = array('*')) : Collection;
 
-    /**
-     * Find model by ID
-     *
-     * @param $id
-     */
-    public function find($id);
+    public function paginate($perPage = 15, $columns = array('*'));
+
+    public function create(array $data) : Model;
+
+    public function update(array $data, $id) : Model;
+
+    public function delete($id) : bool;
+
+    public function find($id, $columns = array('*')) : Model;
+
+    public function findBy($field, $value, $columns = array('*')) : Model;
 
 }
