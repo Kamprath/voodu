@@ -12,12 +12,12 @@ import routes from './routes.js';
 // load Bulma CSS framework -- https://bulma.io
 import 'bulma/css/bulma.css';
 
+// initialize globals
+window.Voodu = globals;
+
 // register plugins
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
-
-// initialize globals
-window.Voodu = globals;
 
 // instantiate App component on #app
 new Vue(

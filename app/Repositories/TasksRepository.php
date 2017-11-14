@@ -34,7 +34,7 @@ class TasksRepository implements RepositoryInterface {
 
     public function all($columns = array('*')): Collection
     {
-        return ['Task A', 'Task B', 'Task C'];
+        return new Collection();
     }
 
     public function find($id, $columns = array('*')): Model
