@@ -13,7 +13,9 @@
     <script src="{{ mix('/js/app.js') }}"></script>
 
     <!-- Bootstrapped Vue data -->
-    <script id="bootstrapped">@yield('bootstrapped')</script>
+    <script>
+        window.Voodu.bootstrapped = @yield('bootstrapped', '{}');
+    </script>
 </body>
 
 </html>

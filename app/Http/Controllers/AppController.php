@@ -28,7 +28,7 @@ class AppController extends Controller
     }
 
     /**
-     * Display app view with bootstrapped data
+     * Display view with bootstrapped data
      *
      * @return \Illuminate\Contracts\View\Factory|View
      */
@@ -38,7 +38,7 @@ class AppController extends Controller
     }
 
     /**
-     * Display view with Tasks data * Display view with Tasks data injected
+     * Display view with bootstrapped Tasks data
      *
      * @return \Illuminate\Contracts\View\Factory|View
      */
@@ -50,7 +50,7 @@ class AppController extends Controller
     }
 
     /**
-     * Get default bootstrapped data to pass to Vue
+     * Get default bootstrapped data
      *
      * @return array
      */
@@ -64,7 +64,7 @@ class AppController extends Controller
     }
 
     /**
-     * Return app view with bootstrapped data
+     * Return app view with bootstrapped data injected
      *
      * @param array $data   Non-default bootstrapped data to pass to Vue
      * @return \Illuminate\Contracts\View\Factory|View

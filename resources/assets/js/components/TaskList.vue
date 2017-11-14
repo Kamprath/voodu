@@ -2,18 +2,35 @@
 	<div class="task-list">
 		<div class="content">
 			<h3 v-text="pageTitle"></h3>
-            
+
+            <!-- Task list -->
 			<ul v-bind:class="listClass">
-			    <li v-for="name in names" v-text="name" v-on:click="removeName"></li>
+			    <li v-for="task in tasks"
+                    v-text="task"
+                    v-on:click="removeTask">
+                </li>
 			</ul>
 
 			<div class="columns">
+                <!-- New task input -->
 				<div class="column is-four-fifths">
-					<input class="input" type="text" tabindex="0" v-model="newName" @keyup.enter="addName" placeholder="Enter a new task">
+					<input class="input"
+                        type="text"
+                        tabindex="0"
+                        v-model="newTask"
+                        @keyup.enter="addTask"
+                        placeholder="Enter a new task">
 				</div>
 
+                <!-- Add button -->
 				<div class="column">
-					<button style="display: block; width: 100%;" class="button is-primary" v-on:click="addName" v-bind:title="buttonTitle" v-bind:disabled="isDisabled">Add</button>
+					<button class="button is-primary"
+                        style="display: block; width: 100%;"
+                        v-on:click="addTask"
+                        v-bind:title="buttonTitle"
+                        v-bind:disabled="isDisabled">
+                        Add
+                    </button>
 				</div>
 			</div>
 		</div>
@@ -43,43 +60,46 @@
 </style>
 
 <script>
+    import Tasks from '../repositories/Tasks.js';
+
     export default {
     	data() {
     		return {
     			/**
-		         * User names
+		         * Task models
 		         * @type {Array}
 		         */
-		        names: (typeof window.localStorage.names !== 'string') ? [] : JSON.parse(window.localStorage.names),
+		        tasks: Tasks.all(),
 
 		        /**
-		         * New name input string
+		         * New task input string
 		         * @type {String}
 		         */
-		        newName: ''
+		        newTask: ''
     		};
     	},
 
         mounted() {
+        	Voodu.Events.$on('tasks-changed', this.updateTasks);
         	this.focusInput();
         },
 
         computed: {
 	        pageTitle: function() {
-	            var length = this.names.length;
+	            var length = this.tasks.length;
 	            return length + ' ' + (length === 1 ? 'Task' : 'Tasks');
 	        },
 
 	        buttonTitle: function() {
-	            return (this.newName === '') ? 'Add a name' : 'Add "' + this.newName + '"';
+	            return (this.newTask === '') ? 'Add a task' : 'Add "' + this.newTask + '"';
 	        },
 
 	        isDisabled: function() {
-	            return (this.newName === '');
+	            return (this.newTask === '');
 	        },
 
 	        listClass: function() {
-	            var count = this.names.length;
+	            var count = this.tasks.length;
 	            if (count > 5) {
 	                return 'color-high';
 	            }
@@ -92,33 +112,33 @@
 
 	    methods: {
 	        /**
-	         * Add input string to list
+	         * Add input string to Tasks
 	         */
-	        addName() {
+	        addTask() {
 	        	if (this.isDisabled) { return; }
-	            this.names.push(this.newName);
-	            this.newName = '';
+
+	        	Tasks.create(this.newTask);
+
+	            this.newTask = '';
 	            this.focusInput();
 	        },
 
 	        /**
-	         * Remove clicked name from list
+	         * Remove clicked task from list
 	         * @param  {Event} e
 	         */
-	        removeName(e) {
-	            this.names.splice(this.names.indexOf(e.target.innerText), 1);
+	        removeTask(e) {
+	            Tasks.delete(e.target.innerText);
 	            this.focusInput();
 	        },
 
 	        focusInput() {
 	            document.querySelector('input').focus();
-	        }
-	    },
+	        },
 
-	    watch: {
-	        names: function(data) {
-	            window.localStorage.names = JSON.stringify(data);
-	        }
+            updateTasks() {
+	            this.tasks = Tasks.all();
+            }
 	    }
     };
 </script>

@@ -11,9 +11,6 @@
 |
 */
 
-// redirect all routes to index
-//Route::get('/{uri?}', 'AppController@index')->where('uri', '(.*)');
-
 Route::get('/', 'AppController@index');
 
 Route::get('/tasks', 'AppController@tasks');

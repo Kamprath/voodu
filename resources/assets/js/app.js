@@ -6,11 +6,18 @@ import axios from 'axios';
 
 // import assets
 import App from './components/App.vue';
+import globals from './globals.js';
+import routes from './routes.js';
+
+// load Bulma CSS framework -- https://bulma.io
 import 'bulma/css/bulma.css';
 
 // register plugins
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
+
+// initialize globals
+window.Voodu = globals;
 
 // instantiate App component on #app
 new Vue(
@@ -19,7 +26,7 @@ new Vue(
 		router: new VueRouter({
             mode: 'history',
             linkActiveClass: 'is-active',
-            routes: require('./routes.js')
+            routes
         })
 	}, App)
 ).$mount('#app');
