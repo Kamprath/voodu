@@ -26,4 +26,11 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function tasks()
+    {
+        // to assign tasks to user: $user->tasks()->sync([6, 12, 15]);
+        // to unassign tasks: $user->tasks->detach([6, 12, 15]);
+        return $this->belongsToMany(Task::class)->withTimestamps();
+    }
 }
