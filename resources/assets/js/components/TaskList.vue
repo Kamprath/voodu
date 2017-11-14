@@ -22,7 +22,7 @@
 
 </template>
 
-<style scoped>
+<style lang="less" scoped>
 
 	.color-high {
 	    color: red;
