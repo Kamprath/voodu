@@ -10,7 +10,7 @@
 
 			<div class="columns">
 				<div class="column is-four-fifths">
-					<input class="input" type="text" tabindex="0" v-model="newName" @keyup="handleKeyUp" placeholder="Enter a new task">
+					<input class="input" type="text" tabindex="0" v-model="newName" @keyup.enter="addName" placeholder="Enter a new task">
 				</div>
 
 				<div class="column">
@@ -113,13 +113,6 @@
 
 	        focusInput() {
 	            document.querySelector('input').focus();
-	        },
-
-	        handleKeyUp(e) {
-        		if (e.keyCode !== 13) {
-    				return;
-        		}
-        		this.addName();
 	        }
 	    },
 

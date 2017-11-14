@@ -17,6 +17,4 @@ mix.js('resources/assets/js/app.js', 'public/js')
 	.less('resources/assets/less/app.less', 'public/css');
 
 // suffix paths with a cache-breaking version string
-if (mix.inProduction()) {
-    mix.version();
-}
+mix.version();
