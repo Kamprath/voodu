@@ -23,6 +23,7 @@
         "vue-axios": "^2.0.2",
         "vue-loader": "^13.5.0",
         "vue-router": "^3.0.1",
-        "vue-template-compiler": "^2.5.3"
+        "vue-template-compiler": "^2.5.3",
+        "@shopify/draggable": "^1.0.0-beta.3"
     }
 }
