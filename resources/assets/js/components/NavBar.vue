@@ -10,7 +10,7 @@
 
         <div id="navbarExampleTransparentExample" class="navbar-menu">
             <div class="navbar-start">
-                <router-link v-for="route in routes" :key="route.name" class="navbar-item" :to="route.path">
+                <router-link v-for="route in routes" :key="route.name" class="navbar-item" :to="route.path" exact>
                     {{ route.name }}
                 </router-link>
             </div>

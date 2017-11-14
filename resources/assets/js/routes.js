@@ -1,17 +1,12 @@
-// import components
-import TasksSection from './components/TasksSection.vue';
-import DashboardSection from './components/DashboardSection.vue';
-
-// export mappings
-export default [
+module.exports = [
     {
         name: 'DashboardSection',
         path: '/',
-        component: DashboardSection
+        component: require('./components/DashboardSection.vue')
     },
     {
         name: 'TasksSection',
         path: '/tasks',
-        component: TasksSection
+        component: require('./components/TasksSection.vue')
     }
-]
+];
