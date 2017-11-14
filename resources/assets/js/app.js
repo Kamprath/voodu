@@ -12,8 +12,9 @@ import 'bulma/css/bulma.css';
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
 
-// instantiate App component, inject router, and mount to #app element
+// instantiate App component on #app
 new Vue(
+    // inject router
 	Vue.util.extend({
 		router: new VueRouter({
             mode: 'history',

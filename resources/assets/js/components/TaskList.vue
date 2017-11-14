@@ -1,5 +1,4 @@
 <template>
-
 	<div class="task-list">
 		<div class="content">
 			<h3 v-text="pageTitle"></h3>
@@ -19,31 +18,31 @@
 			</div>
 		</div>
 	</div>
-
 </template>
 
 <style lang="less" scoped>
-
-	.color-high {
-	    color: red;
+	.color {
+		&-high {
+	    	color: red;
+		}
+		&-medium {
+	    	color: orange;
+		}
+		&-low {
+	    	color: green;
+		}
 	}
-	.color-medium {
-	    color: orange;
+	li {
+		&:hover {
+			cursor: pointer;
+		}
+		&:hover:after {
+			content: ' (remove)';
+		}
 	}
-	.color-low {
-	    color: green;
-	}
-	li:hover {
-	    cursor: pointer;
-	}
-	li:hover:after {
-	    content: ' (remove)';
-	}
-
 </style>
 
 <script>
-
     export default {
     	data() {
     		return {
@@ -122,5 +121,4 @@
 	        }
 	    }
     };
-
 </script>
