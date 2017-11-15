@@ -20,12 +20,13 @@
                         tabindex="0"
                         v-model="newTask"
                         @keyup.enter="addTask"
-                        placeholder="Enter a new task">
+                        placeholder="Enter a new task"
+                        :disabled="isLoading">
 				</div>
 
                 <!-- Add button -->
 				<div class="column">
-					<button class="button is-primary"
+					<button :class="{ 'button': true, 'is-primary': true, 'is-loading': isLoading }"
                         style="display: block; width: 100%;"
                         v-on:click="addTask"
                         v-bind:title="buttonTitle"
@@ -70,20 +71,17 @@
 		         * Task models
 		         * @type {Array}
 		         */
-		        tasks: Tasks.all(),
+		        tasks: Tasks.all(this.updateTasks),
 
 		        /**
 		         * New task input string
 		         * @type {String}
 		         */
-		        newTask: ''
+		        newTask: '',
+
+                isLoading: true
     		};
     	},
-
-        mounted() {
-        	Voodu.Events.$on('tasks-changed', this.updateTasks);
-        	this.focusInput();
-        },
 
         computed: {
 	        pageTitle: function() {
@@ -96,7 +94,7 @@
 	        },
 
 	        isDisabled: function() {
-	            return (this.newTask === '');
+	            return (this.newTask === '' || this.isLoading);
 	        },
 
 	        listClass: function() {
@@ -118,10 +116,12 @@
 	        addTask() {
 	        	if (this.isDisabled) { return; }
 
-	        	Tasks.create(this.newTask);
+	        	Tasks.create(this.newTask, function(tasks) {
+	        	    this.updateTasks(tasks)
+                    this.newTask = '';
+                }.bind(this));
 
-	            this.newTask = '';
-	            this.focusInput();
+                this.isLoading = true;
 	        },
 
 	        /**
@@ -129,17 +129,21 @@
 	         * @param  {Integer} id
 	         */
 	        removeTask(id) {
-	            Tasks.delete(id);
+	            this.isLoading = true;
+	            Tasks.delete(id, this.updateTasks);
 	            this.focusInput();
 	        },
 
 	        focusInput() {
-	            document.querySelector('input').focus();
+	            window.setTimeout(function() {
+	                document.querySelector('input').focus();
+                }, 50);
 	        },
 
-            updateTasks() {
-	            this.tasks = Tasks.all();
-	            console.log('Updated tasks');
+            updateTasks(tasks) {
+                this.tasks = tasks;
+                this.isLoading = false;
+                this.focusInput();
             }
 	    }
     };

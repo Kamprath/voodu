@@ -9,44 +9,48 @@ function error(err) {
     });
 }
 
-function fetch() {
+function fetch(callback) {
     axios.get('/api/tasks')
         .then(response => {
             tasks = response.data;
             Voodu.Events.$emit('tasks-changed');
+
+            if (typeof callback === 'function') {
+                callback(tasks);
+            }
         })
         .catch(err => error(err));
 }
 
 class Tasks {
 
-    static all() {
+    static all(callback) {
         if (tasks === null && Voodu.bootstrapped.hasOwnProperty('tasks')) {
             tasks = Voodu.bootstrapped.tasks;
         }
         if (tasks === null && !Voodu.bootstrapped.hasOwnProperty('tasks')) {
             tasks = {};
-            fetch();
+            fetch(callback);
         }
 
         return tasks;
     }
 
-    static create(title) {
+    static create(title, callback) {
         axios.post('/api/tasks', { title })
             .then(response => {
                 if (response.data.success === true) {
-                    fetch();
+                    fetch(callback);
                 }
             })
             .catch(err => error(err));
     }
 
-    static delete(id) {
+    static delete(id, callback) {
         axios.delete('/api/tasks/' + id)
             .then(response => {
                 if (response.data.success === true) {
-                    fetch();
+                    fetch(callback);
                 }
             })
             .catch(err => error(err));
