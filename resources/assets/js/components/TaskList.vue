@@ -6,8 +6,9 @@
             <!-- Task list -->
 			<ul v-bind:class="listClass">
 			    <li v-for="task in tasks"
-                    v-text="task"
-                    v-on:click="removeTask">
+                    v-text="task.title"
+                    v-bind:key="task.id"
+                    v-on:click="removeTask(task.id)">
                 </li>
 			</ul>
 
@@ -86,7 +87,7 @@
 
         computed: {
 	        pageTitle: function() {
-	            var length = this.tasks.length;
+	            var length = this.tasks.length || 0;
 	            return length + ' ' + (length === 1 ? 'Task' : 'Tasks');
 	        },
 
@@ -125,10 +126,10 @@
 
 	        /**
 	         * Remove clicked task from list
-	         * @param  {Event} e
+	         * @param  {Integer} id
 	         */
-	        removeTask(e) {
-	            Tasks.delete(e.target.innerText);
+	        removeTask(id) {
+	            Tasks.delete(id);
 	            this.focusInput();
 	        },
 
@@ -138,6 +139,7 @@
 
             updateTasks() {
 	            this.tasks = Tasks.all();
+	            console.log('Updated tasks');
             }
 	    }
     };

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\TasksRepository;
+use App\Repositories\TaskRepository;
 use Illuminate\View\View;
 
 /**
@@ -12,7 +12,7 @@ use Illuminate\View\View;
 class AppController extends Controller
 {
     /**
-     * @var TasksRepository
+     * @var TaskRepository
      */
     protected $tasks;
 
@@ -20,9 +20,9 @@ class AppController extends Controller
      * Initialize controller
      *
      * AppController constructor.
-     * @param TasksRepository $tasks
+     * @param TaskRepository $tasks
      */
-    public function __construct(TasksRepository $tasks)
+    public function __construct(TaskRepository $tasks)
     {
         $this->tasks = $tasks;
     }
@@ -45,7 +45,7 @@ class AppController extends Controller
     public function tasks() : View
     {
         return $this->response([
-            'tasks' => $this->tasks->all()
+//            'tasks' => $this->tasks->all()
         ]);
     }
 

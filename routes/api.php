@@ -17,6 +17,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/tasks', function() {
-    return (new \App\Repositories\TasksRepository())->all();
-});
+Route::apiResource('tasks', 'TaskController');

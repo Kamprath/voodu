@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Task;
 
-class TasksRepository extends Repository {
+class TaskRepository extends Repository {
 
     protected $model = Task::class;
 }
