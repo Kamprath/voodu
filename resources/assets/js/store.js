@@ -1,7 +1,10 @@
+import Vue from 'vue';
+import VueX from 'vuex';
 import { mapState } from 'vuex';
 
-// VueX data store
-export default {
+Vue.use(VueX);
+
+export default new VueX.Store({
 
 	state: {
 		message: 'test',
@@ -22,4 +25,4 @@ export default {
 		}
 	}
 
-}
+});
