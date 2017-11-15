@@ -5,7 +5,7 @@
         <nav-bar :routes="routes" />
 
         <div class="section">
-            <TaskList />
+            <task-list />
         </div>
 
     </section>
@@ -13,8 +13,6 @@
 </template>
 
 <script>
-    import TaskList from './TaskList';
-    import NavBar from './NavBar';
 
     export default {
 
@@ -27,6 +25,11 @@
             }
         },
 
-        components: { TaskList, NavBar }
+        components: {
+            'task-list': require('./TaskList.vue'),
+            'nav-bar': require('./NavBar.vue')
+        }
+
     }
+
 </script>

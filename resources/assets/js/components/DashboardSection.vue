@@ -21,8 +21,6 @@
 
     import { mapState } from 'vuex';
     import { mapMutations } from 'vuex';
-	import MessageBox from './MessageBox';
-	import NavBar from './NavBar';
 
     export default {
 
@@ -35,11 +33,15 @@
                 ]
             }
         },
+
         methods: mapMutations(['setMessage', 'setRoutes']),
 
         computed: mapState(['message', 'routes']),
 
-        components: { MessageBox, NavBar }
+        components: {
+            'message-box': require('./MessageBox.vue'),
+            'nav-bar': require('./NavBar.vue')
+        }
 
     };
 

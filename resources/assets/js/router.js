@@ -15,6 +15,7 @@ export default new VueRouter({
             path: '/',
             component: require('./components/DashboardSection.vue')
         },
+        
         {
             name: 'TasksSection',
             path: '/tasks',
