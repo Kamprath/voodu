@@ -5,8 +5,13 @@
 		<nav-bar :routes="routes"></nav-bar>
 
 		<message-box title="Lorizzle Dizzle">
-			Lorizzle ghetto daahng dawg sit sheezy, consectetuer adipiscing my shizz. Ghetto shizzle my nizzle crocodizzle velizzle, crazy volutpizzle, suscipit gangster, gravida vizzle, break yo neck, yall. Pellentesque egizzle yo. Sed erizzle. Gangsta izzle my shizz dapibizzle turpis tempus stuff. Maurizzle pellentesque for sure et turpis. Vestibulum in tortor. My shizz eleifend rhoncus fo. In hac pot platea dictumst. Fo shizzle my nizzle dapibizzle. Curabitur tellizzle dang, pretizzle that's the shizzle, dizzle izzle, eleifend i'm in the shizzle, uhuh ... yih!. Hizzle suscipizzle. Integizzle sempizzle velit funky fresh dizzle.
+			{{ message }}
 		</message-box>
+
+        <div class="section">
+            <button class="button is-primary" @click="setMessage('You clicked the button...')">Update Message</button>
+            <button class="button is-secondary" @click="setRoutes(newRoutes)">Update Routes</button>
+        </div>
 
 	</section>
 
@@ -14,6 +19,8 @@
 
 <script>
 
+    import { mapState } from 'vuex';
+    import { mapMutations } from 'vuex';
 	import MessageBox from './MessageBox';
 	import NavBar from './NavBar';
 
@@ -21,12 +28,16 @@
 
         data() {
             return {
-                routes: [
-                    { name: 'Dashboard', path: '/' },
-                    { name: 'Tasks', path: '/tasks' }
+                newRoutes: [
+                    { name: 'One', path: '#' },
+                    { name: 'Two', path: '#' },
+                    { name: 'Three', path: '#' }
                 ]
             }
         },
+        methods: mapMutations(['setMessage', 'setRoutes']),
+
+        computed: mapState(['message', 'routes']),
 
         components: { MessageBox, NavBar }
 
