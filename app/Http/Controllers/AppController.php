@@ -34,7 +34,11 @@ class AppController extends Controller
      */
     public function index() : View
     {
-        return $this->response();
+        return $this->response([
+            'dashboard' => [
+                'message' => \Illuminate\Foundation\Inspiring::quote()
+            ]
+        ]);
     }
 
     /**

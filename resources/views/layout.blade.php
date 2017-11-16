@@ -10,12 +10,14 @@
     <!-- App container -->
     <div id="app"></div>
 
-    <script src="{{ mix('/js/app.js') }}"></script>
-
     <!-- Bootstrapped Vue data -->
     <script>
-        window.Voodu.bootstrapped = @yield('bootstrapped', '{}');
+        window.Voodu = {
+            bootstrapped: @yield('bootstrapped', '{}')
+        };
     </script>
+
+    <script src="{{ mix('/js/app.js') }}"></script>
 </body>
 
 </html>

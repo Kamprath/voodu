@@ -5,15 +5,14 @@ import axios from 'axios';
 
 // import assets
 import App from './components/App.vue';
-import globals from './globals.js';
 import router from './router.js';
 import store from './store.js';
 
 // load Bulma CSS framework -- https://bulma.io
 import 'bulma/css/bulma.css';
 
-// initialize globals
-window.Voodu = globals;
+// create a central event bus
+Voodu.Events = new Vue();
 
 // register plugins
 Vue.use(VueAxios, axios);

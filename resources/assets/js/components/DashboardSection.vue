@@ -55,7 +55,9 @@
         },
 
         mounted() {
-            this.$store.dispatch('updateMessage');
+            if (this.isMessageLoading) {
+                this.$store.dispatch('updateMessage');
+            }
         }
 
     };
