@@ -1,8 +1,13 @@
 <template>
 
     <div class="container">
+
         <modal></modal>
+
+        <nav-bar></nav-bar>
+
         <router-view />
+        
     </div>
 
 </template>
@@ -11,7 +16,8 @@
 
     export default {
         components: {
-            'modal': require('./Modal.vue')
+            'modal': require('./Modal.vue'),
+            'nav-bar': require('./NavBar.vue')
         }
     }
 

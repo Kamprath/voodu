@@ -18,7 +18,13 @@
 </template>
 
 <script>
+
+    import { mapState } from 'vuex';
+
     export default {
-        props: ['routes']
+        computed: mapState({
+            routes: state => state.app.routes
+        })
     }
+
 </script>

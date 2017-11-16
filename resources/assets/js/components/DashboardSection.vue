@@ -2,8 +2,6 @@
 
 	<section id="dashboard">
 
-		<nav-bar :routes="routes"></nav-bar>
-
 		<message-box title="Inspiring Quote">
 			{{ message }}
 		</message-box>
@@ -39,19 +37,20 @@
         },
 
         methods: {
-            ...mapMutations(['setRoutes']),
-            ...mapActions(['updateMessage'])
+            ...mapActions(['updateMessage']),
+
+            setRoutes() {
+                this.$store.dispatch('setRoutes', this.newRoutes);
+            }
         },
 
         computed: mapState({
             message: state => state.dashboard.message,
-            routes: state => state.dashboard.routes,
             isMessageLoading: state => state.dashboard.messageIsLoading
         }),
 
         components: {
-            'message-box': require('./MessageBox.vue'),
-            'nav-bar': require('./NavBar.vue')
+            'message-box': require('./MessageBox.vue')
         },
 
         mounted() {

@@ -1,14 +1,12 @@
 import axios from 'axios';
-
-const bootstrapped = Voodu.bootstrapped;
-bootstrapped.dashboard = bootstrapped.dashboard || {};
+import bootstrapped from '../bootstrapped.js';
 
 export default {
 
     state: {
-        message: bootstrapped.dashboard.message || 'Loading...',
+        message: bootstrapped.get('dashboard', 'message') || 'Loading...',
 
-        messageIsLoading: !bootstrapped.dashboard.message,
+        messageIsLoading: !bootstrapped.get('dashboard', 'message'),
 
         routes: [
             { name: 'Dashboard', path: '/' },
