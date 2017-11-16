@@ -18,3 +18,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('tasks', 'TaskController');
+
+Route::get('message', function() {
+	return response()->json([
+		'message' => Illuminate\Foundation\Inspiring::quote()
+
+	]);
+});

@@ -19,7 +19,7 @@
                         type="text"
                         tabindex="0"
                         v-model="newTask"
-                        @keyup.enter="addTask"
+                        @keyup.enter="addTask(newTask)"
                         placeholder="Enter a new task"
                         :disabled="isLoading">
 				</div>
@@ -62,6 +62,7 @@
 </style>
 
 <script>
+	import { mapState, mapActions } from 'vuex';
     import Tasks from '../repositories/Tasks.js';
 
     export default {
@@ -71,7 +72,7 @@
 		         * Task models
 		         * @type {Array}
 		         */
-		        tasks: Tasks.all(this.updateTasks),
+		        // tasks: Tasks.all(this.updateTasks),
 
 		        /**
 		         * New task input string
@@ -106,7 +107,11 @@
 	                return 'color-medium';
 	            }
 	            return 'color-low';
-	        }
+	        },
+
+	        ...mapState({
+	        	tasks: state => state.tasks.tasks
+	        })
     	},
 
 	    methods: {
@@ -116,23 +121,27 @@
 	        addTask() {
 	        	if (this.isDisabled) { return; }
 
-	        	Tasks.create(this.newTask, function(tasks) {
-	        	    this.updateTasks(tasks)
-                    this.newTask = '';
-                }.bind(this));
+        		this.$store.state.tasks.commit('addTask', this.newTask);
 
-                this.isLoading = true;
+	        	// Tasks.create(this.newTask, function(tasks) {
+	        	//     this.updateTasks(tasks)
+          //           this.newTask = '';
+          //       }.bind(this));
+
+          //       this.isLoading = true;
 	        },
 
 	        /**
 	         * Remove clicked task from list
 	         * @param  {Integer} id
 	         */
-	        removeTask(id) {
-	            this.isLoading = true;
-	            Tasks.delete(id, this.updateTasks);
-	            this.focusInput();
-	        },
+	        // removeTask(id) {
+	        //     this.isLoading = true;
+	        //     Tasks.delete(id, this.updateTasks);
+	        //     this.focusInput();
+
+	        //     this.$store.state.tasks.removeTask();
+	        // },
 
 	        focusInput() {
 	            window.setTimeout(function() {
@@ -144,7 +153,9 @@
                 this.tasks = tasks;
                 this.isLoading = false;
                 this.focusInput();
-            }
+            },
+
+            ...mapActions(['addTask', 'removeTask'])
 	    }
     };
 </script>

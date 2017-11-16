@@ -4,12 +4,17 @@
 
 		<nav-bar :routes="routes"></nav-bar>
 
-		<message-box title="Lorizzle Dizzle">
+		<message-box title="Inspiring Quote">
 			{{ message }}
 		</message-box>
 
         <div class="section">
-            <button class="button is-primary" @click="setMessage('You clicked the button...')">Update Message</button>
+            <button 
+                :class="{ 'button': true, 'is-primary': true, 'is-loading': isMessageLoading }"
+                @click="updateMessage"
+                :disabled="isMessageLoading">
+                New Quote
+            </button>
             <button class="button is-secondary" @click="setRoutes(newRoutes)">Update Routes</button>
         </div>
 
@@ -19,7 +24,7 @@
 
 <script>
 
-    import { mapState, mapMutations } from 'vuex';
+    import { mapState, mapActions, mapMutations } from 'vuex';
 
     export default {
 
@@ -33,16 +38,24 @@
             }
         },
 
-        methods: mapMutations(['setMessage', 'setRoutes']),
+        methods: {
+            ...mapMutations(['setRoutes']),
+            ...mapActions(['updateMessage'])
+        },
 
         computed: mapState({
             message: state => state.dashboard.message,
-            routes: state => state.dashboard.routes
+            routes: state => state.dashboard.routes,
+            isMessageLoading: state => state.dashboard.messageIsLoading
         }),
 
         components: {
             'message-box': require('./MessageBox.vue'),
             'nav-bar': require('./NavBar.vue')
+        },
+
+        mounted() {
+            this.$store.dispatch('updateMessage');
         }
 
     };

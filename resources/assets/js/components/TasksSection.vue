@@ -14,16 +14,13 @@
 
 <script>
 
+    import { mapState } from 'vuex';
+
     export default {
 
-        data() {
-            return {
-                routes: [
-                    { name: 'Dashboard', path: '/' },
-                    { name: 'Tasks', path: '/tasks' }
-                ]
-            }
-        },
+        computed: mapState({
+            routes: state => state.dashboard.routes
+        }),
 
         components: {
             'task-list': require('./TaskList.vue'),

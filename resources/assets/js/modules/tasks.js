@@ -2,9 +2,25 @@ export default {
 	
 	state: {},
 
-	mutations: {},
+	mutations: {
+		addTask(title) {
 
-	actions: {},
+		},
+
+		removeTask(id) {
+
+		}
+	},
+
+	actions: {
+		addTask(context, title) {
+			context.commit('addTask', title);
+		},
+
+		removeTask(context, id) {
+
+		}
+	},
 
 	getters: {}
 
