@@ -19,8 +19,7 @@
 
 <script>
 
-    import { mapState } from 'vuex';
-    import { mapMutations } from 'vuex';
+    import { mapState, mapMutations } from 'vuex';
 
     export default {
 
@@ -36,7 +35,10 @@
 
         methods: mapMutations(['setMessage', 'setRoutes']),
 
-        computed: mapState(['message', 'routes']),
+        computed: mapState({
+            message: state => state.dashboard.message,
+            routes: state => state.dashboard.routes
+        }),
 
         components: {
             'message-box': require('./MessageBox.vue'),
