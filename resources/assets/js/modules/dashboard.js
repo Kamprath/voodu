@@ -6,21 +6,12 @@ export default {
     state: {
         message: bootstrapped.get('dashboard', 'message') || 'Loading...',
 
-        messageIsLoading: !bootstrapped.get('dashboard', 'message'),
-
-        routes: [
-            { name: 'Dashboard', path: '/' },
-            { name: 'Tasks', path: '/tasks' }
-        ]
+        messageIsLoading: !bootstrapped.get('dashboard', 'message')
     },
 
     mutations: {
         setMessage(state, payload) {
             state.message = payload;
-        },
-
-        setRoutes(state, payload) {
-            state.routes = payload;
         },
 
         setMessageLoading(state, isLoading) {

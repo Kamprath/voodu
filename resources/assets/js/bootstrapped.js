@@ -1,4 +1,8 @@
+window.Voodu = window.Voodu || {};
+window.Voodu.bootstrapped = window.Voodu.bootstrapped || {};
+
 const data = window.Voodu.bootstrapped;
+
 
 export default {
 	get (module, key) {
