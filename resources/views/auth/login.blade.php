@@ -52,7 +52,7 @@
                                 <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
                             </label>
                         </div>
-                        <button type="submit" class="button is-block is-info is-medium is-fullwidth">Login</button>
+                        <button type="submit" class="button is-block is-primary is-medium is-fullwidth">Login</button>
                     </form>
                 </div>
                 <p class="login-links">
