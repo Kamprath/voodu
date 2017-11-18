@@ -8,9 +8,6 @@ import App from './components/App.vue';
 import router from './router.js';
 import store from './store.js';
 
-// load Bulma CSS framework -- https://bulma.io
-import 'bulma/css/bulma.css';
-
 // create a central event bus
 Voodu.Events = new Vue();
 
