@@ -1,17 +1,28 @@
 #section-login, #section-register {
-  background-color: @color-gray-dark;
+  background-color: @color-gray-darker;
+
+  input {
+    background-color: #FFF;
+  }
 
   .box {
-    background-color: @color-gray-light;
+    background-color: #f8f8f8;
   }
+  .avatar {
+    img {
+      width: 85px;
+      height: 85px;
+      border: 3px solid #696666;
+      border-radius: 200px;
+    }
+  }
+
   .login-links {
     &, a {
-      color: #b1b1b1;
+      color: @color-gray-medium;
     }
 
     a {
-      transition: color 120ms;
-
       &:hover {
         color: @color-gray-light;
       }

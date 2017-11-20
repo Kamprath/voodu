@@ -7,6 +7,10 @@
         <div class="container has-text-centered">
             <div class="column is-4 is-offset-4">
                 <div class="box">
+                    <figure class="avatar">
+                        <img src="http://lorempizza.com/85/85">
+                    </figure>
+
                     <h4 class="title">Voodu</h4>
                     <p class="subtitle has-text-grey">Sign in to your workspace</p>
 
@@ -17,7 +21,7 @@
                             <div class="control">
                                 <input class="input is-medium{{ $errors->has('email') ? ' is-danger' : null }}"
                                        type="email"
-                                       placeholder="Your Email"
+                                       placeholder="Email"
                                        autofocus=""
                                        id="email"
                                        name="email"
@@ -38,7 +42,7 @@
                                        type="password"
                                        name="password"
                                        required
-                                       placeholder="Your password">
+                                       placeholder="Password">
 
                                 @if ($errors->has('password'))
                                     <span class="help-block">
@@ -52,7 +56,7 @@
                                 <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
                             </label>
                         </div>
-                        <button type="submit" class="button is-block is-primary is-medium is-fullwidth">Login</button>
+                        <button type="submit" class="button is-block is-success is-medium is-fullwidth">Login</button>
                     </form>
                 </div>
                 <p class="login-links">
@@ -63,5 +67,11 @@
         </div>
     </div>
 </section>
+
+<script>
+    document.querySelector('form').addEventListener('submit', function() {
+        document.querySelector('button[type=submit]').className += ' is-loading';
+    });
+</script>
 
 @endsection
