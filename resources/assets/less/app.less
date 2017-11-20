@@ -1,7 +1,6 @@
+@import "colors.less";
 @import "vendor/font-awesome/font-awesome.less";
 @import "vendor/bulma.css";
-
-@import "colors.less";
 @import "pages/login.less";
 
 html, body {
@@ -9,9 +8,23 @@ html, body {
 }
 
 body {
-  background-color: @color-gray-light;
+  background-color: @color-gray-lighter;
+}
+
+button, a {
+  transition: color 120ms, background-color 120ms;
 }
 
 .is-underlined {
   text-decoration: underline;
+}
+
+.avatar {
+  img {
+    border-radius: 200px;
+  }
+}
+
+.wrapper {
+  margin-left: 65px;
 }
