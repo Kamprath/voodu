@@ -1,3 +1,56 @@
-@color-gray-light: #E1E5E6;
+@color-blue: #5BB6F4;
+@color-blue-dark: #2980B9;
+@color-red: #E74C3C;
+@color-green: #8bc34a;
+@color-gray-lightest: #FAFAFA;
+@color-gray-lighter: #E1E5E6;
+@color-gray-light: #D4D6D8;
+@color-gray-medium: #b1b1b1;
 @color-gray-dark: #52575C;
 @color-gray-darker: #424446;
+@color-gray-darkest: #313334;
+@color-black: #191919;
+
+.color-blue {
+  color: @color-blue !important;
+}
+.color-blue-dark {
+  color: @color-blue-dark !important;
+}
+.color-red {
+  color: @color-red !important;
+}
+.color-gray-light {
+  color: @color-gray-light !important;
+}
+.color-gray-dark {
+  color: @color-gray-dark !important;
+}
+.color-gray-darker {
+  color: @color-gray-darker !important;
+}
+.color-gray-darkest {
+  color: @color-gray-darkest !important;
+}
+.color-black {
+  color: @color-black !important;
+}
+
+.is-primary {
+  background-color: @primary !important;
+
+  &:hover {
+    background-color: #4797ce !important;
+  }
+}
+.is-success {
+  background-color: @success !important;
+
+  &:hover {
+    background-color: #7bad42 !important;
+  }
+}
+
+@primary: @color-blue;
+@warning: @color-red;
+@success: @color-green;
