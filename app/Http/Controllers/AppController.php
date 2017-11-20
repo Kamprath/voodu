@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Board;
 use App\Repositories\TaskRepository;
 use Illuminate\View\View;
 
@@ -51,6 +52,21 @@ class AppController extends Controller
     {
         return $this->response([
 //            'tasks' => $this->tasks->all()
+        ]);
+    }
+
+    /**
+     * Display view with bootstrapped Board data
+     *
+     * @param Board $board
+     * @return \Illuminate\Contracts\View\Factory|View
+     */
+    public function board(Board $board) : View
+    {
+        return $this->response([
+            'board' => !empty($board)
+                ? $board->toApi()
+                : null
         ]);
     }
 
