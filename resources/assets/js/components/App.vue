@@ -1,6 +1,8 @@
 <template>
 
     <div>
+        <modal-view />
+
         <nav-bar />
 
         <div class="wrapper">
@@ -14,6 +16,7 @@
 
     export default {
         components: {
+            'modal-view': require('./Modal.vue'),
             'nav-bar': require('./NavBar.vue')
         }
     }

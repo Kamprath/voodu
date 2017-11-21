@@ -8,7 +8,16 @@ export default {
             { name: 'Tasks', path: '/tasks' }
         ],
 
-        section: null
+        /**
+         * Indicates whether or not the Boards sidebar is active
+         */
+        isBoardsActive: false,
+
+        modal: {
+            isActive: false,
+            title: null,
+            message: null
+        }
     },
 
     mutations: {
@@ -16,8 +25,18 @@ export default {
     		state.routes = routes;
     	},
 
-        setSection(state, section) {
-    	    state.section = section;
+        toggleBoards(state) {
+    	    state.isBoardsActive = !state.isBoardsActive;
+        },
+
+        showModal(state, payload) {
+    	    state.modal.title = payload.title;
+    	    state.modal.message = payload.message;
+    	    state.modal.isActive = true;
+        },
+
+        hideModal(state) {
+    	    state.modal.isActive = false;
         }
     },
 
@@ -26,8 +45,16 @@ export default {
 			context.commit('setRoutes', routes);
 		},
 
-        setSection(context, section) {
-		    context.commit('setSection', section);
+        toggleBoards(context) {
+		    context.commit('toggleBoards');
+        },
+
+        showModal(context, payload) {
+		    context.commit('showModal', payload);
+        },
+
+        hideModal(context) {
+		    context.commit('hideModal');
         }
     }
 
