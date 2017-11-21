@@ -11,15 +11,19 @@ export default new VueRouter({
 
     routes: [
         {
-            name: 'DashboardSection',
+            name: 'dashboard',
             path: '/',
             component: require('./components/DashboardSection.vue')
         },
-        
         {
-            name: 'TasksSection',
+            name: 'tasks',
             path: '/tasks',
             component: require('./components/TasksSection.vue')
+        },
+        {
+            name: 'board',
+            path: '/board/:id',
+            component: require('./components/Board.vue')
         }
     ]
 
