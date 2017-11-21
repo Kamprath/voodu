@@ -5,7 +5,7 @@
             <img src="http://lorempizza.com/40/40">
         </figure>
 
-        <a href="#" :class="{ 'is-active': isBoards }">
+        <a href="#" :class="{ 'is-active': isBoardsActive }" @click="toggleBoards">
             <i class="fa fa-columns fa-2x" aria-hidden="true"></i>
         </a>
 
@@ -29,7 +29,6 @@
 </template>
 
 <style lang="less" scoped>
-<style lang="less" scoped>
     @import "../../less/colors.less";
 
     #nav-sidebar {
@@ -46,6 +45,10 @@
             padding: 10px;
             color: @color-gray-medium;
             font-size: .8em;
+
+            &.is-active, &.is-active:hover {
+                color: @primary;
+            }
 
             &:hover {
                 color: @color-gray-lightest;
@@ -80,12 +83,20 @@
 
 <script>
 
-    import { mapState } from 'vuex';
+    import { mapActions } from 'vuex';
 
     export default {
+        methods: {
+            toggleBoards(e) {
+                e.preventDefault();
+
+                this.$store.dispatch('toggleBoards');
+            }
+        },
+
         computed: {
-            isBoards() {
-                return this.$store.state.app.section === 'boards';
+            isBoardsActive() {
+                return this.$route.name === 'board';
             }
         }
     }
