@@ -1,29 +1,33 @@
 <template>
 
-    <nav id="nav-sidebar">
-        <figure class="avatar">
-            <img src="http://lorempizza.com/40/40">
-        </figure>
+    <nav>
+        <div class="nav-content">
+            <figure class="avatar">
+                <img src="http://lorempizza.com/40/40">
+            </figure>
 
-        <a href="#" :class="{ 'is-active': isBoardsActive }" @click="toggleBoards">
-            <i class="fa fa-columns fa-2x" aria-hidden="true"></i>
-        </a>
+            <a href="#" :class="{ 'is-active': isBoardSelected }" @click="toggleBoards">
+                <i class="fa fa-columns fa-2x" aria-hidden="true"></i>
+            </a>
 
-        <router-link to="/queue">
-            <i class="fa fa-list-alt fa-2x" aria-hidden="true"></i>
-        </router-link>
+            <router-link to="/queue">
+                <i class="fa fa-list-alt fa-2x" aria-hidden="true"></i>
+            </router-link>
 
-        <a href="#" class="button-search">
-            <i class="fa fa-search fa-2x" aria-hidden="true"></i>
-        </a>
+            <a href="#" class="button-search">
+                <i class="fa fa-search fa-2x" aria-hidden="true"></i>
+            </a>
 
-        <a href="#" class="button-add color-black">
-            <i class="fa fa-plus-circle fa-2x" aria-hidden="true"></i>
-        </a>
+            <a href="#" class="button-add color-black">
+                <i class="fa fa-plus-circle fa-2x" aria-hidden="true"></i>
+            </a>
 
-        <figure class="avatar avatar-user">
-            <img src="http://lorempizza.com/35/35">
-        </figure>
+            <figure class="avatar avatar-user">
+                <img src="http://lorempizza.com/35/35">
+            </figure>
+        </div>
+
+        <boards-sidebar v-if="$store.state.app.isBoardsActive"></boards-sidebar>
     </nav>
 
 </template>
@@ -31,13 +35,20 @@
 <style lang="less" scoped>
     @import "../../less/colors.less";
 
-    #nav-sidebar {
-        height: 100%;
+    .nav-content {
         width: 65px;
+        border-right: 1px solid #373B40;
+        background-color: @color-gray-darker;
+        display: block;
+        height: 100%;
+        float: left;
+        position: relative;
+    }
+
+    nav {
+        height: 100%;
         position: fixed;
         left: 0;
-        background-color: @color-gray-darker;
-        border-right: 1px solid #373B40;
 
         a {
             display: block;
@@ -79,11 +90,12 @@
             }
         }
     }
+
 </style>
 
 <script>
 
-    import { mapActions } from 'vuex';
+    import { mapActions, mapState } from 'vuex';
 
     export default {
         methods: {
@@ -95,9 +107,13 @@
         },
 
         computed: {
-            isBoardsActive() {
+            isBoardSelected() {
                 return this.$route.name === 'board';
             }
+        },
+
+        components: {
+            'boards-sidebar': require('./sidebars/Boards.vue')
         }
     }
 
