@@ -40,7 +40,7 @@ abstract class Repository implements RepositoryInterface {
      * @param array $columns
      * @return mixed
      */
-    public function all($columns = array('*')) : Collection {
+    public function all($columns = ['*']) : Collection {
         return $this->modelInstance->get($columns);
     }
 
@@ -49,7 +49,7 @@ abstract class Repository implements RepositoryInterface {
      * @param array $columns
      * @return mixed
      */
-    public function paginate($perPage = 15, $columns = array('*')) {
+    public function paginate($perPage = 15, $columns = ['*']) {
         return $this->modelInstance->paginate($perPage, $columns);
     }
 
@@ -67,7 +67,7 @@ abstract class Repository implements RepositoryInterface {
      * @param string $attribute
      * @return mixed
      */
-    public function update(array $data, $id, $attribute="id") : Model {
+    public function update(array $data, $id, $attribute = 'id') : Model {
         return $this->modelInstance->where($attribute, '=', $id)->update($data);
     }
 
@@ -84,7 +84,7 @@ abstract class Repository implements RepositoryInterface {
      * @param array $columns
      * @return mixed
      */
-    public function find($id, $columns = array('*')) : Model {
+    public function find($id, $columns = ['*']) : Model {
         return $this->modelInstance->find($id, $columns);
     }
 
@@ -94,7 +94,7 @@ abstract class Repository implements RepositoryInterface {
      * @param array $columns
      * @return mixed
      */
-    public function findBy($attribute, $value, $columns = array('*')) : Model {
+    public function findBy($attribute, $value, $columns = ['*']) : Model {
         return $this->modelInstance->where($attribute, '=', $value)->first($columns);
     }
 

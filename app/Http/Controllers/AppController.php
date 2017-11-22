@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Board;
+use App\Repositories\BoardRepository;
 use App\Repositories\TaskRepository;
+use Illuminate\Foundation\Inspiring;
 use Illuminate\View\View;
 
 /**
@@ -18,15 +20,22 @@ class AppController extends Controller
     protected $tasks;
 
     /**
+     * @var BoardRepository
+     */
+    protected $boards;
+
+    /**
      * Initialize controller
      *
      * AppController constructor.
      * @param TaskRepository $tasks
+     * @param BoardRepository $boards
      */
-    public function __construct(TaskRepository $tasks)
+    public function __construct(TaskRepository $tasks, BoardRepository $boards)
     {
         $this->middleware('auth');
         $this->tasks = $tasks;
+        $this->boards = $boards;
     }
 
     /**
@@ -38,7 +47,7 @@ class AppController extends Controller
     {
         return $this->response([
             'dashboard' => [
-                'message' => \Illuminate\Foundation\Inspiring::quote()
+                'message' => Inspiring::quote()
             ]
         ]);
     }
@@ -64,9 +73,7 @@ class AppController extends Controller
     public function board(Board $board) : View
     {
         return $this->response([
-            'board' => !empty($board)
-                ? $board->toApi()
-                : null
+            'board' => !empty($board) ? $board : null
         ]);
     }
 
@@ -79,7 +86,9 @@ class AppController extends Controller
     {
         return [
             'user' => null,
-            'boards' => null,
+            'boards' => [
+                'models' => $this->boards->all()
+            ],
             'projects' => null
         ];
     }
