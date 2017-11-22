@@ -1,5 +1,3 @@
-import bootstrapped from '../bootstrapped.js';
-
 export default {
 
     state: {
@@ -20,6 +18,12 @@ export default {
         }
     },
 
+    getters: {
+        isSidebarOpen(state) {
+            return state.isBoardsActive;
+        }
+    },
+
     mutations: {
     	setRoutes(state, routes) {
     		state.routes = routes;
@@ -37,6 +41,10 @@ export default {
 
         hideModal(state) {
     	    state.modal.isActive = false;
+        },
+
+        hideSidebar(state) {
+    	    state.isBoardsActive = false;
         }
     },
 
@@ -55,6 +63,10 @@ export default {
 
         hideModal(context) {
 		    context.commit('hideModal');
+        },
+
+        hideSidebar(context) {
+		    context.commit('hideSidebar');
         }
     }
 
