@@ -4,7 +4,7 @@ import VueAxios from 'vue-axios';
 import axios from 'axios';
 
 // import assets
-import App from './components/App.vue';
+import App from './components/views/App.vue';
 import router from './router.js';
 import store from './store.js';
 

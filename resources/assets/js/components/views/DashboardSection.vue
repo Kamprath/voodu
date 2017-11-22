@@ -50,7 +50,7 @@
         }),
 
         components: {
-            'message-box': require('./MessageBox.vue')
+            'message-box': require('../MessageBox.vue')
         },
 
         mounted() {

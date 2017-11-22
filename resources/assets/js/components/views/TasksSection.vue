@@ -17,7 +17,7 @@
     export default {
 
         components: {
-            'task-list': require('./TaskList.vue')
+            'task-list': require('../TaskList.vue')
         }
 
     }

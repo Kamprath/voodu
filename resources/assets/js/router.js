@@ -1,9 +1,10 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import store from './store.js';
 
 Vue.use(VueRouter);
 
-export default new VueRouter({
+const router = new VueRouter({
 
     mode: 'history',
 
@@ -13,18 +14,29 @@ export default new VueRouter({
         {
             name: 'dashboard',
             path: '/',
-            component: require('./components/DashboardSection.vue')
+            component: require('./components/views/DashboardSection.vue')
         },
         {
             name: 'tasks',
             path: '/tasks',
-            component: require('./components/TasksSection.vue')
+            component: require('./components/views/TasksSection.vue')
         },
         {
             name: 'board',
             path: '/board/:id',
-            component: require('./components/Board.vue')
+            component: require('./components/views/Board.vue')
         }
     ]
 
 });
+
+/**
+ * Pre-route actions
+ */
+router.beforeEach((to, from, next) => {
+    // hide any open sidebar
+    store.dispatch('hideSidebar');
+    next();
+});
+
+export default router;

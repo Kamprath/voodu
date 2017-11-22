@@ -5,7 +5,7 @@
 
         <nav-bar />
 
-        <div class="wrapper">
+        <div :class="{ 'wrapper': true, 'sidebar-open': $store.getters.isSidebarOpen }">
             <router-view />
         </div>
     </div>
@@ -16,8 +16,8 @@
 
     export default {
         components: {
-            'modal-view': require('./Modal.vue'),
-            'nav-bar': require('./NavBar.vue')
+            'modal-view': require('../Modal.vue'),
+            'nav-bar': require('../NavBar.vue')
         }
     }
 
