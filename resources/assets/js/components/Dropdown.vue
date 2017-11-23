@@ -32,7 +32,7 @@
         }
 
         a:hover .fa {
-            color: @color-gray-lightest;
+            color: @color-white;
         }
 
         &.is-dark a:hover .fa {

@@ -9,7 +9,8 @@
         <h5 class="title is-5">Boards</h5>
 
         <a href="#" class="create-board" @click.prevent>
-            <i class="fa fa-plus-circle is-dark"></i> Create a board
+            <i class="fa fa-plus-circle is-dark"></i>
+            <span>Create a board</span>
         </a>
 
         <div>
@@ -59,11 +60,20 @@
     }
 
     .title, .create-board {
-        color: @color-gray-lightest;
+        color: @color-white;
     }
 
     .create-board {
         display: inline-block;
+
+        .fa, span {
+            vertical-align: middle;
+        }
+
+        .fa {
+            font-size: 1.3rem;
+            margin-right: .2rem;
+        }
     }
 
     label {
@@ -85,7 +95,7 @@
             padding: .15rem .5rem;
 
             &:hover, &.is-active {
-                color: @color-gray-lightest;
+                color: @color-white;
             }
 
             &.is-active {

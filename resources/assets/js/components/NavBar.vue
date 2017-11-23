@@ -62,7 +62,7 @@
             }
 
             &:not(.is-active):hover .fa {
-                color: @color-gray-lightest;
+                color: @color-white;
             }
         }
 
