@@ -10,10 +10,15 @@ html, body {
 
 body {
   background-color: @color-gray-lighter;
+  font-family: Roboto, Helvetica, sans-serif;
 }
 
-button, a {
+button, a, .fa {
   transition: color 120ms, background-color 120ms;
+}
+
+.fa.is-dark {
+  color: @color-black;
 }
 
 .is-underlined {

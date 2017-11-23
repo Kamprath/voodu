@@ -18,8 +18,8 @@
                 <i class="fa fa-search fa-2x" aria-hidden="true"></i>
             </a>
 
-            <a href="#" class="button-add color-black">
-                <i class="fa fa-plus-circle fa-2x" aria-hidden="true"></i>
+            <a href="#" class="button-add">
+                <i class="fa fa-plus-circle fa-2x is-dark" aria-hidden="true"></i>
             </a>
 
             <figure class="avatar avatar-user">
@@ -57,11 +57,11 @@
             color: @color-gray-medium;
             font-size: .8em;
 
-            &.is-active, &.is-active:hover {
+            &.is-active .fa {
                 color: @primary;
             }
 
-            &:hover {
+            &:not(.is-active):hover .fa {
                 color: @color-gray-lightest;
             }
         }
