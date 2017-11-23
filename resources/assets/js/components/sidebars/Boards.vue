@@ -3,7 +3,7 @@
     <div class="sidebar sidebar-boards">
 
         <a href="#" class="close-sidebar" @click.prevent="$store.dispatch('hideSidebar')">
-            <i class="fa fa-times-circle is-dark" aria-hidden="true"></i>
+            <i class="fa fa-times is-dark" aria-hidden="true"></i>
         </a>
 
         <h5 class="title is-5">Boards</h5>
