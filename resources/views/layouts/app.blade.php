@@ -11,7 +11,7 @@
     <title>{{ config('app.name', 'Voodu') }}</title>
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
     @yield('content')
