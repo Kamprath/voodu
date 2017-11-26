@@ -19,7 +19,7 @@
             </a>
 
             <a href="#" class="button-add">
-                <i class="fa fa-plus-circle fa-2x is-dark" aria-hidden="true"></i>
+                <i class="fa fa-plus-circle fa-2x" aria-hidden="true"></i>
             </a>
 
             <figure class="avatar avatar-user">
@@ -89,6 +89,10 @@
                 }
             }
         }
+    }
+
+    .button-add .fa {
+        color: @color-black;
     }
 
 </style>

@@ -1,11 +1,12 @@
+@import "vendor/bulma.css";
 @import "colors.less";
 @import "vendor/font-awesome/font-awesome.less";
 @import "fonts.css";
-@import "vendor/bulma.css";
 @import "pages/login.less";
 
 html, body {
   height: 100%;
+  overflow: hidden;
 }
 
 body {
@@ -13,12 +14,20 @@ body {
   font-family: Roboto, Helvetica, sans-serif;
 }
 
-button, a, .fa {
+button, a, span, .fa {
   transition: color 120ms, background-color 120ms;
 }
 
+input {
+  font-family: Lato, Helvetica, sans-serif;
+}
+
+.input-details {
+  font-size: .88rem;
+}
+
 .fa.is-dark {
-  color: @color-black;
+  color: @color-gray-darkest;
 }
 
 .is-underlined {

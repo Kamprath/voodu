@@ -21,6 +21,10 @@ export default {
     getters: {
         isSidebarOpen(state) {
             return state.isBoardsActive;
+        },
+
+        isOverlayOpen(state) {
+            return state.boards.isCreateOverlayActive;
         }
     },
 

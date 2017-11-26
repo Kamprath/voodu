@@ -1,0 +1,73 @@
+@import 'colors.less';
+
+.overlay {
+  position: fixed;
+  z-index: 666;
+  background-color: @color-white;
+  width: 100%;
+  height: 100%;
+
+  .close-overlay {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+
+    span {
+      display: block;
+      font-size: .8rem;
+      text-align: center;
+      line-height: .8rem;
+    }
+
+    span, .fa {
+      color: @color-gray-lighter;
+    }
+
+    &:hover {
+      span, .fa {
+        color: @color-white;
+      }
+    }
+  }
+
+  .title {
+    margin-bottom: .85rem;
+  }
+
+  .field {
+    margin-top: 1.25rem;
+  }
+
+  .label {
+    color: @color-gray-lighter;
+    margin: 0;
+  }
+
+  .input-details {
+    color: @color-gray-lighter;
+  }
+
+  .radio {
+    padding: .5rem 1rem;
+    margin: 0;
+
+    &:hover {
+      color: inherit;
+    }
+  }
+
+  p, .radio {
+    font-size: 1.1rem;
+  }
+
+  .button.is-text {
+    color: @color-gray-lighter;
+    background-color: transparent;
+    text-decoration: none;
+
+    &:hover {
+      color: @color-white;
+      background-color: transparent;
+    }
+  }
+}

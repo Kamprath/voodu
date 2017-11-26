@@ -8,7 +8,7 @@
 
         <h5 class="title is-5">Boards</h5>
 
-        <a href="#" class="create-board" @click.prevent>
+        <a href="#" class="create-board" @click.prevent="$store.dispatch('showCreateBoardOverlay')">
             <i class="fa fa-plus-circle is-dark"></i>
             <span>Create a board</span>
         </a>

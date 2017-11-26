@@ -4,13 +4,20 @@ import axios from 'axios';
 export default {
 
     state: {
-        models: bootstrapped.get('boards', 'models')
+        models: bootstrapped.get('boards', 'models'),
+
+        isCreateOverlayActive: false
     },
 
-    mutators: {
+    mutations: {
         deleteBoard(state, id) {
 
-        }
+        },
+
+        showCreateBoardOverlay(state, isVisible = true) {
+            state.isCreateOverlayActive = isVisible;
+        },
+
     },
 
     actions: {
@@ -28,6 +35,10 @@ export default {
                         message: 'Failed to delete board.'
                     })
                 });
+        },
+
+        showCreateBoardOverlay(context, isVisible = true) {
+            context.commit('showCreateBoardOverlay', isVisible);
         }
     }
 

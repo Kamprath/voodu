@@ -2,6 +2,7 @@
 
     <div>
         <modal-view />
+        <create-board-overlay />
 
         <nav-bar />
 
@@ -17,7 +18,8 @@
     export default {
         components: {
             'modal-view': require('../Modal.vue'),
-            'nav-bar': require('../NavBar.vue')
+            'nav-bar': require('../NavBar.vue'),
+            'create-board-overlay': require('../overlays/CreateBoard.vue')
         }
     }
 
