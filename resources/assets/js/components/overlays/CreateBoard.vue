@@ -65,7 +65,7 @@
                                 <input type="radio"
                                        name="is_public"
                                        value="1"
-                                       v-model="board.is_public"
+                                       v-model.number="board.is_public"
                                        tabindex="3"
                                        checked>
                                 &nbsp;Public
@@ -74,7 +74,7 @@
                                 <input type="radio"
                                        name="is_public"
                                        value="0"
-                                       v-model="board.is_public"
+                                       v-model.number="board.is_public"
                                        tabindex="4">
                                 &nbsp;Private
                             </label>
