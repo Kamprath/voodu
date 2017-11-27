@@ -19,6 +19,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::apiResource('tasks', 'TaskController');
 
+Route::apiResource('boards', 'BoardController');
+
 Route::get('message', function() {
 	return response()->json([
 		'message' => Illuminate\Foundation\Inspiring::quote()
