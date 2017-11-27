@@ -12,17 +12,17 @@ const router = new VueRouter({
 
     routes: [
         {
-            name: 'dashboard',
+            name: 'Dashboard',
             path: '/',
             component: require('./components/views/DashboardSection.vue')
         },
         {
-            name: 'tasks',
+            name: 'Tasks',
             path: '/tasks',
             component: require('./components/views/TasksSection.vue')
         },
         {
-            name: 'board',
+            name: 'Board',
             path: '/board/:id',
             component: require('./components/views/Board.vue')
         }
@@ -34,8 +34,12 @@ const router = new VueRouter({
  * Pre-route actions
  */
 router.beforeEach((to, from, next) => {
-    // hide any open sidebar
+    // hide any open sidebars
     store.dispatch('hideSidebar');
+
+    // set page title to route name
+    document.querySelector('title').text = !to.name ? 'Voodu' : to.name + ' | Voodu';
+
     next();
 });
 
