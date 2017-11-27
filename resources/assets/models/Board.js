@@ -1,7 +1,7 @@
 import Model from './Model.js';
 
 class Board extends Model {
-    get route() {
+    get source() {
         return '/api/boards';
     }
 }

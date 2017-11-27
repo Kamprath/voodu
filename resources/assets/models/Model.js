@@ -33,12 +33,12 @@ class Model {
     }
 
     create(callback) {
-        if (!this.route) {
-            throw new Error('No \'route\' getter is set');
+        if (!this.source) {
+            throw new Error('No \'source\' getter is set');
             return;
         }
 
-        axios.post(this.route, this.properties)
+        axios.post(this.source, this.properties)
             .then(response => {
                 // verify success
                 if (!response.data.id) {
