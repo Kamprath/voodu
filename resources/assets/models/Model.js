@@ -46,7 +46,8 @@ class Model {
                     return;
                 }
 
-                this.id = response.data.id;
+                // update model with response data
+                this.assign(response.data);
 
                 if (typeof callback === 'function') {
                     callback(this);
