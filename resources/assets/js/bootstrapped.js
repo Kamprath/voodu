@@ -11,7 +11,7 @@ export default {
      * @param {string} key		Property name
      * @returns {*}
      */
-	get (module, key) {
+	get(module, key) {
 		if (!data.hasOwnProperty(module)) {
 			return;
 		}
@@ -21,5 +21,16 @@ export default {
 		}
 
 		return data[module][key];
+	},
+
+	models(module, model) {
+		let models = [];
+		const bootstrapped = this.get(module, 'models');
+
+		for (const data in bootstrapped) {
+			models.push(new model(data));
+		}
+
+		return models;
 	}
 }
