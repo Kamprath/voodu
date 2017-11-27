@@ -10,40 +10,22 @@ export default {
     },
 
     mutations: {
-        deleteBoard(state, id) {
-
-        },
-
         showCreateBoardOverlay(state, isVisible = true) {
             state.isCreateOverlayActive = isVisible;
         },
 
         addBoard(state, model) {
             state.models.push(model);
+        },
+
+        removeBoard(state, board) {
+            state.models.splice(state.models.indexOf(board), 1);
         }
     },
 
     actions: {
-        deleteBoard(context, id) {
-            axios.delete('/api/boards/' + id)
-                .then(response => {
-                    if (!response.data.success) { return; }
-                    context.commit('deleteBoard', id);
-                })
-                .catch(() => {
-                    this.dispatch('showModal', {
-                        title: 'API Error',
-                        message: 'Failed to delete board.'
-                    })
-                });
-        },
-
         showCreateBoardOverlay(context, isVisible = true) {
             context.commit('showCreateBoardOverlay', isVisible);
-        },
-
-        addBoard(context, model) {
-            context.commit('addBoard', model);
         }
     }
 

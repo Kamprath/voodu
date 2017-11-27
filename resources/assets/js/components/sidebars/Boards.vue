@@ -2,31 +2,48 @@
 
     <div class="sidebar sidebar-boards">
 
+        <!-- Close button -->
         <a href="#" class="close-sidebar" @click.prevent="$store.dispatch('hideSidebar')">
             <i class="fa fa-times is-dark" aria-hidden="true"></i>
         </a>
 
         <h5 class="title is-5">Boards</h5>
 
+        <!-- Create board link -->
         <a href="#" class="create-board" @click.prevent="$store.dispatch('showCreateBoardOverlay')">
             <i class="fa fa-plus-circle is-dark"></i>
             <span>Create a board</span>
         </a>
 
-        <div>
+        <!-- Public list -->
+        <div v-if="publicBoards.length > 0">
             <label>TEAM</label>
             <ul>
-                <li>
-                    <router-link to="/board/6">Test</router-link>
+                <li v-for="board in publicBoards">
+                    <router-link :to="{ name: 'Board', params: { id: board.id }}" :title="board.purpose || board.name">
+                        {{ board.name }}
+                    </router-link>
                     <dropdown-list>
-                        <router-link to="/board/6/edit" class="dropdown-item">Edit</router-link>
-                        <a href="#" class="dropdown-item" @click.prevent="deleteBoard(6)">Delete</a>
+                        <router-link :to="board.route + '/edit'" class="dropdown-item">Edit</router-link>
+                        <a href="#" class="dropdown-item has-text-danger" @click.prevent="destroy(board)">Delete</a>
                     </dropdown-list>
                 </li>
             </ul>
+        </div>
 
+        <!-- Private list -->
+        <div v-if="privateBoards.length > 0">
             <label>ME</label>
             <ul>
+                <li v-for="board in privateBoards">
+                    <router-link :to="{ name: 'Board', params: { id: board.id }}" :title="board.purpose || board.name">
+                        {{ board.name }}
+                    </router-link>
+                    <dropdown-list>
+                        <router-link :to="{ name: 'Edit Board', params: { id: board.id }}" class="dropdown-item">Edit</router-link>
+                        <a href="#" class="dropdown-item has-text-danger" @click.prevent="destroy(board)">Delete</a>
+                    </dropdown-list>
+                </li>
             </ul>
         </div>
 
@@ -128,9 +145,31 @@
             'dropdown-list': require('../Dropdown.vue')
         },
 
-        methods: mapActions([
-            'deleteBoard'
-        ])
+        computed: {
+            boards() {
+                return this.$store.state.boards.models;
+            },
+
+            publicBoards() {
+                return this.boards.filter(board => {
+                    return board.is_public;
+                });
+            },
+
+            privateBoards() {
+                return this.boards.filter(board => {
+                    return !board.is_public;
+                });
+            }
+        },
+
+        methods: {
+            destroy(board) {
+                board.destroy(() => {
+                    this.$store.commit('removeBoard', board);
+                });
+            }
+        }
     }
 
 </script>

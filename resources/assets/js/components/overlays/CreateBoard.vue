@@ -172,7 +172,7 @@
                 this.isLoading = true;
 
                 this.board.create(model => {
-                    this.$store.dispatch('addBoard', model);
+                    this.$store.commit('addBoard', model);
                     this.hide();
                 });
             }

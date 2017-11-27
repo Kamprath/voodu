@@ -23,8 +23,12 @@ const router = new VueRouter({
         },
         {
             name: 'Board',
-            path: '/board/:id',
+            path: '/boards/:id',
             component: require('./components/views/Board.vue')
+        },
+        {
+            name: 'Edit Board',
+            path: '/boards/:id/edit'
         }
     ]
 
