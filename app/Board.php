@@ -4,18 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Board extends Model implements ApiModelInterface
+class Board extends Model
 {
-    protected $fillable = [ 'title', 'description' ];
-
-    public function toApi() : array
-    {
-        return [
-            'id' => $this->id,
-            'title' => $this->title,
-            'description' => $this->description,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at
-        ];
-    }
+    protected $fillable = [ 'name', 'purpose', 'is_public', 'created_by' ];
 }

@@ -60,22 +60,22 @@
                         <div class="control">
                             <label class="radio">
                                 <input type="radio"
-                                       name="visibility"
-                                       value="public"
-                                       v-model="visibility"
+                                       name="is_public"
+                                       value="1"
+                                       v-model="is_public"
                                        tabindex="3"
                                        checked>
                                 &nbsp;Public
                             </label>
                             <label class="radio">
                                 <input type="radio"
-                                       name="visibility"
-                                       value="private"
-                                       v-model="visibility"
+                                       name="is_public"
+                                       value="0"
+                                       v-model="is_public"
                                        tabindex="4">
                                 &nbsp;Private
                             </label>
-                            <div v-if="visibility ==='public'" class="input-details">
+                            <div v-if="parseInt(is_public) === 1" class="input-details">
                                 Everyone on your team can access this board.
                             </div>
                             <div v-else class="input-details">
@@ -123,7 +123,7 @@
             return {
                 name: null,
                 purpose: null,
-                visibility: 'public',
+                is_public: 1,
                 isLoading: false
             };
         },
@@ -137,7 +137,7 @@
             reset() {
                 this.name = null;
                 this.purpose = null;
-                this.visibility = 'public';
+                this.is_public = 1;
                 this.isLoading = false;
             },
 
@@ -147,7 +147,7 @@
                 const data = {
                     name: this.name,
                     purpose: this.purpose,
-                    visibility: this.visibility
+                    is_public: parseInt(this.is_public)
                 };
 
                 (new Board(data))

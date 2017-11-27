@@ -37,7 +37,12 @@ class BoardController extends Controller
     {
         try {
             return response()->json(
-                Board::create($request->all()),
+                $this->boards->create([
+                    'name' => $request->get('name'),
+                    'purpose' => $request->get('purpose'),
+                    'is_public' => $request->get('is_public', 0),
+                    'created_by' => \Auth::id()
+                ]),
                 201
             );
         } catch (Exception $e) {
