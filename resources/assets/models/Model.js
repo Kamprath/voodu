@@ -24,8 +24,38 @@ class Model {
         return properties;
     }
 
-    delete() {
+    /**
+     * API resource URI
+     * @returns {string}
+     */
+    get route() {
+        if (!this.source || !this.id) {
+            return;
+        }
 
+        return this.source + '/' + this.id;
+    }
+
+    destroy(callback) {
+        if (!this.id) {
+            throw new Error('Failed to delete model: No ID is set.');
+            return false;
+        }
+
+        if (!this.route) {
+            throw new Error('Failed to delete model: No route is set.');
+            return false;
+        }
+
+        axios.delete(this.route)
+            .then(() => {
+                if (typeof callback === 'function') {
+                    callback(this);
+                }
+            })
+            .catch(error => {
+                throw new Error('Failed to delete model: ' + error);
+            })
     }
 
     update() {
@@ -54,7 +84,7 @@ class Model {
                 }
             })
             .catch(error => {
-                throw new Error(error);
+                throw new Error('Failed to create model: ' + error);
             });
     }
 }
