@@ -24,15 +24,18 @@
                     <div class="field">
                         <label class="label">Name</label>
                         <div class="control">
-                            <input class="input is-medium"
+                            <input :class="{ 'input': true, 'is-medium': true, 'is-danger has-text-danger': isNameTaken }"
                                    type="text"
                                    placeholder="Enter a project, goal, or task"
                                    tabindex="1"
                                    maxlength="26"
-                                   v-model="name"
+                                   v-model="board.name"
                                    required
                                    autofocus>
-                            <div class="input-details">
+                            <div v-if="isNameTaken" class="input-details">
+                                That name is already taken.
+                            </div>
+                            <div v-else class="input-details">
                                 Names must be shorter than 26 characters.
                             </div>
                         </div>
@@ -46,7 +49,7 @@
                                    type="text"
                                    placeholder="(Optional)"
                                    tabindex="2"
-                                   v-model="purpose"
+                                   v-model="board.purpose"
                                    autofocus>
                             <div class="input-details">
                                 What is this board used for?
@@ -62,7 +65,7 @@
                                 <input type="radio"
                                        name="is_public"
                                        value="1"
-                                       v-model="is_public"
+                                       v-model="board.is_public"
                                        tabindex="3"
                                        checked>
                                 &nbsp;Public
@@ -71,11 +74,11 @@
                                 <input type="radio"
                                        name="is_public"
                                        value="0"
-                                       v-model="is_public"
+                                       v-model="board.is_public"
                                        tabindex="4">
                                 &nbsp;Private
                             </label>
-                            <div v-if="parseInt(is_public) === 1" class="input-details">
+                            <div v-if="parseInt(board.is_public) === 1" class="input-details">
                                 Everyone on your team can access this board.
                             </div>
                             <div v-else class="input-details">
@@ -96,7 +99,7 @@
                         <div class="control">
                             <button type="submit"
                                     :class="{ 'button': true, 'is-medium': true, 'is-secondary': true, 'is-loading': isLoading }"
-                                    :disabled="isLoading">
+                                    :disabled="isLoading || isNameTaken">
                                 Create Board
                             </button>
                         </div>
@@ -121,11 +124,37 @@
 
         data() {
             return {
-                name: null,
-                purpose: null,
-                is_public: 1,
+                board: new Board({ is_public: 1 }),
                 isLoading: false
             };
+        },
+
+        computed: {
+            /**
+             * Get names of all boards
+             * A computed property is used to cache this value so the function isn't executed on each keyup
+             * @returns {Array} Returns board names as an array of strings
+             */
+            names() {
+                let names = [];
+
+                this.$store.state.boards.models.forEach(model => {
+                    names.push(model.name.toLowerCase());
+                });
+
+                return names;
+            },
+
+            /**
+             * Indicates if board name already exists
+             * @returns {boolean}
+             */
+            isNameTaken() {
+                if (!this.board.name) {
+                    return false;
+                }
+                return this.names.includes(this.board.name.toLowerCase());
+            }
         },
 
         methods: {
@@ -135,26 +164,17 @@
             },
 
             reset() {
-                this.name = null;
-                this.purpose = null;
-                this.is_public = 1;
+                this.board = new Board({ is_public: 1 });
                 this.isLoading = false;
             },
 
             submit() {
                 this.isLoading = true;
 
-                const data = {
-                    name: this.name,
-                    purpose: this.purpose,
-                    is_public: parseInt(this.is_public)
-                };
-
-                (new Board(data))
-                    .create(model => {
-                        this.isLoading = false;
-                        this.$store.dispatch('addBoard', model);
-                    });
+                this.board.create(model => {
+                    this.$store.dispatch('addBoard', model);
+                    this.hide();
+                });
             }
         }
 
