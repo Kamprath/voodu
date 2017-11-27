@@ -22,6 +22,13 @@ abstract class Repository implements RepositoryInterface {
     protected $model;
 
     /**
+     * A space-delimited string containing field name and order to sort results by
+     *
+     * @var string
+     */
+    protected $orderBy;
+
+    /**
      * Model instance used for querying
      *
      * @var
@@ -39,9 +46,22 @@ abstract class Repository implements RepositoryInterface {
     /**
      * @param array $columns
      * @return mixed
+     * @throws \RuntimeException
      */
     public function all($columns = ['*']) : Collection {
-        return $this->modelInstance->get($columns);
+        $query = $this->modelInstance;
+
+        if (!empty($this->orderBy)) {
+            $params = explode(' ', $this->orderBy);
+
+            if (count($params) !== 2) {
+                throw new \RuntimeException('orderBy property requires a space-delimited string containing field name and order.');
+            }
+
+            $query = $query->orderBy($params[0], $params[1]);
+        }
+
+        return $query->get($columns);
     }
 
     /**
