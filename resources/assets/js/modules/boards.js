@@ -1,11 +1,11 @@
 import bootstrapped from '../bootstrapped.js';
 import axios from 'axios';
+import Board from '../../models/Board.js';
 
 export default {
 
     state: {
-        models: bootstrapped.get('boards', 'models'),
-
+        models: bootstrapped.models('boards', Board) || [],
         isCreateOverlayActive: false
     },
 
@@ -18,15 +18,16 @@ export default {
             state.isCreateOverlayActive = isVisible;
         },
 
+        addBoard(state, model) {
+            state.models.push(model);
+        }
     },
 
     actions: {
         deleteBoard(context, id) {
             axios.delete('/api/boards/' + id)
                 .then(response => {
-                    if (!response.data.success) {
-                        return;
-                    }
+                    if (!response.data.success) { return; }
                     context.commit('deleteBoard', id);
                 })
                 .catch(() => {
@@ -39,6 +40,10 @@ export default {
 
         showCreateBoardOverlay(context, isVisible = true) {
             context.commit('showCreateBoardOverlay', isVisible);
+        },
+
+        addBoard(context, model) {
+            context.commit('addBoard', model);
         }
     }
 
