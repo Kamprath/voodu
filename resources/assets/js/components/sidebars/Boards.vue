@@ -24,7 +24,7 @@
                         {{ board.name }}
                     </router-link>
                     <dropdown-list>
-                        <router-link :to="board.route + '/edit'" class="dropdown-item">Edit</router-link>
+                        <router-link :to="{ name: 'Edit Board', params: { id: board.id }}" class="dropdown-item">Edit</router-link>
                         <a href="#" class="dropdown-item has-text-danger" @click.prevent="destroy(board)">Delete</a>
                     </dropdown-list>
                 </li>

@@ -18,9 +18,9 @@
                 <i class="fa fa-search fa-2x" aria-hidden="true"></i>
             </a>
 
-            <a href="#" class="button-add">
+            <!--<a href="#" class="button-add">
                 <i class="fa fa-plus-circle fa-2x" aria-hidden="true"></i>
-            </a>
+            </a>-->
 
             <figure class="avatar avatar-user">
                 <img src="http://lorempizza.com/35/35">
@@ -112,7 +112,7 @@
 
         computed: {
             isBoardSelected() {
-                return this.$route.name === 'board';
+                return this.$route.name === 'Board';
             }
         },
 
