@@ -1,5 +1,4 @@
 import bootstrapped from '../bootstrapped.js';
-import axios from 'axios';
 import Board from '../../models/Board.js';
 
 export default {
@@ -26,6 +25,12 @@ export default {
     actions: {
         showCreateBoardOverlay(context, isVisible = true) {
             context.commit('showCreateBoardOverlay', isVisible);
+        },
+
+        destroyBoard(context, board) {
+            board.destroy(() => {
+                context.commit('removeBoard', board);
+            });
         }
     }
 

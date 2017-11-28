@@ -44,6 +44,10 @@
                 color: @primary;
             }
         }
+
+        .icon.is-small {
+            font-size: .8rem;
+        }
     }
 
 </style>
