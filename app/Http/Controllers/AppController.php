@@ -87,7 +87,11 @@ class AppController extends Controller
         return [
             'user' => null,
             'boards' => [
-                'models' => $this->boards->all()
+                'models' => $this->boards->all(null, [
+                    'swimlanes',
+                    'columns',
+                    'cards'
+                ])
             ],
             'projects' => null
         ];

@@ -44,12 +44,13 @@ abstract class Repository implements RepositoryInterface {
     }
 
     /**
-     * @param array $columns
-     * @return mixed
+     * @param array $columns    (Optional) Columns to select as array of strings
+     * @param array $with       (Optional) Relationships to eager load as array of strings
+     * @return Collection
      * @throws \RuntimeException
      */
-    public function all($columns = ['*']) : Collection {
-        $query = $this->modelInstance;
+    public function all($columns = ['*'], $with = []) : Collection {
+        $query = $this->modelInstance->with($with);
 
         if (!empty($this->orderBy)) {
             $params = explode(' ', $this->orderBy);

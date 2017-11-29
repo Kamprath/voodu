@@ -1,10 +1,11 @@
 import bootstrapped from '../bootstrapped.js';
 import Board from '../models/Board.js';
+import Column from '../models/Column.js';
 
 export default {
 
     state: {
-        models: bootstrapped.models('boards', Board) || [],
+        models: bootstrapped.models('boards', Board, { columns: Column }) || [],
         isCreateOverlayActive: false
     },
 
