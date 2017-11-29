@@ -17,12 +17,25 @@
                 </div>
             </div>
 
-            <div class="level-right">
+            <div class="level-right is-hidden-mobile">
                 <p class="level-item">
                     <a href="#" class="logout" @click.prevent="logout">Logout</a>
                 </p>
             </div>
         </nav>
+
+        <div class="container">
+            <div v-if="!board.columns" class="message-no-columns has-text-centered">
+                <p>No columns have been added to this board yet.</p>
+                <button class="button is-primary">Add a column</button>
+            </div>
+
+            <!-- Render column headers -->
+
+            <!-- Render each swimlane -->
+                <!-- Iterate through each column -->
+                    <!-- Render each card -->
+        </div>
 
     </section>
 </template>
@@ -43,7 +56,7 @@
             verticali-align: top;
             &:first-child {
                 font-weight: bold;
-                color: #747474;
+                color: @color-gray-dark;
                 vertical-align: middle;
             }
         }
@@ -54,7 +67,7 @@
     }
 
     .purpose {
-        color: #939393;
+        color: @color-gray-dark;
         font-family: Lato, helvetica, sans-serif;
         line-height: .9rem;
         font-size: .8rem;
@@ -68,6 +81,22 @@
             color: @color-red;
         }
     }
+
+    .container {
+        position: relative;
+    }
+
+    .message-no-columns {
+        margin-top: 4rem;
+
+        p {
+            color: @color-gray-dark;
+        }
+
+        .button {
+            margin-top: .6rem;
+        }
+    }
 </style>
 
 <script>
@@ -78,6 +107,9 @@
                 // redirect to login page
             },
 
+            /**
+             * Navigate to the first board
+             */
             goToFirstBoard() {
                 const firstBoard = this.$store.state.boards.models[0];
                 this.$router.replace({
@@ -102,17 +134,22 @@
             }
         },
 
-        beforeMount() {
-            if (!this.board) {
-                this.goToFirstBoard();
-            }
-        },
-
         watch: {
+            /**
+             * Redirect if active board is deleted
+             * @param board
+             */
             board(board) {
                 if (!board) {
                     this.goToFirstBoard();
                 }
+            }
+        },
+
+        beforeMount() {
+            // redirect if selected board doesn't exist
+            if (!this.board) {
+                this.goToFirstBoard();
             }
         },
 
