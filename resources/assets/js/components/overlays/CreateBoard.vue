@@ -174,6 +174,7 @@
                 this.board.create(model => {
                     this.$store.commit('addBoard', model);
                     this.hide();
+                    this.$router.push({ name: 'Board', params: { id: model.id }});
                 });
             }
         }
