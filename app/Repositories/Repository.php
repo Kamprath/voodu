@@ -44,12 +44,16 @@ abstract class Repository implements RepositoryInterface {
     }
 
     /**
+     * Get all models
+     *
      * @param array $columns    (Optional) Columns to select as array of strings
-     * @param array $with       (Optional) Relationships to eager load as array of strings
-     * @return Collection
+     * @param array $with       (Optional) Relationships to eager load as array of strings mapped to orderBy strings.
+     *                          Example: ['robots' => 'created_at asc', 'robots.parts' => 'name asc']
+     * @return Collection       Returns models as a collection
      * @throws \RuntimeException
      */
-    public function all($columns = ['*'], $with = []) : Collection {
+    public function all(array $columns = ['*'], array $with = []) : Collection {
+        $with = self::createEagerLoadArray($with);
         $query = $this->modelInstance->with($with);
 
         if (!empty($this->orderBy)) {
@@ -130,5 +134,32 @@ abstract class Repository implements RepositoryInterface {
             throw new RepositoryException("Class {$this->model} must be an instance of Illuminate\\Database\\Eloquent\\Model");
 
         return $this->modelInstance = $modelInstance->newQuery();
+    }
+
+    /**
+     * Create an array of ordered relationships that can be passed to Model::with()
+     *
+     * @param array $with   Relationships mapped to field and order as an associative array of strings.
+     *                      Example: ['robots' => 'created_at asc', 'robots.parts' => 'name asc']
+     * @return array        Returns an array usable as an argument for Model::with()
+     */
+    protected static function createEagerLoadArray(array $with): array
+    {
+        if (empty($with)) {
+            return [];
+        }
+
+        foreach ($with as $relationship => $orderBy) {
+            $params = explode(' ', $orderBy);
+
+            if (count($params) !== 2) {
+                throw new \RuntimeException('$with array values must contain space-delimited string containing field name and order.');
+            }
+
+            $with[$relationship] = function ($query) use ($params) {
+                $query->orderBy($params[0], $params[1]);
+            };
+        }
+        return $with;
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 interface RepositoryInterface {
 
-    public function all($columns = array('*')) : Collection;
+    public function all(array $columns = array('*')) : Collection;
 
     public function paginate($perPage = 15, $columns = array('*'));
 
