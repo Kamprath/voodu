@@ -45,36 +45,7 @@ class AppController extends Controller
      */
     public function index() : View
     {
-        return $this->response([
-            'dashboard' => [
-                'message' => Inspiring::quote()
-            ]
-        ]);
-    }
-
-    /**
-     * Display view with bootstrapped Tasks data
-     *
-     * @return \Illuminate\Contracts\View\Factory|View
-     */
-    public function tasks() : View
-    {
-        return $this->response([
-//            'tasks' => $this->tasks->all()
-        ]);
-    }
-
-    /**
-     * Display view with bootstrapped Board data
-     *
-     * @param Board $board
-     * @return \Illuminate\Contracts\View\Factory|View
-     */
-    public function board(Board $board) : View
-    {
-        return $this->response([
-            'board' => !empty($board) ? $board : null
-        ]);
+        return $this->response();
     }
 
     /**
@@ -85,15 +56,14 @@ class AppController extends Controller
     protected function getBootstrapped() : array
     {
         return [
-            'user' => null,
+            'user' => \Auth::user(),
             'boards' => [
                 'models' => $this->boards->all(['*'], [
                     'swimlanes' => 'position asc',
                     'columns' => 'position asc',
                     'cards' => 'position asc'
                 ])
-            ],
-            'projects' => null
+            ]
         ];
     }
 
