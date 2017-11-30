@@ -2,7 +2,9 @@
 
     <div>
         <modal-view />
-        <create-board-overlay />
+        <transition name="fade">
+            <create-board-overlay />
+        </transition>
 
         <nav-bar />
 

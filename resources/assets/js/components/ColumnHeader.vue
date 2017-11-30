@@ -49,9 +49,12 @@
     .input {
         display: inline;
     }
+    .input, .textarea {
+        padding: .25rem .5rem;
+    }
     .textarea {
         margin: .25rem 0;
-        padding: .5rem;
+        font-size: .9rem;
     }
     .label-color {
         span {

@@ -1,6 +1,6 @@
 <template>
 
-    <section v-if="$store.state.boards.isCreateOverlayActive"
+    <section v-if="show"
              class="hero is-info is-bold is-fullheight overlay overlay-create-board"
              @keyup.esc="hide">
 
@@ -154,6 +154,10 @@
                     return false;
                 }
                 return this.names.includes(this.board.name.toLowerCase());
+            },
+
+            show() {
+                return this.$store.state.boards.isCreateOverlayActive;
             }
         },
 
