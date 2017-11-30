@@ -26,9 +26,14 @@
     .dropdown {
         height: 1rem;
 
-        &-trigger .fa {
+        &-trigger {
+            line-height: 1rem;
+        }
+
+        .fa {
             font-size: 1.5em;
             color: @color-gray-medium;
+            font-weight: bold;
         }
 
         a:hover .fa {
@@ -38,8 +43,22 @@
         &.is-dark a:hover .fa {
             color: @color-gray-medium;
         }
+        &.is-light {
+            .fa {
+                color: @color-gray-lighter;
+            }
+
+            a:hover .fa {
+                color: @color-white;
+            }
+        }
 
         &.is-active {
+            .fa, a:hover .fa {
+                color: @color-white;
+            }
+        }
+        &.is-dark.is-active {
             .fa, a:hover .fa {
                 color: @primary;
             }
@@ -47,6 +66,26 @@
 
         .icon.is-small {
             font-size: .8rem;
+        }
+    }
+
+    .dropdown-menu {
+        min-width: 6rem;
+    }
+
+    .dropdown-content {
+        padding: 0;
+    }
+
+    .dropdown-item {
+        padding: .3rem 1rem;
+        text-align: center;
+
+        &:first-child {
+            padding-top: .4rem;
+        }
+        &:last-child {
+            padding-bottom: .4rem;
         }
     }
 

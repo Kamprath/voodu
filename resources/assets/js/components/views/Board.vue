@@ -25,12 +25,19 @@
         </nav>
 
         <div class="container">
-            <div v-if="!board.columns" class="message-no-columns has-text-centered">
+            <div v-if="!board.columns.length" class="message-no-columns has-text-centered">
                 <p>No columns have been added to this board yet.</p>
                 <button class="button is-primary">Add a column</button>
             </div>
 
             <!-- Render column headers -->
+            <div v-else class="columns">
+                <column-header v-for="column in board.columns"
+                        :model="column"
+                        :key="column.id">
+                    {{ column.name }}
+                </column-header>
+            </div>
 
             <!-- Render each swimlane -->
                 <!-- Iterate through each column -->
@@ -84,6 +91,7 @@
 
     .container {
         position: relative;
+        margin-top: 1rem;
     }
 
     .message-no-columns {
@@ -96,6 +104,15 @@
         .button {
             margin-top: .6rem;
         }
+    }
+
+    .columns {
+        width: 95%;
+        margin: auto;
+    }
+
+    .column {
+        max-width: 33%;
     }
 </style>
 
@@ -154,7 +171,8 @@
         },
 
         components: {
-            'dropdown-list': require('../Dropdown.vue')
+            'dropdown-list': require('../Dropdown.vue'),
+            'column-header': require('../ColumnHeader.vue')
         }
     }
 </script>

@@ -12,6 +12,10 @@ html, body {
 body {
   background-color: @color-gray-lighter;
   font-family: Roboto, Helvetica, sans-serif;
+
+  & > div {
+    height: 100%;
+  }
 }
 
 button, a, span, .fa {
@@ -41,7 +45,9 @@ input {
 }
 
 .wrapper {
+  height: 100%;
   margin-left: 65px;
+  overflow: hidden;
 
   &.sidebar-open {
     margin-left: 315px;
