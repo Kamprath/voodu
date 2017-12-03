@@ -34,6 +34,7 @@
             <div v-else class="columns">
                 <column-header v-for="column in board.columns"
                         @removeColumn="removeColumn"
+                        @updatePositions="updatePositions"
                         :model="column"
                         :key="column.id">
                     {{ column.name }}
@@ -119,6 +120,7 @@
 
 <script>
     import Column from '../../models/Column.js';
+    import axios from 'axios';
 
     export default {
         methods: {
@@ -143,6 +145,18 @@
 
             removeColumn(column) {
                 this.board.removeColumn(column);
+            },
+
+            updatePositions() {
+                let positions = {};
+
+                // build object mapping column ID to position
+                for (let i in this.board.columns) {
+                    positions[this.board.columns[i].id] = this.board.columns[i].position;
+                }
+
+                // submit API request
+                axios.post('/api/columns/positions/' + this.board.id, positions);
             }
         },
 

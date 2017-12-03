@@ -23,9 +23,4 @@ Route::apiResource('boards', 'BoardController');
 
 Route::apiResource('columns', 'ColumnController');
 
-Route::get('message', function() {
-	return response()->json([
-		'message' => Illuminate\Foundation\Inspiring::quote()
-
-	]);
-});
+Route::post('columns/positions/{boardId}', 'ColumnController@positions');

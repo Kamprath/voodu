@@ -24,8 +24,8 @@
             <h6 class="title is-6"><slot></slot></h6>
             <dropdown-list class="is-light">
                 <a href="#" class="dropdown-item" @click.prevent="edit">Edit</a>
-                <a href="#" class="dropdown-item" @click.prevent="moveLeft">Move left</a>
-                <a href="#" class="dropdown-item" @click.prevent="moveRight">Move right</a>
+                <a href="#" class="dropdown-item" @click.prevent="moveColumn(false)">Move left</a>
+                <a href="#" class="dropdown-item" @click.prevent="moveColumn(true)">Move right</a>
                 <a href="#" class="dropdown-item has-text-danger" @click.prevent="destroy">Delete</a>
             </dropdown-list>
         </div>
@@ -120,6 +120,20 @@
                 this.model.destroy(() => {
                     this.$emit('removeColumn', this.model);
                 });
+            },
+
+            moveColumn(increment) {
+                // increment/decrement position field
+                console.log('position', this.model.position);
+                this.model.position = increment ? this.model.position + 1 : this.model.position - 1;
+                console.log('position', this.model.position);
+
+                if (this.model.position <= 0) {
+                    this.model.position = 0;
+                }
+
+                this.$store.commit('updateColumnPosition', this.model);
+                this.$emit('updatePositions');
             }
         },
 

@@ -20,7 +20,7 @@ class Controller extends BaseController
     protected const STATUS_SERVER_ERROR = 500;
 
 
-    protected function error(Exception $e) : JsonResponse
+    protected function error(\Exception $e) : JsonResponse
     {
         return response()->json($e, self::STATUS_SERVER_ERROR);
     }
