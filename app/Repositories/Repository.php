@@ -37,6 +37,7 @@ abstract class Repository implements RepositoryInterface {
 
     /**
      * @param App $app
+     * @throws RepositoryException
      */
     public function __construct(App $app) {
         $this->app = $app;
@@ -59,7 +60,7 @@ abstract class Repository implements RepositoryInterface {
         if (!empty($this->orderBy)) {
             $params = explode(' ', $this->orderBy);
 
-            if (count($params) !== 2) {
+            if (\count($params) !== 2) {
                 throw new \RuntimeException('orderBy property requires a space-delimited string containing field name and order.');
             }
 
@@ -102,7 +103,7 @@ abstract class Repository implements RepositoryInterface {
      * @return mixed
      */
     public function delete($id) : bool {
-        return $this->modelInstance->destroy($id);
+        return $this->modelInstance->where('id', $id)->delete();
     }
 
     /**
@@ -140,9 +141,10 @@ abstract class Repository implements RepositoryInterface {
     /**
      * Create an array of ordered relationships that can be passed to Model::with()
      *
-     * @param array $with   Relationships mapped to field and order as an associative array of strings.
+     * @param array $with Relationships mapped to field and order as an associative array of strings.
      *                      Example: ['robots' => 'created_at asc', 'robots.parts' => 'name asc']
      * @return array        Returns an array usable as an argument for Model::with()
+     * @throws \RuntimeException
      */
     protected static function createEagerLoadArray(array $with): array
     {
@@ -153,7 +155,7 @@ abstract class Repository implements RepositoryInterface {
         foreach ($with as $relationship => $orderBy) {
             $params = explode(' ', $orderBy);
 
-            if (count($params) !== 2) {
+            if (\count($params) !== 2) {
                 throw new \RuntimeException('$with array values must contain space-delimited string containing field name and order.');
             }
 

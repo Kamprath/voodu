@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Board;
 use App\Column;
 use App\Repositories\ColumnRepository;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ColumnController extends Controller
@@ -43,13 +45,7 @@ class ColumnController extends Controller
 
         try {
             return response()->json(
-                $this->columns->create([
-                    'name' => $request->get('name'),
-                    'description' => $request->get('description'),
-                    'color' => $request->get('color', '545C67'),
-                    'board_id' => $request->get('board_id'),
-                    'created_by' => \Auth::id()
-                ]),
+                $this->columns->create($request->all()),
                 self::STATUS_CREATED
             );
         } catch (Exception $e) {
@@ -96,11 +92,21 @@ class ColumnController extends Controller
         }
     }
 
-    public function destroy(Board $board) : JsonResponse
+    /**
+     * @param Request $request
+     * @param Column $column
+     * @return JsonResponse
+     * @throws \Exception
+     */
+    public function destroy(Column $column) : JsonResponse
     {
-        // todo: make sure user has access to board they're submitting column for
+        if (!\Auth::user()->hasBoard($column->board_id)) {
+            return response()
+                ->json([ 'message' => 'You do not have access to this board.' ], self::STATUS_FORBIDDEN);
+        }
+
         try {
-            $board->delete();
+            $this->columns->delete($column->id);
             return response()->json(null, self::STATUS_DELETED);
         } catch (Exception $e) {
             return $this->error($e);

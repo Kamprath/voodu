@@ -37,12 +37,7 @@ class BoardController extends Controller
     {
         try {
             return response()->json(
-                $this->boards->create([
-                    'name' => $request->get('name'),
-                    'purpose' => $request->get('purpose'),
-                    'is_public' => $request->get('is_public', 0),
-                    'created_by' => \Auth::id()
-                ]),
+                $this->boards->create($request->all()),
                 201
             );
         } catch (Exception $e) {
@@ -73,10 +68,10 @@ class BoardController extends Controller
         //
     }
 
-    public function destroy(Board $board) : JsonResponse
+    public function destroy($id) : JsonResponse
     {
         try {
-            $board->delete();
+            $this->boards->delete($id);
             return response()->json(null, 204);
         } catch (Exception $e) {
             return $this->error($e);
