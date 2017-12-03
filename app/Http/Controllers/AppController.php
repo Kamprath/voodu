@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Board;
 use App\Repositories\BoardRepository;
 use App\Repositories\TaskRepository;
-use Illuminate\Foundation\Inspiring;
 use Illuminate\View\View;
 
 /**
@@ -42,6 +40,7 @@ class AppController extends Controller
      * Display view with bootstrapped data
      *
      * @return \Illuminate\Contracts\View\Factory|View
+     * @throws \RuntimeException
      */
     public function index() : View
     {
@@ -52,6 +51,7 @@ class AppController extends Controller
      * Get default bootstrapped data
      *
      * @return array
+     * @throws \RuntimeException
      */
     protected function getBootstrapped() : array
     {
@@ -70,8 +70,9 @@ class AppController extends Controller
     /**
      * Return app view with bootstrapped data injected
      *
-     * @param array $data   Non-default bootstrapped data to pass to Vue
+     * @param array $data Non-default bootstrapped data to pass to Vue
      * @return \Illuminate\Contracts\View\Factory|View
+     * @throws \RuntimeException
      */
     protected function response(array $data = []) : View
     {
