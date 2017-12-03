@@ -25,7 +25,7 @@
         </nav>
 
         <div class="container">
-            <div v-if="!board.columns.length" class="message-no-columns has-text-centered">
+            <div v-if="!board.columns || !board.columns.length" class="message-no-columns has-text-centered">
                 <p>No columns have been added to this board yet.</p>
                 <button class="button is-primary">Add a column</button>
             </div>
