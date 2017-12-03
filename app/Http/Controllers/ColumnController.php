@@ -112,4 +112,38 @@ class ColumnController extends Controller
             return $this->error($e);
         }
     }
+
+    /**
+     * Set column positions
+     *
+     * Request body must be column IDs mapped to positions as a JSON object.
+     *
+     * @param Request $request
+     * @param int $boardId
+     * @return JsonResponse
+     */
+    public function positions(Request $request, $boardId): JsonResponse
+    {
+        if (!\Auth::user()->hasBoard($boardId)) {
+            return response()
+                ->json([ 'message' => 'You do not have access to this board.' ], self::STATUS_FORBIDDEN);
+        }
+
+        try {
+            // update each column
+            foreach ($request->all() as $id => $position) {
+                if (!\is_int($id) || !\is_int($position)) {
+                    continue;
+                }
+
+                Column::where('id', $id)->where('board_id', $boardId)->update([
+                    'position' => $position
+                ]);
+            }
+
+            return response()->json();
+        } catch (\Exception $e) {
+            return $this->error($e);
+        }
+    }
 }
