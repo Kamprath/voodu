@@ -1,12 +1,12 @@
 <template>
 
-    <nav>
+    <nav :class="{ 'is-sidebar-open': $store.getters.isSidebarOpen }">
         <div class="nav-content">
             <figure class="avatar">
                 <img src="http://lorempizza.com/40/40">
             </figure>
 
-            <a href="#" :class="{ 'is-active': isBoardSelected }" @click="toggleBoards">
+            <a href="#" :class="{ 'is-active': isBoardSelected, 'is-selected': $store.state.app.isBoardsActive }" @click="toggleBoards">
                 <i class="fa fa-columns fa-2x" aria-hidden="true"></i>
             </a>
 
@@ -61,8 +61,10 @@
                 color: @primary;
             }
 
-            &:not(.is-active):hover .fa {
-                color: @color-white;
+            &:not(.is-active):hover, &.is-selected {
+                .fa {
+                    color: @color-white;
+                }
             }
         }
 
@@ -89,6 +91,10 @@
                 }
             }
         }
+    }
+
+    .is-sidebar-open a:not(.is-selected) {
+        opacity: .5;
     }
 
     .button-add .fa {
