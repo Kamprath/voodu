@@ -99,6 +99,15 @@
             return {
                 isActive: false
             };
+        },
+
+        mounted() {
+            // close dropdown if anything other than toggle link was clicked
+            document.querySelector('body').addEventListener('click', function(e) {
+                if (!e.target.parentNode.parentNode.classList.contains('dropdown-trigger')) {
+                    this.isActive = false;
+                }
+            }.bind(this));
         }
 
     }

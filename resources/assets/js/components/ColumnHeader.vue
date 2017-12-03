@@ -123,10 +123,11 @@
             },
 
             moveColumn(increment) {
-                // increment/decrement position field
-                console.log('position', this.model.position);
-                this.model.position = increment ? this.model.position + 1 : this.model.position - 1;
-                console.log('position', this.model.position);
+                if (increment) {
+                    this.model.position++;
+                } else {
+                    this.model.position--;
+                }
 
                 if (this.model.position <= 0) {
                     this.model.position = 0;
