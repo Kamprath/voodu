@@ -8,7 +8,8 @@
                         <p class="board-title">
                             <span>{{ board.name }}</span>
                             <dropdown-list class="is-dark">
-                                <router-link :to="{ name: 'Edit Board', params: { id: $route.params.id }}" class="dropdown-item">Edit</router-link>
+                                <router-link :to="{ name: 'Edit Board', params: { id: $route.params.id }}" class="dropdown-item">Edit board</router-link>
+                                <a href="#" class="dropdown-item" @click.prevent="addColumn">Add column</a>
                                 <a href="#" class="dropdown-item has-text-danger" @click.prevent="$store.dispatch('destroyBoard', board)">Delete</a>
                             </dropdown-list>
                         </p>
@@ -137,8 +138,10 @@
 
             addColumn() {
                 // add blank column to model and toggle edit class
-                this.board.columns.push(new Column({
+                this.board.columns.splice(0, 0, new Column({
+                    id: null,
                     name: 'New Column',
+                    position: 0,
                     board_id: this.board.id
                 }));
             },
