@@ -58,11 +58,20 @@ class Model {
             })
     }
 
-    update() {
+    update(callback = () => {}) {
+        if (!this.source) {
+            throw new Error('No \'source\' getter is set');
+            return;
+        }
 
+        axios.put(this.source + '/' + this.id, this.properties)
+            .then(response => {
+                this.handleSaveResponse(response, callback);
+            })
+            .catch(this.handleError);
     }
 
-    create(callback) {
+    create(callback = () => {}) {
         if (!this.source) {
             throw new Error('No \'source\' getter is set');
             return;
@@ -70,22 +79,45 @@ class Model {
 
         axios.post(this.source, this.properties)
             .then(response => {
-                // verify success
-                if (!response.data.id) {
-                    throw new Error('No model data returned by API.');
-                    return;
-                }
-
-                // update model with response data
-                this.assign(response.data);
-
-                if (typeof callback === 'function') {
-                    callback(this);
-                }
+                this.handleSaveResponse(response, callback);
             })
-            .catch(error => {
-                throw new Error('Failed to create model: ' + error);
-            });
+            .catch(this.handleError);
+    }
+
+    /**
+     * Create or update model
+     * @param {function} callback
+     */
+    save(callback = () => {}) {
+        if (!this.id) {
+            this.create(callback);
+        } else {
+            this.update(callback);
+        }
+    }
+
+    /**
+     * Handle response after create() or update()
+     * @param {object} response     Response data
+     * @param {function} callback   (Optional)
+     */
+    handleSaveResponse(response, callback) {
+        // verify success
+        if (!response.data.id) {
+            throw new Error('No model data returned by API.');
+            return;
+        }
+
+        // update model with response data
+        this.assign(response.data);
+
+        if (typeof callback === 'function') {
+            callback(response.data);
+        }
+    }
+
+    handleError(error) {
+        throw new Error('Failed to create model: ' + error);
     }
 }
 
