@@ -12,9 +12,8 @@ const router = new VueRouter({
 
     routes: [
         {
-            name: 'Dashboard',
             path: '/',
-            component: require('./components/views/DashboardSection.vue')
+            redirect: { name: 'Board' }
         },
         {
             name: 'Tasks',

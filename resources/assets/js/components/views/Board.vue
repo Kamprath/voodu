@@ -19,7 +19,7 @@
 
             <div class="level-right is-hidden-mobile">
                 <p class="level-item">
-                    <a href="#" class="logout" @click.prevent="logout">Logout</a>
+                    <a href="/logout" class="logout">Logout</a>
                 </p>
             </div>
         </nav>
@@ -27,12 +27,13 @@
         <div class="container">
             <div v-if="!board.columns || !board.columns.length" class="message-no-columns has-text-centered">
                 <p>No columns have been added to this board yet.</p>
-                <button class="button is-primary">Add a column</button>
+                <button class="button is-primary" @click="addColumn">Add a column</button>
             </div>
 
             <!-- Render column headers -->
             <div v-else class="columns">
                 <column-header v-for="column in board.columns"
+                        @removeColumn="removeColumn"
                         :model="column"
                         :key="column.id">
                     {{ column.name }}
@@ -117,13 +118,10 @@
 </style>
 
 <script>
+    import Column from '../../models/Column.js';
+
     export default {
         methods: {
-            logout() {
-                // make API call to logout action
-                // redirect to login page
-            },
-
             /**
              * Navigate to the first board
              */
@@ -133,6 +131,18 @@
                     name: !firstBoard ? 'Welcome' : 'Board',
                     params: !firstBoard ? null : { id: firstBoard.id }
                 });
+            },
+
+            addColumn() {
+                // add blank column to model and toggle edit class
+                this.board.columns.push(new Column({
+                    name: 'New Column',
+                    board_id: this.board.id
+                }));
+            },
+
+            removeColumn(column) {
+                this.board.removeColumn(column);
             }
         },
 
