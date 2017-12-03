@@ -175,10 +175,10 @@
             submit() {
                 this.isLoading = true;
 
-                this.board.create(model => {
-                    this.$store.commit('addBoard', model);
+                this.board.create(data => {
+                    this.$store.commit('addBoard', new Board(data));
                     this.hide();
-                    this.$router.push({ name: 'Board', params: { id: model.id }});
+                    this.$router.push({ name: 'Board', params: { id: data.id }});
                 });
             }
         }

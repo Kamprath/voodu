@@ -21,6 +21,8 @@ Route::apiResource('tasks', 'TaskController');
 
 Route::apiResource('boards', 'BoardController');
 
+Route::apiResource('columns', 'ColumnController');
+
 Route::get('message', function() {
 	return response()->json([
 		'message' => Illuminate\Foundation\Inspiring::quote()

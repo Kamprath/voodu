@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
@@ -33,5 +34,22 @@ class User extends Authenticatable
         // to assign tasks to user: $user->tasks()->sync([6, 12, 15]);
         // to unassign tasks: $user->tasks->detach([6, 12, 15]);
         return $this->belongsToMany(Task::class)->withTimestamps();
+    }
+
+    /**
+     * Determine if user has access to a board.
+     *
+     * @param int $id   Board ID
+     * @return bool
+     */
+    public function hasBoard($id) : bool
+    {
+        try {
+            $board = Board::findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            return false;
+        }
+
+        return $board->is_public || $board->created_by === $this->id;
     }
 }

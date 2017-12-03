@@ -55,6 +55,7 @@
     .textarea {
         margin: .25rem 0;
         font-size: .9rem;
+        line-height: 1.1rem;
     }
     .label-color {
         span {
@@ -99,7 +100,7 @@
                 this.model.color = this.editData.color;
 
                 this.isEditing = false;
-                this.model.update();
+                this.model.save();
             },
 
             cancel() {

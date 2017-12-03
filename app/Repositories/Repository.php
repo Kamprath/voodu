@@ -89,11 +89,12 @@ abstract class Repository implements RepositoryInterface {
     /**
      * @param array $data
      * @param $id
-     * @param string $attribute
-     * @return mixed
+     * @return Model
      */
-    public function update(array $data, $id, $attribute = 'id') : Model {
-        return $this->modelInstance->where($attribute, '=', $id)->update($data);
+    public function update(array $data, $id) : Model {
+        $model = $this->modelInstance->find($id);
+        $model->update($data);
+        return $model;
     }
 
     /**
