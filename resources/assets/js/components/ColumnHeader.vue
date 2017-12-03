@@ -26,18 +26,22 @@
                 <a href="#" class="dropdown-item" @click.prevent="edit">Edit</a>
                 <a href="#" class="dropdown-item" @click.prevent="moveLeft">Move left</a>
                 <a href="#" class="dropdown-item" @click.prevent="moveRight">Move right</a>
-                <a href="#" class="dropdown-item has-text-danger" @click.prevent="$store.dispatch('destroyColumn', model)">Delete</a>
+                <a href="#" class="dropdown-item has-text-danger" @click.prevent="destroy">Delete</a>
             </dropdown-list>
         </div>
     </div>
 </template>
 
 <style lang="less" scoped>
+    @import '../../less/colors.less';
+
     .column {
         padding: .3rem;
         margin: .25rem;
         text-align: center;
         align-self: flex-start;
+        border-radius: 2px;
+        background-color: @color-gray-dark;
     }
     .title {
         color: white;
@@ -77,7 +81,7 @@
 
         data() {
             return {
-                isEditing: false,
+                isEditing: !this.model.id,
                 editData: {}
             }
         },
@@ -104,7 +108,18 @@
             },
 
             cancel() {
+                // trigger event for parent to handle if no ID (column created and then canceled)
+                if (!this.model.id) {
+                    this.$emit('removeColumn', this.model);
+                }
+
                 this.isEditing = false;
+            },
+
+            destroy() {
+                this.model.destroy(() => {
+                    this.$emit('removeColumn', this.model);
+                });
             }
         },
 
