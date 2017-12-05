@@ -60,8 +60,8 @@ class AppController extends Controller
             'boards' => [
                 'models' => $this->boards->all(['*'], [
                     'swimlanes' => 'position asc',
-                    'columns' => 'position asc',
-                    'cards' => 'position asc'
+                    'swimlanes.cards' => 'position asc',
+                    'columns' => 'position asc'
                 ])
             ]
         ];

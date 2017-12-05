@@ -1,11 +1,17 @@
 import bootstrapped from '../bootstrapped.js';
 import Board from '../models/Board.js';
 import Column from '../models/Column.js';
+import Swimlane from '../models/Swimlane.js';
+import Card from '../models/Card.js';
 
 export default {
 
     state: {
-        models: bootstrapped.models('boards', Board, { columns: Column }) || [],
+        models: bootstrapped.models('boards', Board, {
+            columns: Column,
+            swimlanes: Swimlane,
+            cards: Card
+        }) || [],
         isCreateOverlayActive: false
     },
 
