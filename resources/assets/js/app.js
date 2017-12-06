@@ -1,3 +1,6 @@
+// polyfill for browsers (IE) that don't support promises
+require('es6-promise').polyfill();
+
 // import dependencies
 import Vue from 'vue';
 import VueAxios from 'vue-axios';
@@ -7,7 +10,6 @@ import axios from 'axios';
 import App from './components/views/App.vue';
 import router from './router.js';
 import store from './store.js';
-
 
 /**
  * Register the CSRF Token as a common header with Axios so that
