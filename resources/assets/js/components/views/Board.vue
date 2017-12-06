@@ -43,8 +43,24 @@
             </div>
 
             <!-- Render each swimlane -->
-                <!-- Iterate through each column -->
-                    <!-- Render each card -->
+            <div class="swimlane" v-for="swimlane in board.swimlanes" :key="swimlane.id">
+                <div class="columns">
+                    <div class="column swimlane-column" v-for="column in board.columns" :key="column.id">
+                        <!-- Cards -->
+                        <card v-for="card in swimlane.cards"
+                              :key="card.id"
+                              v-if="card.column_id === column.id"
+                              :model="card" />
+
+                        <div class="add-card">
+                            <a href="#" @click.prevent>
+                                <i class="fa fa-plus-circle"></i>
+                                <span>Add a card</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </section>
@@ -116,6 +132,46 @@
 
     .column {
         max-width: 33%;
+    }
+
+    .swimlane-column {
+        background-color: @color-white;
+        margin: 0 .25rem;
+        padding: .4rem .4rem 2rem;
+        position: relative;
+        border-radius: 2px;
+    }
+
+    .add-card {
+        position: absolute;
+        width: 100%;
+        bottom: .25rem;
+        right: 0;
+        left: 0;
+        opacity: 0;
+        text-align: center;
+
+        &, a {
+            transition: opacity 100ms;
+        }
+
+        a {
+            color: @color-gray-dark;
+            font-size: .85rem;
+            opacity: .4;
+            padding: .2rem 2rem;
+
+            span, .fa {
+                vertical-align: middle;
+            }
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+    .swimlane-column:hover .add-card {
+        opacity: 1;
     }
 </style>
 
@@ -199,7 +255,8 @@
 
         components: {
             'dropdown-list': require('../Dropdown.vue'),
-            'column-header': require('../ColumnHeader.vue')
+            'column-header': require('../ColumnHeader.vue'),
+            'card': require('../Card.vue')
         }
     }
 </script>

@@ -78,14 +78,18 @@
     }
 
     .dropdown-item {
-        padding: .3rem 1rem;
+        padding: .2rem .8rem;
         text-align: center;
 
         &:first-child {
-            padding-top: .4rem;
+            padding-top: .25rem;
         }
         &:last-child {
-            padding-bottom: .4rem;
+            padding-bottom: .25rem;
+        }
+
+        a {
+            font-size: .85rem;
         }
     }
 
