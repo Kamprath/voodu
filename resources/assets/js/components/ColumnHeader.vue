@@ -1,15 +1,37 @@
 <template>
     <div class="column" :style="style">
         <form v-if="isEditing" @keyup.esc="cancel" @submit.prevent="save">
-            <input class="input" type="text" placeholder="Enter a title" autofocus tabindex="1" required v-model="editData.name">
-            <textarea class="textarea" placeholder="Enter a description (optional)" tabindex="2" rows="2" v-model="editData.description"></textarea>
+            <!-- Edit name -->
+            <input class="input edit-title"
+                   type="text"
+                   placeholder="Enter a title"
+                   autofocus
+                   tabindex="1"
+                   required
+                   v-model="editData.name">
 
+            <!-- Edit description -->
+            <textarea class="textarea"
+                      placeholder="Enter a description (optional)"
+                      tabindex="2"
+                      rows="2"
+                      v-model="editData.description">
+            </textarea>
+
+            <!-- Edit color -->
             <div class="is-pulled-left">
                 <label class="label is-small label-color">
                     <span>Color</span>
-                    <input class="input is-small column-color" type="text" tabindex="3" placeholder="Hex value" v-model="editData.color" maxlength="6">
+                    <input class="input is-small column-color"
+                           type="text"
+                           tabindex="3"
+                           placeholder="Hex value"
+                           v-model="editData.color"
+                           maxlength="6">
                 </label>
             </div>
+
+            <!-- Buttons -->
             <div class="is-pulled-right">
                 <button class="button is-danger is-small" type="button" tabindex="5" @click="cancel">
                     <i class="fa fa-times" aria-hidden="true"></i>
@@ -21,7 +43,7 @@
         </form>
 
         <div v-else>
-            <h6 class="title is-6"><slot></slot></h6>
+            <h6 class="title is-6">{{ model.name }}</h6>
             <dropdown-list class="is-light">
                 <a href="#" class="dropdown-item" @click.prevent="edit">Edit</a>
                 <a href="#" class="dropdown-item" @click.prevent="moveColumn(false)">Move left</a>
@@ -37,7 +59,7 @@
 
     .column {
         padding: .3rem;
-        margin: .25rem;
+        margin: auto .25rem .25rem;
         text-align: center;
         align-self: flex-start;
         border-radius: 2px;
@@ -46,20 +68,21 @@
     .title {
         color: white;
         display: inline;
-        font-size: .95rem;
     }
     .title, .dropdown {
         vertical-align: middle;
     }
-    .input {
-        display: inline;
+    .edit-title {
+        font-weight: bold;
+    }
+    .edit-title, .textarea {
+        font-size: .9rem;
     }
     .input, .textarea {
         padding: .25rem .5rem;
     }
     .textarea {
         margin: .25rem 0;
-        font-size: .9rem;
         line-height: 1.1rem;
     }
     .label-color {
@@ -77,8 +100,15 @@
 </style>
 
 <script>
+    import Column from '../models/Column.js';
+
     export default {
-        props: ['model'],
+        props: {
+            model: {
+                type: Column,
+                default: new Column
+            },
+        },
 
         data() {
             return {

@@ -37,9 +37,7 @@
                         @removeColumn="removeColumn"
                         @updatePositions="updatePositions"
                         :model="column"
-                        :key="column.id">
-                    {{ column.name }}
-                </column-header>
+                        :key="column.id" />
             </div>
 
             <!-- Render each swimlane -->
