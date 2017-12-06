@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Board;
 use App\Column;
+use App\Swimlane;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,8 +26,15 @@ class BoardRepository extends Repository {
         $board->created_by = \Auth::id();
         $board->save();
 
+        // create a default Swimlane
+        $swimlane = new Swimlane;
+        $swimlane->created_by = \Auth::id();
+        $swimlane->board_id = $board->id;
+        $swimlane->save();
+        $board->swimlanes = collect([$swimlane]);
+
         // append placeholder arrays for relationships
-        $board->columns = $board->swimlanes = $board->cards = [];
+        $board->columns = $board->cards = [];
 
         return $board;
     }
@@ -40,6 +48,7 @@ class BoardRepository extends Repository {
     public function delete($id): bool
     {
         Column::where('board_id', $id)->delete();
+        Swimlane::where('board_id', $id)->delete();
         return parent::delete($id);
     }
 
