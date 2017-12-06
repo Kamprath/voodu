@@ -89,7 +89,7 @@
         }
 
         a {
-            font-size: .85rem;
+            font-size: .75rem;
         }
     }
 

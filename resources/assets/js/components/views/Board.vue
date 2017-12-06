@@ -45,7 +45,7 @@
             <!-- Render each swimlane -->
             <div class="swimlane" v-for="swimlane in board.swimlanes" :key="swimlane.id">
                 <div class="columns">
-                    <div class="column swimlane-column" v-for="column in board.columns" :key="column.id">
+                    <div class="column swimlane-column" v-for="column in board.columns" :key="column.id" v-if="column.id">
                         <!-- Cards -->
                         <card v-for="card in swimlane.cards"
                               :key="card.id"

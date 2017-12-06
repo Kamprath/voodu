@@ -8,7 +8,7 @@
 
         <p>{{ model.name }}</p>
 
-        <span class="created-at">{{ timeAgo }}</span>
+        <span class="created-at" :title="'Created ' + createdAt">{{ timeAgo }}</span>
     </div>
 
 </template>
@@ -60,6 +60,10 @@
         },
 
         computed: {
+            createdAt() {
+                return moment(this.model.created_at).format('dddd, MMMM Do YYYY, h:mm a');
+            },
+
             timeAgo() {
                 return moment(this.model.created_at).fromNow();
             }

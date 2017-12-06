@@ -46,6 +46,7 @@
     .title {
         color: white;
         display: inline;
+        font-size: .95rem;
     }
     .title, .dropdown {
         vertical-align: middle;
