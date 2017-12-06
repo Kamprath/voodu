@@ -78,14 +78,17 @@
     }
 
     .dropdown-item {
-        padding: .2rem .8rem;
+        padding: .5rem .8rem;
         text-align: center;
+        font-family: Roboto, Helvetica, sans-serif;
+        font-size: .85rem;
+        line-height: .75rem;
 
         &:first-child {
-            padding-top: .25rem;
+            padding-top: .6rem;
         }
         &:last-child {
-            padding-bottom: .25rem;
+            padding-bottom: .6rem;
         }
 
         a {
