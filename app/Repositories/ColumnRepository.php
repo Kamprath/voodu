@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Card;
 use App\Column;
 use Illuminate\Database\Eloquent\Model;
 
@@ -24,6 +25,18 @@ class ColumnRepository extends Repository {
         $column->save();
 
         return $column;
+    }
+
+    /**
+     * Delete a column.
+     *
+     * @param int $id
+     * @return bool
+     */
+    public function delete($id): bool
+    {
+        Card::where('column_id', $id)->delete();
+        return parent::delete($id);
     }
 
 }
