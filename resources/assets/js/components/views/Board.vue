@@ -34,7 +34,7 @@
             <!-- Render column headers -->
             <div v-else class="columns">
                 <column-header v-for="column in board.columns"
-                        @removeColumn="removeColumn"
+                        @removeColumn="board.removeRelated('columns', column)"
                         @updatePositions="updatePositions"
                         :model="column"
                         :key="column.id" />
@@ -48,10 +48,11 @@
                         <card v-for="card in swimlane.cards"
                               :key="card.id"
                               v-if="card.column_id === column.id"
-                              :model="card" />
+                              :model="card"
+                              @removeCard="swimlane.removeRelated('cards', card)" />
 
                         <div class="add-card">
-                            <a href="#" @click.prevent>
+                            <a href="#" @click.prevent="addCard(swimlane, column.id)">
                                 <i class="fa fa-plus-circle"></i>
                                 <span>Add a card</span>
                             </a>
@@ -135,7 +136,7 @@
     .swimlane-column {
         background-color: @color-white;
         margin: 0 .25rem;
-        padding: .4rem .4rem 2rem;
+        padding: .4rem .4rem 1.7rem;
         position: relative;
         border-radius: 2px;
     }
@@ -176,6 +177,7 @@
 <script>
     import Column from '../../models/Column.js';
     import axios from 'axios';
+    import Card from "../../models/Card";
 
     export default {
         methods: {
@@ -200,10 +202,6 @@
                 }));
             },
 
-            removeColumn(column) {
-                this.board.removeColumn(column);
-            },
-
             updatePositions() {
                 let positions = {};
 
@@ -214,6 +212,15 @@
 
                 // submit API request
                 axios.post('/api/columns/positions/' + this.board.id, positions);
+            },
+
+            addCard(swimlane, columnId) {
+                swimlane.addCard(new Card({
+                    column_id: columnId,
+                    swimlane_id: swimlane.id,
+                    board_id: swimlane.board_id,
+                    position: swimlane.cards.length
+                }));
             }
         },
 

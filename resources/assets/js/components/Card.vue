@@ -1,7 +1,7 @@
 <template>
 
     <div :class="{ 'card': true, 'is-editing': isEditing }" @keyup.esc="cancel">
-        <div v-if="isEditing">
+        <form v-if="isEditing" @submit.prevent="save">
             <!-- Edit name -->
             <textarea class="textarea edit-title is-autosize"
                       type="text"
@@ -28,12 +28,12 @@
             </div>
 
             <span class="is-clearfix"></span>
-        </div>
+        </form>
 
         <div v-else>
             <dropdown-list class="is-dark">
                 <a href="#" class="dropdown-item" @click.prevent="edit">Edit</a>
-                <a href="#" class="dropdown-item has-text-danger" @click.prevent>Delete</a>
+                <a href="#" class="dropdown-item has-text-danger" @click.prevent="destroy">Delete</a>
             </dropdown-list>
 
             <p>{{ model.name }}</p>
@@ -54,6 +54,7 @@
         padding: 0.4rem .75rem 1.1rem;
         min-height: 4.5rem;
         position: relative;
+        margin-bottom: .3rem;
 
         &:hover .dropdown, .dropdown.is-active {
             opacity: 1;
@@ -93,6 +94,7 @@
         font-size: .9rem;
         font-family: Lato, Helvetica, sans-serif;
         margin-bottom: .4rem;
+        min-height: 2.5rem;
     }
 </style>
 
@@ -128,6 +130,12 @@
         },
 
         methods: {
+            save() {
+                this.model.name = this.editData.name;
+                this.isEditing = false;
+                this.model.save();
+            },
+
             edit() {
                 this.editData = this.model.properties;
                 this.isEditing = true;
@@ -147,6 +155,12 @@
                     this.$emit('removeCard', this.model);
                 });
             },
+        },
+
+        mounted() {
+            if (this.isEditing) {
+                document.querySelector('[autofocus]').focus();
+            }
         },
 
         updated() {

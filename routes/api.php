@@ -23,4 +23,6 @@ Route::apiResource('boards', 'BoardController');
 
 Route::apiResource('columns', 'ColumnController');
 
+Route::apiResource('cards', 'CardController');
+
 Route::post('columns/positions/{boardId}', 'ColumnController@positions');
