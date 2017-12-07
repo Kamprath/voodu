@@ -49,8 +49,7 @@
                                    type="text"
                                    placeholder="(Optional)"
                                    tabindex="2"
-                                   v-model="board.purpose"
-                                   autofocus>
+                                   v-model="board.purpose">
                             <div class="input-details">
                                 What is this board used for?
                             </div>
@@ -119,13 +118,15 @@
 
 <script>
     import Board from '../../models/Board.js';
+    import autofocus from '../../autofocus.js';
 
     export default {
 
         data() {
             return {
                 board: new Board({ is_public: 1 }),
-                isLoading: false
+                isLoading: false,
+                autofocused: false
             };
         },
 
@@ -185,8 +186,8 @@
 
         updated() {
             this.$nextTick(() => {
-                document.querySelector('[autofocus]').focus();
-            })
+                autofocus();
+            });
         }
 
     }

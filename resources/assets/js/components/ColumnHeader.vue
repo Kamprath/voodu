@@ -101,6 +101,7 @@
 
 <script>
     import Column from '../models/Column.js';
+    import autofocus from '../autofocus.js';
 
     export default {
         props: {
@@ -175,7 +176,7 @@
 
         updated() {
             this.$nextTick(() => {
-                document.querySelector('[autofocus]').focus();
+                autofocus();
             })
         }
     }

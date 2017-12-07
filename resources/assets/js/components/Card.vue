@@ -102,6 +102,7 @@
     import Card from '../models/Card.js';
     import moment from 'moment';
     import autosize from 'autosize';
+    import autofocus from '../autofocus.js';
 
     export default {
 
@@ -159,7 +160,7 @@
 
         mounted() {
             if (this.isEditing) {
-                document.querySelector('[autofocus]').focus();
+                autofocus();
             }
         },
 
@@ -167,12 +168,12 @@
             // automatically resize textarea
             this.$nextTick(() => {
                 if (this.isEditing) {
-                    autosize(document.querySelectorAll('.is-autosize'));
+                    autosize(
+                        document.querySelectorAll('.is-autosize')
+                    );
                 }
 
-                if (document.querySelector('[autofocus]')) {
-                    document.querySelector('[autofocus]').focus();
-                }
+                autofocus();
             })
         },
 
