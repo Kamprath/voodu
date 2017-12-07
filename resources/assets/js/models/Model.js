@@ -119,6 +119,20 @@ class Model {
     handleError(error) {
         throw new Error('Failed to create model: ' + error);
     }
+
+    /**
+     * Remove a related model
+     * @param {string} key  Name of the property that contains the model
+     * @param Model model   The model to remove
+     */
+    removeRelated(key, model) {
+        for (let i in this[key]) {
+            if (this[key][i] === model) {
+                delete this[key].splice(i, 1);
+                break;
+            }
+        }
+    }
 }
 
 export default Model;
