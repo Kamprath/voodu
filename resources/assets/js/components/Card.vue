@@ -1,14 +1,46 @@
 <template>
 
-    <div class="card">
-        <dropdown-list class="is-dark">
-            <a href="#" class="dropdown-item" @click.prevent>Edit card</a>
-            <a href="#" class="dropdown-item has-text-danger" @click.prevent>Delete</a>
-        </dropdown-list>
+    <div :class="{ 'card': true, 'is-editing': isEditing }" @keyup.esc="cancel">
+        <div v-if="isEditing">
+            <!-- Edit name -->
+            <textarea class="textarea edit-title is-autosize"
+                      type="text"
+                      placeholder="Enter a title"
+                      autofocus
+                      tabindex="1"
+                      required
+                      rows="2"
+                      v-model="editData.name">
+            </textarea>
 
-        <p>{{ model.name }}</p>
+            <div class="is-pulled-left">
+                <a href="#" @click.prevent>Edit details</a>
+            </div>
 
-        <span class="created-at" :title="'Created ' + createdAt">{{ timeAgo }}</span>
+            <!-- Buttons -->
+            <div class="is-pulled-right">
+                <button class="button is-danger is-small" type="button" tabindex="5" @click="cancel">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
+                <button class="button is-success is-small" type="submit" tabindex="4">
+                    <i class="fa fa-check" aria-hidden="true"></i>
+                </button>
+            </div>
+
+            <span class="is-clearfix"></span>
+        </div>
+
+        <div v-else>
+            <dropdown-list class="is-dark">
+                <a href="#" class="dropdown-item" @click.prevent="edit">Edit</a>
+                <a href="#" class="dropdown-item has-text-danger" @click.prevent>Delete</a>
+            </dropdown-list>
+
+            <p>{{ model.name }}</p>
+
+            <span class="created-at" :title="'Created ' + createdAt">{{ timeAgo }}</span>
+
+        </div>
     </div>
 
 </template>
@@ -16,41 +48,67 @@
 <style lang="less" scoped>
     @import '../../less/colors.less';
 
-      .card {
+    .card {
         font-size: 0.9rem;
-        font-family: Lato, Helvetica, sans-serif;
         border-radius: 2px;
         padding: 0.4rem .75rem 1.1rem;
         min-height: 4.5rem;
         position: relative;
 
-        .dropdown {
-          opacity: 0;
-          transition: opacity 150ms;
-          position: absolute;
-          top: .4rem;
-          right: .5rem;
-        }
-
         &:hover .dropdown, .dropdown.is-active {
-          opacity: 1;
+            opacity: 1;
         }
 
-        .created-at {
-          position: absolute;
-          bottom: .6rem;
-          font-size: .75rem;
-          line-height: .7rem;
-          color: @color-gray-medium;
+        &.is-editing {
+            padding-bottom: .5rem;
         }
+    }
+
+    p {
+        font-family: Lato, Helvetica, sans-serif;
+    }
+
+    a {
+        line-height: 1.7rem;
+    }
+
+    .dropdown {
+        opacity: 0;
+        transition: opacity 150ms;
+        position: absolute;
+        top: .4rem;
+        right: .5rem;
+    }
+
+    .created-at {
+        position: absolute;
+        bottom: .6rem;
+        font-size: .75rem;
+        line-height: .7rem;
+        color: @color-gray-medium;
+    }
+
+    .textarea {
+        resize: vertical;
+        font-size: .9rem;
+        font-family: Lato, Helvetica, sans-serif;
+        margin-bottom: .4rem;
     }
 </style>
 
 <script>
     import Card from '../models/Card.js';
     import moment from 'moment';
+    import autosize from 'autosize';
 
     export default {
+
+        data() {
+            return {
+                isEditing: !this.model.id,
+                editData: {}
+            }
+        },
 
         props: {
             model: {
@@ -67,6 +125,41 @@
             timeAgo() {
                 return moment(this.model.created_at).fromNow();
             }
+        },
+
+        methods: {
+            edit() {
+                this.editData = this.model.properties;
+                this.isEditing = true;
+            },
+
+            cancel() {
+                // trigger event for parent to handle if no ID (column created and then canceled)
+                if (!this.model.id) {
+                    this.$emit('removeCard', this.model);
+                }
+
+                this.isEditing = false;
+            },
+
+            destroy() {
+                this.model.destroy(() => {
+                    this.$emit('removeCard', this.model);
+                });
+            },
+        },
+
+        updated() {
+            // automatically resize textarea
+            this.$nextTick(() => {
+                if (this.isEditing) {
+                    autosize(document.querySelectorAll('.is-autosize'));
+                }
+
+                if (document.querySelector('[autofocus]')) {
+                    document.querySelector('[autofocus]').focus();
+                }
+            })
         },
 
         components: {
