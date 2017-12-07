@@ -171,6 +171,12 @@
 
         components: {
             'dropdown-list': require('./Dropdown.vue'),
+        },
+
+        updated() {
+            this.$nextTick(() => {
+                document.querySelector('[autofocus]').focus();
+            })
         }
     }
 </script>

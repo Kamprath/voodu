@@ -181,6 +181,12 @@
                     this.$router.push({ name: 'Board', params: { id: data.id }});
                 });
             }
+        },
+
+        updated() {
+            this.$nextTick(() => {
+                document.querySelector('[autofocus]').focus();
+            })
         }
 
     }
