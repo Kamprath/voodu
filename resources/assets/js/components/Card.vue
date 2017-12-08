@@ -10,6 +10,7 @@
                       tabindex="1"
                       required
                       rows="2"
+                      maxlength="65"
                       v-model="editData.name">
             </textarea>
 
@@ -51,7 +52,7 @@
     .card {
         font-size: 0.9rem;
         border-radius: 2px;
-        padding: 0.4rem .75rem 1.1rem;
+        padding: 0.5rem .75rem 1.1rem;
         min-height: 4.5rem;
         position: relative;
         margin-bottom: .3rem;
@@ -67,6 +68,8 @@
 
     p {
         font-family: Lato, Helvetica, sans-serif;
+        margin-bottom: .4rem;
+        line-height: 1rem;
     }
 
     a {
@@ -95,6 +98,8 @@
         font-family: Lato, Helvetica, sans-serif;
         margin-bottom: .4rem;
         min-height: 2.5rem;
+        padding: 0.25rem 0.5rem;
+        line-height: 1rem;
     }
 </style>
 
