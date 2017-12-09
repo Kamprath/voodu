@@ -83,15 +83,19 @@ export default {
         /**
          * Update swimlane cards
          * @param {object} state
-         * @param {array} cards     Array of Card models
+         * @param {array} payload     Object containing swimlane and array of cards
          */
-        updateCards(state, cards) {
-            if (!cards.length) {
+        updateCards(state, payload) {
+            const cards = payload.cards || [];
+            const swimlane = payload.swimlane;
+
+            if (!swimlane) {
+                throw new Error('Payload does not contain a swimlane.');
                 return;
             }
 
-            const updatedIds = [];
-            const updatedCards = [];
+            const updatedIds = [],
+                updatedCards = [];
 
             // get IDs of updated cards
             cards.forEach(card => {
@@ -100,10 +104,10 @@ export default {
 
             // find board
             for (let x in state.models) {
-                if (state.models[x].id === cards[0].board_id) {
+                if (state.models[x].id === swimlane.board_id) {
                     // find swimlane
                     for (let y in state.models[x].swimlanes) {
-                        if (state.models[x].swimlanes[y].id === cards[0].swimlane_id) {
+                        if (state.models[x].swimlanes[y].id === swimlane.id) {
                             // copy all other cards into new array
                             for (let z in state.models[x].swimlanes[y].cards) {
                                 if (!updatedIds.includes(state.models[x].swimlanes[y].cards[z].id)) {

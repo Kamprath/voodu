@@ -118,15 +118,15 @@
                  * @param {array} models
                  */
                 set(models) {
-                    for (let x in this.swimlane.cards) {
-                        for (let y in models) {
-                            if (this.swimlane.cards[x].id === models[y].id) {
-                                models[y].position = parseInt(y);
-                            }
-                        }
+                    for (let i in models) {
+                        models[i].column_id = this.column.id;
+                        models[i].position = parseInt(i);
                     }
 
-                    this.$store.commit('updateCards', models);
+                    this.$store.commit('updateCards', {
+                        cards: models,
+                        swimlane: this.swimlane
+                    });
                 }
             }
         },
