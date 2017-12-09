@@ -80,46 +80,28 @@ export default {
             state.models[boardPosition].columns = newColumns;
         },
 
-        setSwimlaneColumnCards(state, payload) {
-            const payloadIndexes = {};
-
-            // set each model's column_id to columnId
-            for (let i in payload.models) {
-                const model = payload.models[i];
-
-                if (model.column_id !== payload.columnId) {
-                    model.column_id = payload.columnId;
-                    model.update();
-                }
-
-                // set card position to its array position
-                model.position = parseInt(i);
-                payloadIndexes[model.id] = parseInt(i);
+        /**
+         * Update swimlane cards
+         * @param {object} state
+         * @param {array} cards     Array of Card models
+         */
+        updateCards(state, cards) {
+            if (!cards.length) {
+                return;
             }
 
-            // replace each model in store
-            for (let i in state.models) {
-                // find board
-                const board = state.models[i];
-                if (board.id !== payload.boardId) {
-                    continue;
-                }
-                // find swimlane
-                for (let ii in board.swimlanes) {
-                    const swimlane = board.swimlanes[ii];
-                    if (swimlane.id !== payload.swimlaneId) {
-                        continue;
-                    }
-                    // find card
-                    for (let iii in swimlane.cards) {
-                        const card = swimlane.cards[iii];
-                        if (payloadIndexes.hasOwnProperty(card.id)) {
-                            swimlane.cards[iii] = payload.models[payloadIndexes[card.id]];
+            // find board
+            for (let x in state.models) {
+                if (state.models[x].id === cards[0].board_id) {
+                    // find swimlane
+                    for (let y in state.models[x].swimlanes) {
+                        if (state.models[x].swimlanes[y].id === cards[0].swimlane_id) {
+                            // update cards
+                            state.models[x].swimlanes[y].cards = cards;
+                            return;
                         }
                     }
-                    break;
                 }
-                break;
             }
         }
     },

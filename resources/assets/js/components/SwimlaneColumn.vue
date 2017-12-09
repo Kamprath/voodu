@@ -1,18 +1,17 @@
 <template>
     <div class="column swimlane-column">
-        <!-- Cards -->
         <draggable v-model="cards" :options="{
                 dragClass: 'is-dragging',
                 animation: 75,
                 delay: 0,
                 group: 'cards'
             }" style="min-height: 100%;">
+            <!-- Cards -->
             <card v-for="card in cards"
                   :key="card.id"
                   v-if="card.column_id === column.id"
                   :model="card"
                   @removeCard="swimlane.removeRelated('cards', card)" />
-
         </draggable>
 
         <div class="add-card">
@@ -101,28 +100,33 @@
             cards: {
                 /**
                  * Get cards that belong to this column and swimlane
+                 * @return {array}  Returns array of Card models
                  */
                 get() {
-                    const sorted = [];
+                    const cards = [];
 
-                    // filter out swimlane cards that don't match column ID
-                    const cards = this.swimlane.cards.filter(card => card.column_id === this.column.id);
-
-                    // reorder based on position
-                    cards.forEach(card => {
-                       sorted.splice(card.position, 0, card);
+                    // get cards that match column ID and order by position
+                    this.swimlane.cards.filter(card => card.column_id === this.column.id).forEach(card => {
+                        cards.splice(card.position, 0, card);
                     });
 
-                    return sorted;
+                    return cards;
                 },
 
+                /**
+                 * Update card positions
+                 * @param {array} models
+                 */
                 set(models) {
-                    this.$store.commit('setSwimlaneColumnCards', {
-                        columnId: this.column.id,
-                        boardId: this.swimlane.board_id,
-                        swimlaneId: this.swimlane.id,
-                        models: models
-                    });
+                    for (let x in this.swimlane.cards) {
+                        for (let y in models) {
+                            if (this.swimlane.cards[x].id === models[y].id) {
+                                models[y].position = parseInt(y);
+                            }
+                        }
+                    }
+
+                    this.$store.commit('updateCards', models);
                 }
             }
         },
