@@ -34,30 +34,21 @@
             <!-- Render column headers -->
             <div v-else class="columns">
                 <column-header v-for="column in board.columns"
-                        @removeColumn="board.removeRelated('columns', column)"
-                        @updatePositions="updatePositions"
-                        :model="column"
-                        :key="column.id" />
+                    @removeColumn="board.removeRelated('columns', column)"
+                    @updatePositions="updateColumnPositions"
+                    :model="column"
+                    :key="column.id" />
             </div>
 
             <!-- Render each swimlane -->
             <div class="swimlane" v-for="swimlane in board.swimlanes" :key="swimlane.id">
                 <div class="columns">
-                    <div class="column swimlane-column" v-for="column in board.columns" :key="column.id" v-if="column.id">
-                        <!-- Cards -->
-                        <card v-for="card in swimlane.cards"
-                              :key="card.id"
-                              v-if="card.column_id === column.id"
-                              :model="card"
-                              @removeCard="swimlane.removeRelated('cards', card)" />
-
-                        <div class="add-card">
-                            <a href="#" @click.prevent="addCard(swimlane, column.id)">
-                                <i class="fa fa-plus-circle"></i>
-                                <span>Add a card</span>
-                            </a>
-                        </div>
-                    </div>
+                    <!-- Render each column -->
+                    <swimlane-column v-for="column in board.columns"
+                        :key="column.id"
+                        v-if="column.id"
+                        :swimlane="swimlane"
+                        :column="column" />
                 </div>
             </div>
         </div>
@@ -132,52 +123,12 @@
     .column {
         max-width: 33%;
     }
-
-    .swimlane-column {
-        background-color: @color-white;
-        margin: 0 .25rem;
-        padding: .4rem .4rem 1.7rem;
-        position: relative;
-        border-radius: 2px;
-    }
-
-    .add-card {
-        position: absolute;
-        width: 100%;
-        bottom: .25rem;
-        right: 0;
-        left: 0;
-        opacity: 0;
-        text-align: center;
-
-        &, a {
-            transition: opacity 100ms;
-        }
-
-        a {
-            color: @color-gray-dark;
-            font-size: .85rem;
-            opacity: .4;
-            padding: .2rem 2rem;
-
-            span, .fa {
-                vertical-align: middle;
-            }
-
-            &:hover {
-                opacity: 1;
-            }
-        }
-    }
-    .swimlane-column:hover .add-card {
-        opacity: 1;
-    }
 </style>
 
 <script>
-    import Column from '../../models/Column.js';
     import axios from 'axios';
-    import Card from "../../models/Card";
+    import draggable from 'vuedraggable';
+    import Column from '../../models/Column';
 
     export default {
         methods: {
@@ -202,7 +153,7 @@
                 }));
             },
 
-            updatePositions() {
+            updateColumnPositions() {
                 let positions = {};
 
                 // build object mapping column ID to position
@@ -212,15 +163,6 @@
 
                 // submit API request
                 axios.post('/api/columns/positions/' + this.board.id, positions);
-            },
-
-            addCard(swimlane, columnId) {
-                swimlane.addCard(new Card({
-                    column_id: columnId,
-                    swimlane_id: swimlane.id,
-                    board_id: swimlane.board_id,
-                    position: swimlane.cards.length
-                }));
             }
         },
 
@@ -259,9 +201,10 @@
         },
 
         components: {
-            'dropdown-list': require('../Dropdown.vue'),
-            'column-header': require('../ColumnHeader.vue'),
-            'card': require('../Card.vue')
+            'dropdown-list': require('../Dropdown'),
+            'column-header': require('../ColumnHeader'),
+            'swimlane-column': require('../SwimlaneColumn'),
+            draggable
         }
     }
 </script>

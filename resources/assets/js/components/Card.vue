@@ -56,6 +56,7 @@
         min-height: 4.5rem;
         position: relative;
         margin-bottom: .3rem;
+        cursor: grab;
 
         &:hover .dropdown, .dropdown.is-active {
             opacity: 1;
@@ -100,6 +101,17 @@
         min-height: 2.5rem;
         padding: 0.25rem 0.5rem;
         line-height: 1rem;
+    }
+
+    .is-dragging {
+        opacity: 1 !important;
+    }
+    .sortable-ghost {
+        /*background-color: #F9F9F9;*/
+        background: none;
+        border: 1px dashed @color-gray-medium;
+        opacity: .85;
+        box-shadow: none;
     }
 </style>
 

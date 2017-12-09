@@ -78,6 +78,49 @@ export default {
             }
 
             state.models[boardPosition].columns = newColumns;
+        },
+
+        setSwimlaneColumnCards(state, payload) {
+            const payloadIndexes = {};
+
+            // set each model's column_id to columnId
+            for (let i in payload.models) {
+                const model = payload.models[i];
+
+                if (model.column_id !== payload.columnId) {
+                    model.column_id = payload.columnId;
+                    model.update();
+                }
+
+                // set card position to its array position
+                model.position = parseInt(i);
+                payloadIndexes[model.id] = parseInt(i);
+            }
+
+            // replace each model in store
+            for (let i in state.models) {
+                // find board
+                const board = state.models[i];
+                if (board.id !== payload.boardId) {
+                    continue;
+                }
+                // find swimlane
+                for (let ii in board.swimlanes) {
+                    const swimlane = board.swimlanes[ii];
+                    if (swimlane.id !== payload.swimlaneId) {
+                        continue;
+                    }
+                    // find card
+                    for (let iii in swimlane.cards) {
+                        const card = swimlane.cards[iii];
+                        if (payloadIndexes.hasOwnProperty(card.id)) {
+                            swimlane.cards[iii] = payload.models[payloadIndexes[card.id]];
+                        }
+                    }
+                    break;
+                }
+                break;
+            }
         }
     },
 
