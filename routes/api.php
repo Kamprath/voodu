@@ -25,4 +25,6 @@ Route::apiResource('columns', 'ColumnController');
 
 Route::apiResource('cards', 'CardController');
 
+Route::post('cards/update', 'CardController@updateMany');
+
 Route::post('columns/positions/{boardId}', 'ColumnController@positions');

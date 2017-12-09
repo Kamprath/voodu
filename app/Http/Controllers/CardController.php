@@ -36,7 +36,7 @@ class CardController extends Controller
                 $this->cards->create($request->all()),
                 self::STATUS_CREATED
             );
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return $this->error($e);
         }
     }
@@ -69,6 +69,48 @@ class CardController extends Controller
     }
 
     /**
+     * Update multiple cards
+     *
+     * @param Request $request  Request body must contain model data as a JSON array of objects
+     * @return JsonResponse
+     * @throws \App\Repositories\RepositoryException
+     */
+    public function updateMany(Request $request) : JsonResponse
+    {
+        $models = [];
+
+        foreach ($request->all() as $modelData) {
+            $card = Card::find($modelData['id']);
+
+            if (!$card) {
+                return repsonse()->json([
+                    'message' => 'Card with ID ' .$modelData['id'] . ' does not exist.'
+                ], self::STATUS_NOT_FOUND);
+            }
+
+            // make sure user has access to board
+            if (!\Auth::user()->hasBoard($card->board_id)) {
+                return response()->json([
+                    'message' => 'You do not have access to a board that one or more of the cards belongs to.'
+                ], self::STATUS_FORBIDDEN);
+            }
+
+            // update model
+            try {
+                $models[] = $this->cards->update([
+                    'column_id' => $modelData['column_id'],
+                    'position' => $modelData['position']
+                ], $card->id);
+            } catch (\Exception $e) {
+                dd($modelData);
+                return $this->error($e);
+            }
+        }
+
+        return response()->json(collect($models));
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Card  $card
@@ -84,7 +126,7 @@ class CardController extends Controller
         try {
             $this->cards->delete($card->id);
             return response()->json(null, self::STATUS_DELETED);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return $this->error($e);
         }
     }
