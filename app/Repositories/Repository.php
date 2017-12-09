@@ -91,10 +91,13 @@ abstract class Repository implements RepositoryInterface {
      * @param array $data
      * @param $id
      * @return Model
+     * @throws RepositoryException
      */
     public function update(array $data, $id) : Model {
         $model = $this->modelInstance->find($id);
         $model->update($data);
+        $this->makeModel();
+
         return $model;
     }
 
