@@ -90,14 +90,29 @@ export default {
                 return;
             }
 
+            const updatedIds = [];
+            const updatedCards = [];
+
+            // get IDs of updated cards
+            cards.forEach(card => {
+                updatedIds.push(card.id);
+            });
+
             // find board
             for (let x in state.models) {
                 if (state.models[x].id === cards[0].board_id) {
                     // find swimlane
                     for (let y in state.models[x].swimlanes) {
                         if (state.models[x].swimlanes[y].id === cards[0].swimlane_id) {
-                            // update cards
-                            state.models[x].swimlanes[y].cards = cards;
+                            // copy all other cards into new array
+                            for (let z in state.models[x].swimlanes[y].cards) {
+                                if (!updatedIds.includes(state.models[x].swimlanes[y].cards[z].id)) {
+                                    updatedCards.push(state.models[x].swimlanes[y].cards[z]);
+                                }
+                            }
+
+                            // combine arrays and update store
+                            state.models[x].swimlanes[y].cards = updatedCards.concat(cards);
                             return;
                         }
                     }
