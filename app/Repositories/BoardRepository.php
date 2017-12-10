@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Board;
+use App\Card;
 use App\Column;
 use App\Swimlane;
 use Illuminate\Database\Eloquent\Collection;
@@ -47,6 +48,7 @@ class BoardRepository extends Repository {
      */
     public function delete($id): bool
     {
+        Card::where('board_id', $id)->delete();
         Column::where('board_id', $id)->delete();
         Swimlane::where('board_id', $id)->delete();
         return parent::delete($id);
