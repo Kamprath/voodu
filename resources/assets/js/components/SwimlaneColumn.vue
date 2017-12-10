@@ -123,7 +123,7 @@
                         models[i].position = parseInt(i);
                     }
 
-                    this.$store.commit('updateCards', {
+                    this.$store.dispatch('updateCards', {
                         cards: models,
                         swimlane: this.swimlane
                     });

@@ -44,9 +44,10 @@ class CardController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Card  $card
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Card $card
      * @return \Illuminate\Http\Response
+     * @throws \App\Repositories\RepositoryException
      */
     public function update(Request $request, Card $card)
     {
@@ -102,7 +103,6 @@ class CardController extends Controller
                     'position' => $modelData['position']
                 ], $card->id);
             } catch (\Exception $e) {
-                dd($modelData);
                 return $this->error($e);
             }
         }

@@ -3,6 +3,7 @@ import Board from '../models/Board.js';
 import Column from '../models/Column.js';
 import Swimlane from '../models/Swimlane.js';
 import Card from '../models/Card.js';
+import axios from 'axios';
 
 export default {
 
@@ -12,7 +13,8 @@ export default {
             swimlanes: Swimlane,
             cards: Card
         }) || [],
-        isCreateOverlayActive: false
+        isCreateOverlayActive: false,
+        updateQueue: []
     },
 
     mutations: {
@@ -122,6 +124,23 @@ export default {
                     }
                 }
             }
+        },
+
+        /**
+         * Add cards to update queue
+         * @param state
+         * @param cards
+         */
+        queue(state, cards) {
+            state.updateQueue = state.updateQueue.concat(cards);
+        },
+
+        /**
+         * Clear update queue
+         * @param state
+         */
+        clearQueue(state) {
+            state.updateQueue = [];
         }
     },
 
@@ -134,6 +153,23 @@ export default {
             board.destroy(() => {
                 context.commit('removeBoard', board);
             });
+        },
+
+        updateCards(context, payload) {
+            context.commit('updateCards', payload);
+
+            // set timeout for a closure that sends API request containing updateQueue data
+            if (!context.state.updateQueue.length) {
+                setTimeout(() => {
+                    axios.post('/api/cards/update', context.state.updateQueue)
+                        .then(response => {
+                            context.commit('clearQueue');
+                        });
+                }, 25);
+            }
+
+            // add cards to update queue
+            context.commit('queue', payload.cards);
         }
     }
 
