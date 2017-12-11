@@ -53,7 +53,7 @@
         font-size: 0.9rem;
         border-radius: 2px;
         padding: 0.5rem .75rem 1.1rem;
-        min-height: 4.5rem;
+        min-height: 3.75rem;
         position: relative;
         margin-bottom: .3rem;
         cursor: grab;

@@ -20,16 +20,9 @@
             </textarea>-->
 
             <!-- Edit color -->
-            <div class="is-pulled-left">
-                <label class="label is-small label-color">
-                    <span>Color</span>
-                    <input class="input is-small column-color"
-                           type="text"
-                           tabindex="3"
-                           placeholder="Hex value"
-                           v-model="editData.color"
-                           maxlength="6">
-                </label>
+            <div class="is-pulled-left edit-color">
+                <a href="#" @click.prevent="isEditingColor = true">Choose color</a>
+                <color-picker v-if="isEditingColor" @change="handleColorPickerChange" @close="isEditingColor = false" />
             </div>
 
             <!-- Buttons -->
@@ -87,16 +80,14 @@
         margin: .25rem 0;
         line-height: 1.1rem;
     }
-    .label-color {
-        span {
-            color: #fff;
+    .edit-color {
+        position: relative;
+
+        a {
+            color: white;
             margin: 0 .25rem;
-        }
-        span, .input {
             vertical-align: middle;
-        }
-        .input {
-            width: 4rem;
+            font-size: .9rem;
         }
     }
 </style>
@@ -116,13 +107,15 @@
         data() {
             return {
                 isEditing: !this.model.id,
+                isEditingColor: false,
                 editData: {}
             }
         },
 
         computed: {
             style() {
-                return !this.model.color ? '' : 'background-color: #' + this.model.color;
+                const hex = !this.isEditing ? this.model.color : this.editData.color;
+                return !hex ? '' : 'background-color: #' + hex;
             }
         },
 
@@ -175,11 +168,16 @@
                 this.$nextTick(() => {
                     autofocus();
                 });
+            },
+
+            handleColorPickerChange(value) {
+                this.editData.color = value.hex.replace('#', '');
             }
         },
 
         components: {
-            'dropdown-list': require('./Dropdown.vue'),
+            'dropdown-list': require('./Dropdown'),
+            'color-picker': require('./ColorPicker')
         },
 
         updated() {
