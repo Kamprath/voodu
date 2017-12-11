@@ -60,12 +60,28 @@ class BoardController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \App\Board               $board
+     * @param  \App\Board $board
      * @return \Illuminate\Http\JsonResponse
+     * @throws \App\Repositories\RepositoryException
      */
-    public function update(Request $request, Board $board)
+    public function update(Request $request, Board $board) : JsonResponse
     {
-        //
+        if (!$board) {
+            return response()->json(['message' => 'Board not found.'], 404);
+        }
+
+        if ($board->created_by !== \Auth::id()) {
+            return response()
+                ->json([ 'message' => 'You do not have permission to edit this board.' ], self::STATUS_FORBIDDEN);
+        }
+
+        try {
+            return response()->json(
+                $this->boards->update($request->all(), $board->id)
+            );
+        } catch (\Exception $e) {
+            return $this->error($e);
+        }
     }
 
     public function destroy($id) : JsonResponse
