@@ -89,6 +89,7 @@
         methods: {
             addCard(swimlane, columnId) {
                 swimlane.addCard(new Card({
+                    id: null,
                     column_id: columnId,
                     swimlane_id: swimlane.id,
                     board_id: swimlane.board_id,
