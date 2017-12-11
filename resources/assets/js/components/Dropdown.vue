@@ -11,7 +11,7 @@
         </span>
 
         <div class="dropdown-menu" role="menu">
-            <div class="dropdown-content">
+            <div class="dropdown-content fade-in" v-if="isActive">
                 <slot></slot>
             </div>
         </div>
