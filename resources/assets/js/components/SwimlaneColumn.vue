@@ -4,7 +4,8 @@
                 dragClass: 'is-dragging',
                 animation: 75,
                 delay: 0,
-                group: 'cards'
+                group: 'cards',
+                draggable: '.is-draggable'
             }" style="min-height: 100%;">
             <!-- Cards -->
             <card v-for="card in cards"

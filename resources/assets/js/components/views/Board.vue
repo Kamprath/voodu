@@ -101,6 +101,7 @@
     .container {
         position: relative;
         margin-top: 1rem;
+        margin-bottom: 2rem;
     }
 
     .message-no-columns {
