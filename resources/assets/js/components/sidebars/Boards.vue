@@ -10,7 +10,7 @@
         <h5 class="title is-5">Boards</h5>
 
         <!-- Create board link -->
-        <a href="#" class="create-board" @click.prevent="$store.dispatch('showCreateBoardOverlay')">
+        <a href="#" class="create-board" @click.prevent="$store.commit('toggleBoardOverlay', true)">
             <i class="fa fa-plus-circle is-dark"></i>
             <span>Create a board</span>
         </a>
@@ -23,8 +23,8 @@
                     <router-link :to="{ name: 'Board', params: { id: board.id }}" :title="board.purpose || board.name">
                         {{ board.name }}
                     </router-link>
-                    <dropdown-list>
-                        <router-link :to="{ name: 'Edit Board', params: { id: board.id }}" class="dropdown-item">Edit</router-link>
+                    <dropdown-list v-if="board.created_by === $store.state.users.user.id">
+                        <a href="#" class="dropdown-item" @click.prevent="$store.commit('editBoard', board)">Edit</a>
                         <a href="#" class="dropdown-item has-text-danger" @click.prevent="destroy(board)">Delete</a>
                     </dropdown-list>
                 </li>
@@ -39,8 +39,8 @@
                     <router-link :to="{ name: 'Board', params: { id: board.id }}" :title="board.purpose || board.name">
                         {{ board.name }}
                     </router-link>
-                    <dropdown-list>
-                        <router-link :to="{ name: 'Edit Board', params: { id: board.id }}" class="dropdown-item">Edit</router-link>
+                    <dropdown-list v-if="board.created_by === $store.state.users.user.id">
+                        <a href="#" class="dropdown-item" @click.prevent="$store.commit('editBoard', board)">Edit</a>
                         <a href="#" class="dropdown-item has-text-danger" @click.prevent="destroy(board)">Delete</a>
                     </dropdown-list>
                 </li>

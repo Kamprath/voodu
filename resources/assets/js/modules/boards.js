@@ -14,11 +14,12 @@ export default {
             cards: Card
         }) || [],
         isCreateOverlayActive: false,
+        editModel: new Board({ is_public: 1 }),
         updateQueue: []
     },
 
     mutations: {
-        showCreateBoardOverlay(state, isVisible = true) {
+        toggleBoardOverlay(state, isVisible = true) {
             state.isCreateOverlayActive = isVisible;
         },
 
@@ -141,14 +142,29 @@ export default {
          */
         clearQueue(state) {
             state.updateQueue = [];
+        },
+
+        /**
+         * Toggle edit overlay.
+         * @param {object} state
+         * @param {Board|null} board    (Optional) Board to edit or null to close the overlay. Defaults to null.
+         */
+        editBoard(state, board = null) {
+            if (board === null) {
+                state.isCreateOverlayActive = false;
+                return;
+            }
+
+            state.editModel = board;
+            state.isCreateOverlayActive = true;
+        },
+
+        setEditBoard(state, board) {
+            state.editModel = board;
         }
     },
 
     actions: {
-        showCreateBoardOverlay(context, isVisible = true) {
-            context.commit('showCreateBoardOverlay', isVisible);
-        },
-
         destroyBoard(context, board) {
             board.destroy(() => {
                 context.commit('removeBoard', board);

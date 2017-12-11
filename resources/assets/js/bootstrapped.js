@@ -8,14 +8,18 @@ const data = window.Voodu.bootstrapped;
 export default {
     /**
 	 * Get bootstrapped data
-     * @param {string} module	Namespace
-     * @param {string} key		Property name
+     * @param {string} moduld   Namespace
+     * @param {string|null} key (Optional) Property name
      * @returns {*}
      */
-	get(module, key) {
+	get(module, key = null) {
 		if (!data.hasOwnProperty(module)) {
 			return;
 		}
+
+		if (!key) {
+		    return data[module];
+        }
 
 		if (!data[module][key]) {
 			return;

@@ -1,6 +1,6 @@
 <template>
 
-    <section v-if="show"
+    <section v-if="isVisible"
              class="hero is-info is-bold is-fullheight overlay overlay-create-board"
              @keyup.esc="hide">
 
@@ -14,7 +14,7 @@
 
             <div class="container">
                 <h1 class="title">
-                    Create a board
+                    {{ titleText }}
                 </h1>
 
                 <p>Boards allow your team to visually organize tasks and track progress. They’re best when used to track related work.</p>
@@ -99,7 +99,7 @@
                             <button type="submit"
                                     :class="{ 'button': true, 'is-medium': true, 'is-secondary': true, 'is-loading': isLoading }"
                                     :disabled="isLoading || isNameTaken">
-                                Create Board
+                                {{ buttonText }}
                             </button>
                         </div>
                     </div>
@@ -126,13 +126,21 @@
 
         data() {
             return {
-                board: new Board({ is_public: 1 }),
-                isLoading: false,
-                autofocused: false
+                isLoading: false
             };
         },
 
         computed: {
+            board: {
+                get() {
+                    return this.$store.state.boards.editModel;
+                },
+
+                set(board) {
+                    this.$store.commit('setEditBoard', board);
+                }
+            },
+
             /**
              * Get names of all boards
              * A computed property is used to cache this value so the function isn't executed on each keyup
@@ -153,32 +161,51 @@
              * @returns {boolean}
              */
             isNameTaken() {
-                if (!this.board.name) {
+                if (!this.board.name || this.board.id) {
                     return false;
                 }
                 return this.names.includes(this.board.name.toLowerCase());
             },
 
-            show() {
+            isVisible() {
                 return this.$store.state.boards.isCreateOverlayActive;
+            },
+
+            isEditing() {
+                return this.board.id !== null;
+            },
+
+            buttonText() {
+                return this.isEditing ? 'Update Board' : 'Create Board';
+            },
+
+            titleText() {
+                return this.isEditing ? 'Edit board' : 'Create a board'
             }
         },
 
         methods: {
             hide() {
                 this.reset();
-                this.$store.dispatch('showCreateBoardOverlay', false);
+                this.$store.commit('toggleBoardOverlay', false);
             },
 
             reset() {
-                this.board = new Board({ is_public: 1 });
+                this.$store.commit('setEditBoard', new Board({ is_public: 1 }));
                 this.isLoading = false;
             },
 
             submit() {
                 this.isLoading = true;
+                // check for absence of ID before API request because ID will be set on create
+                const newBoard = !this.board.id;
 
-                this.board.create(data => {
+                this.board.save(data => {
+                    if (!newBoard) {
+                        this.hide();
+                        return;
+                    }
+
                     // convert swimlane data to model
                     if (data.hasOwnProperty('swimlanes')) {
                         data.swimlanes = objectsToModels(data.swimlanes, Swimlane);
