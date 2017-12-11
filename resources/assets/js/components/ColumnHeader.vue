@@ -11,12 +11,13 @@
                    v-model="editData.name">
 
             <!-- Edit description -->
-            <textarea class="textarea"
+            <!-- note: removed until a better layout is decided on -->
+            <!--<textarea class="textarea"
                       placeholder="Enter a description (optional)"
                       tabindex="2"
                       rows="2"
                       v-model="editData.description">
-            </textarea>
+            </textarea>-->
 
             <!-- Edit color -->
             <div class="is-pulled-left">
@@ -74,6 +75,7 @@
     }
     .edit-title {
         font-weight: bold;
+        margin-bottom: .25rem;
     }
     .edit-title, .textarea {
         font-size: .9rem;
@@ -167,6 +169,12 @@
 
                 this.$store.commit('updateColumnPosition', this.model);
                 this.$emit('updatePositions');
+            },
+
+            autofocus() {
+                this.$nextTick(() => {
+                    autofocus();
+                });
             }
         },
 
@@ -175,9 +183,11 @@
         },
 
         updated() {
-            this.$nextTick(() => {
-                autofocus();
-            })
+            this.autofocus();
+        },
+
+        mounted() {
+            this.autofocus();
         }
     }
 </script>

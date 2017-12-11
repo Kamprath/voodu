@@ -46,7 +46,6 @@
                     <!-- Render each column -->
                     <swimlane-column v-for="column in board.columns"
                         :key="column.id"
-                        v-if="column.id"
                         :swimlane="swimlane"
                         :column="column" />
                 </div>
@@ -145,11 +144,13 @@
             },
 
             addColumn() {
+                const position = this.board.columns.length;
+
                 // add blank column to model and toggle edit class
-                this.board.columns.splice(0, 0, new Column({
+                this.board.columns.splice(position, 0, new Column({
                     id: null,
-                    name: 'New Column',
-                    position: 0,
+                    name: null,
+                    position,
                     board_id: this.board.id
                 }));
             },

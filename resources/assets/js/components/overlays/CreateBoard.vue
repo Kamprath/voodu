@@ -118,7 +118,9 @@
 
 <script>
     import Board from '../../models/Board.js';
+    import Swimlane from '../../models/Swimlane';
     import autofocus from '../../autofocus.js';
+    import objectsToModels from '../../objectsToModels';
 
     export default {
 
@@ -177,6 +179,11 @@
                 this.isLoading = true;
 
                 this.board.create(data => {
+                    // convert swimlane data to model
+                    if (data.hasOwnProperty('swimlanes')) {
+                        data.swimlanes = objectsToModels(data.swimlanes, Swimlane);
+                    }
+
                     this.$store.commit('addBoard', new Board(data));
                     this.hide();
                     this.$router.push({ name: 'Board', params: { id: data.id }});

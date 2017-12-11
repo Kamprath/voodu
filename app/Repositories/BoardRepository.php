@@ -32,6 +32,7 @@ class BoardRepository extends Repository {
         $swimlane->created_by = \Auth::id();
         $swimlane->board_id = $board->id;
         $swimlane->save();
+        $swimlane->cards = [];
         $board->swimlanes = collect([$swimlane]);
 
         // append placeholder arrays for relationships
