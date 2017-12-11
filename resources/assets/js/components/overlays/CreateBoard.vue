@@ -172,7 +172,7 @@
             },
 
             isEditing() {
-                return this.board.id !== null;
+                return typeof this.board.id === 'number';
             },
 
             buttonText() {
