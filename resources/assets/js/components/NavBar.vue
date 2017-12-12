@@ -2,9 +2,7 @@
 
     <nav :class="{ 'is-sidebar-open': $store.getters.isSidebarOpen }">
         <div class="nav-content">
-            <figure class="avatar">
-                <img src="http://lorempizza.com/40/40">
-            </figure>
+            <team-avatar />
 
             <a href="#" :class="{ 'is-active': isBoardSelected, 'is-selected': $store.state.app.isBoardsActive }" @click="toggleBoards">
                 <i class="fa fa-columns fa-2x" aria-hidden="true"></i>
@@ -44,6 +42,8 @@
         float: left;
         position: relative;
         z-index: 100;
+        text-align: center;
+        padding: .5rem 0;
     }
 
     nav {
@@ -59,6 +59,10 @@
             color: @color-gray-medium;
             font-size: .8em;
 
+            &:first-of-type {
+                margin-top: .25rem;
+            }
+
             &.is-active .fa {
                 color: @primary;
             }
@@ -71,9 +75,8 @@
         }
 
         .avatar {
-            display: block;
             text-align: center;
-            margin: 10px 0 5px;
+            margin: .5rem 0 .25rem;
 
             img {
                 width: 40px;
@@ -125,7 +128,8 @@
         },
 
         components: {
-            'boards-sidebar': require('./sidebars/Boards.vue')
+            'boards-sidebar': require('./sidebars/Boards'),
+            'team-avatar': require('./TeamAvatar')
         }
     }
 

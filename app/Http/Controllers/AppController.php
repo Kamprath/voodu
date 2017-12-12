@@ -63,7 +63,8 @@ class AppController extends Controller
                     'swimlanes.cards' => 'position asc',
                     'columns' => 'position asc'
                 ])
-            ]
+            ],
+            'team' => null
         ];
     }
 

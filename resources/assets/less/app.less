@@ -41,6 +41,24 @@ input {
 }
 
 .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  display: inline-block;
+  position: relative;
+
+  &-initials {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    font-size: 1.2rem;
+    height: 1.2rem;
+    line-height: 1.2rem;
+    color: @color-gray-medium;
+  }
   img {
     border-radius: 200px;
   }

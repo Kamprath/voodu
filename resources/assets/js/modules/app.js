@@ -1,3 +1,5 @@
+import bootstrapped from '../bootstrapped';
+
 export default {
 
     state: {
@@ -15,7 +17,9 @@ export default {
             isActive: false,
             title: null,
             message: null
-        }
+        },
+
+        team: bootstrapped.get('team')
     },
 
     getters: {
