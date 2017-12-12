@@ -17,9 +17,7 @@ export default {
             isActive: false,
             title: null,
             message: null
-        },
-
-        team: bootstrapped.get('team')
+        }
     },
 
     getters: {

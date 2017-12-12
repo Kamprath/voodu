@@ -1,6 +1,6 @@
 <template>
     <div>
-        <a :class="{ 'avatar': true, 'create-team': !team }">
+        <a href="#" :class="{ 'avatar': true, 'create-team': !team }" @click.prevent="$store.commit('editTeam')">
             <img v-if="team && team.avatar" :src="team.avatar">
             <span class="avatar-initials" v-else>{{ letter }}</span>
         </a>
@@ -12,6 +12,7 @@
 
     .avatar {
         &.create-team {
+            opacity: .66;
             border: 1px dashed @color-gray-medium;
             transition: border-color 120ms;
 
@@ -20,6 +21,7 @@
                 color: @color-gray-medium;
             }
             &:hover {
+                opacity: 1;
                 border-color: @color-white;
                 span { color: @color-white; }
             }
@@ -31,7 +33,7 @@
     export default {
         computed: {
             team() {
-                return this.$store.state.team || null;
+                return this.$store.state.team.model || null;
             },
             letter() {
                 return this.team ? this.team.name.match(/\b\w/g).join('').substr(0, 1) : '+';

@@ -92,7 +92,7 @@ class CardController extends Controller
             // make sure user has access to board
             if (!\Auth::user()->hasBoard($card->board_id)) {
                 return response()->json([
-                    'message' => 'You do not have access to a board that one or more of the cards belongs to.'
+                    'message' => 'You do not have access board(s) that one or more cards belong to.'
                 ], self::STATUS_FORBIDDEN);
             }
 
