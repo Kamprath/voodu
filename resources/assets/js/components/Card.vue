@@ -1,6 +1,6 @@
 <template>
 
-    <div :class="{ 'card': true, 'is-editing': isEditing, 'is-draggable': !isEditing }" @keyup.esc="cancel">
+    <div :class="{ 'card': true, 'is-editing': isEditing, 'is-draggable': !isEditing, 'is-new': !model.id }" @keyup.esc="cancel">
         <form v-if="isEditing" @submit.prevent="save">
             <!-- Edit name -->
             <textarea class="textarea edit-title is-autosize"
@@ -65,6 +65,11 @@
         &.is-editing {
             padding-bottom: .5rem;
             cursor: auto;
+        }
+
+        &.is-new {
+            animation: fadeIn;
+            animation-duration: 125ms;
         }
     }
 

@@ -122,6 +122,8 @@
 
     .column {
         max-width: 33%;
+        animation: fadeIn;
+        animation-duration: 175ms;
     }
 </style>
 

@@ -222,7 +222,17 @@
             this.$nextTick(() => {
                 autofocus();
             });
-        }
+        },
+
+        watch: {
+            /**
+             * Hide overflow while overlay is active
+             * @param newValue
+             */
+            isVisible(newValue) {
+                document.querySelector('html').style.overflow = newValue ? 'hidden' : 'visible';
+            }
+        },
 
     }
 </script>

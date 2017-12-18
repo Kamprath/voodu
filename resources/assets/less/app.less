@@ -49,10 +49,22 @@ input {
 .wrapper {
   height: 100%;
   margin-left: 65px;
+  z-index: 10;
 
-  &.sidebar-open {
-    margin-left: 315px;
+  &.sidebar-open .shade {
+    display: block;
+    animation: fadeIn;
+    animation-duration: 250ms;
   }
+}
+.shade {
+  transition: opacity 250ms ease-in-out;
+  display: none;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(10, 10, 10, .5);
+  position: fixed;
+  z-index: 20;
 }
 
 @-webkit-keyframes fadeIn { from { opacity:0; opacity: 1\9; /* IE9 only */ } to { opacity:1; } }

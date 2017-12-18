@@ -9,6 +9,7 @@
         <nav-bar />
 
         <div :class="{ 'wrapper': true, 'sidebar-open': $store.getters.isSidebarOpen }">
+            <div class="shade"></div>
             <router-view />
         </div>
     </div>

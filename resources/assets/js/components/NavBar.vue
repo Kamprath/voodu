@@ -27,7 +27,7 @@
             </figure>
         </div>
 
-        <boards-sidebar v-if="$store.state.app.isBoardsActive"></boards-sidebar>
+        <boards-sidebar />
     </nav>
 
 </template>
@@ -43,12 +43,14 @@
         height: 100%;
         float: left;
         position: relative;
+        z-index: 100;
     }
 
     nav {
         height: 100%;
         position: fixed;
         left: 0;
+        z-index: 100;
 
         a {
             display: block;

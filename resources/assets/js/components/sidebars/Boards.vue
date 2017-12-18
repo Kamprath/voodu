@@ -1,6 +1,6 @@
 <template>
 
-    <div class="sidebar sidebar-boards">
+    <div :class="{ 'sidebar': true, 'sidebar-boards': true, 'is-active': $store.getters.isSidebarOpen }">
 
         <!-- Close button -->
         <a href="#" class="close-sidebar" @click.prevent="$store.dispatch('hideSidebar')">
@@ -57,12 +57,19 @@
 
     .sidebar {
         display: block;
-        float: left;
         width: 250px;
         height: 100%;
         background-color: @color-gray-dark;
         border-right: 1px solid #373B40;
         padding: 1rem 1.25rem;
+        transition: left 150ms ease-in-out;
+        position: absolute;
+        left: -250px;
+        z-index: 10;
+
+        &.is-active {
+            left: 65px;
+        }
     }
 
     .close-sidebar {
