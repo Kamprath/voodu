@@ -60,7 +60,7 @@
         width: 250px;
         height: 100%;
         background-color: @color-gray-dark;
-        border-right: 1px solid #373B40;
+        border-right: 1px solid #595B5D;
         padding: 1rem 1.25rem;
         transition: left 150ms ease-in-out;
         position: absolute;

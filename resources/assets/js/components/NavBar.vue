@@ -50,7 +50,7 @@
         height: 100%;
         position: fixed;
         left: 0;
-        z-index: 10;
+        z-index: 100;
 
         a {
             display: block;
