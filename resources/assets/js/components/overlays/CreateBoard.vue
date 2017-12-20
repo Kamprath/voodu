@@ -17,7 +17,7 @@
                     {{ titleText }}
                 </h1>
 
-                <p>Boards allow your team to visually organize tasks and track progress. They’re best when used to track related work.</p>
+                <p v-if="!isEditing">Boards allow your team to visually organize tasks and track progress. They’re best when used to track related work.</p>
 
                 <form action="/api/boards" method="post" @submit.prevent="submit">
                     <!-- Name field -->
