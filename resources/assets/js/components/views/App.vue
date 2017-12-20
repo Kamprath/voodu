@@ -2,8 +2,13 @@
 
     <div>
         <modal-view />
+
         <transition name="fade">
             <create-board-overlay />
+        </transition>
+
+        <transition name="fade">
+            <create-team-overlay />
         </transition>
 
         <nav-bar />
@@ -22,7 +27,8 @@
         components: {
             'modal-view': require('../Modal.vue'),
             'nav-bar': require('../NavBar.vue'),
-            'create-board-overlay': require('../overlays/CreateBoard.vue')
+            'create-board-overlay': require('../overlays/CreateBoard'),
+            'create-team-overlay' : require('../overlays/CreateTeam')
         }
     }
 

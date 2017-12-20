@@ -1,6 +1,6 @@
 <template>
     <div>
-        <a href="#" :class="{ 'avatar': true, 'create-team': !team }" @click.prevent="$store.commit('editTeam')">
+        <a href="#" :class="{ 'avatar': true, 'create-team': !team }" @click.prevent="$store.commit('toggleTeamOverlay', true)">
             <img v-if="team && team.avatar" :src="team.avatar">
             <span class="avatar-initials" v-else>{{ letter }}</span>
         </a>

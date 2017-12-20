@@ -3,12 +3,15 @@ import bootstrapped from '../bootstrapped';
 export default {
     state: {
         model: bootstrapped.get('team'),
-        isEditing: false
+        overlay: {
+            active: false,
+            model: null
+        }
     },
 
     mutations: {
-        editTeam(state) {
-            state.isEditing = true;
+        toggleTeamOverlay(state, isActive = true) {
+            state.overlay.active = isActive;
         }
     }
 }
