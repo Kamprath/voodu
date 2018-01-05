@@ -31,7 +31,7 @@
                             </p>
                         </div>
                         <div class="input-details">
-                            $5 user/month or $50 user/year
+                            $6 user/month or $60 user/year
                         </div>
                     </div>
                 </div>
@@ -74,7 +74,7 @@
                     <p class="subscription-fee">
                         ${{ price }}<span v-if="!isTrial"> {{ type }}</span><span v-if="isTrial" class="has-text-weight-normal"> after 30 days</span>
                     </p>
-                    <div class="input-details">You can cancel at any time.</div>
+                    <div class="input-details">You can change or cancel your plan at any time.</div>
                 </div>
 
                 <!-- Buttons -->
@@ -284,7 +284,7 @@
                 return this.$store.state.team.overlay.active;
             },
             price() {
-                return this.team.size * (this.type === 'annually' ? 50 : 5);
+                return (this.team.size * (this.type === 'annually' ? 60.0 : 6.0)).toFixed(2);
             },
             isTrial() {
                 return this.type === 'trial';
