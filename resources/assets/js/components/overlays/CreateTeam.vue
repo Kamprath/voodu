@@ -96,77 +96,79 @@
                 </div>
             </div>
 
-            <!-- Step 2: Payment summary interface -->
-            <!--<div class="container" v-if="step === 2">
-                <h1 class="title">Payment summary</h1>
+            <!-- Step 2: Billing interface -->
+            <div class="container fade-in" v-if="step === 2">
+                <h1 class="title">Add a payment method</h1>
                 <p>You can change or cancel your plan at any time.</p>
 
-                &lt;!&ndash; Subscription Type radios &ndash;&gt;
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>Users</th>
+                            <td>{{ team.size }}</td>
+                        </tr>
+                        <tr>
+                            <th>Price per user</th>
+                            <td>${{ pricePerUser.toFixed(2) }}</td>
+                        </tr>
+                        <tr>
+                            <th>Billing cycle</th>
+                            <td>{{ (this.type === 'monthly') ? 'Monthly' : 'Annually' }}</td>
+                        </tr>
+                        <tr v-if="isTrial">
+                            <th>Trial ends</th>
+                            <td>{{ trialEndDate }}</td>
+                        </tr>
+                        <tr>
+                            <th>Amount due<span v-if="isTrial"> after 30 days</span></th>
+                            <td class="has-text-weight-bold">${{ price }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
                 <div class="field">
-                    <label class="label">Subscription type</label>
+                    <label class="label">Credit or debit card</label>
                     <div class="control">
-                        <label class="radio">
-                            <input type="radio"
-                                   name="type"
-                                   value="trial"
-                                   v-model="type"
-                                   tabindex="3"
-                                   checked>
-                            &nbsp;30-day trial
-                        </label>
-                        <label class="radio">
-                            <input type="radio"
-                                   name="type"
-                                   value="monthly"
-                                   v-model="type"
-                                   tabindex="4">
-                            &nbsp;Monthly
-                        </label>
-                        <label class="radio">
-                            <input type="radio"
-                                   name="type"
-                                   value="annually"
-                                   v-model="type"
-                                   tabindex="5">
-                            &nbsp;Annually
-                        </label>
-                        <div class="input-details">Choose when you’d like to be billed.</div>
+                        <div id="stripe-card">
+                            <!-- Stripe renders input here -->
+                        </div>
+                        <div class="input-details">
+                            You won’t be charged until <span v-if="isTrial">your trial has ended</span>
+                            <span v-else>you’ve finished setting up your team</span>. Payments are handled through
+                            <a class="has-text-underline" href="https://stripe.com" target="_blank">Stripe</a>.
+                        </div>
                     </div>
                 </div>
 
-                <div class="field" v-if="type !== 'trial'">
-                    <label class="label">You pay</label>
-                    <p class="subscription-fee is-large">${{ price }} {{ type }}</p>
-                </div>
-
-                &lt;!&ndash; Buttons &ndash;&gt;
+                <!-- Buttons -->
                 <div class="field is-grouped is-pulled-right">
                     <div class="control">
                         <button type="button"
                                 class="button is-medium is-text"
-                                @click="hide">
-                            Cancel
+                                @click="step--">
+                            Back
                         </button>
                     </div>
                     <div class="control">
                         <button type="button"
                                 class="button is-medium is-secondary"
-                                @click="step++">
+                                @click="submitPaymentDetails"
+                                :disabled="!stripeToken">
                             Next
                         </button>
                     </div>
                 </div>
-            </div>-->
+            </div>
 
             <!-- Step 3: Create team interface -->
-            <div class="container fade-in" v-if="step === 2">
+            <div class="container fade-in" v-if="step === 3">
                 <h1 class="title">Create your team</h1>
                 <p>Choose a name and an avatar for your team.</p>
 
                 <div class="field">
                     <label class="label">Name</label>
                     <div class="control">
-                        <input class="input is-medium" v-model="name" placeholder="Enter a name for your team" tabindex="1" maxlength="26" autofocus>
+                        <input class="input is-medium" v-model="team.name" placeholder="Enter a name for your team" tabindex="1" maxlength="26" autofocus>
                         <div class="input-details">
                             Names must be shorter than 26 characters.
                         </div>
@@ -215,16 +217,16 @@
                     <div class="control">
                         <button type="button"
                                 class="button is-medium is-secondary"
-                                :disabled="!this.name"
-                                @click="step++">
-                            Next
+                                :disabled="!this.team.name"
+                                @click="create">
+                            Create
                         </button>
                     </div>
                 </div>
             </div>
 
             <!-- Step 4: Invite team members interface -->
-            <div class="container fade-in" v-if="step === 3">
+            <div class="container fade-in" v-if="step === 4">
                 <h1 class="title"></h1>
             </div>
         </div>
@@ -233,11 +235,13 @@
 
 <style lang="less" scoped>
     @import '../../../less/overlay.less';
+    @import '../../../less/colors';
 
     .team-size {
         width: 3rem;
         text-align: center;
     }
+
     p.subscription-fee {
         font-size: 1.25rem;
         margin-left: .66rem;
@@ -256,11 +260,29 @@
         }
     }
 
+    .table {
+        margin: 1.5rem 0;
+        width: 85%;
+
+        tr:nth-last-child(2) {
+            td, th {
+                padding-bottom: .5rem;
+            }
+        }
+        tr:last-child {
+            td, th {
+                border-top: 1px dotted @color-gray-lighter;
+                padding-top: .5rem;
+            }
+        }
+    }
+
 </style>
 
 <script>
+    import moment from 'moment';
     import autofocus from '../../autofocus';
-    import Avatar from "../Avatar";
+    import Avatar from '../Avatar';
 
     export default {
         components: { Avatar },
@@ -268,9 +290,12 @@
         data() {
             return {
                 step: 1,
-                team: { size: 2 },
                 type: 'monthly',
-                name: null,
+                stripeToken: null,
+                team: {
+                    name: null,
+                    size: 2
+                },
                 avatar: {
                     file: null,
                     dataUrl: null,
@@ -283,11 +308,24 @@
             isVisible() {
                 return this.$store.state.team.overlay.active;
             },
+
             price() {
-                return (this.team.size * (this.type === 'annually' ? 60.0 : 6.0)).toFixed(2);
+                return (this.team.size * this.pricePerUser).toFixed(2);
             },
+
             isTrial() {
                 return this.type === 'trial';
+            },
+
+            trialEndDate() {
+                const future = new Date();
+                return moment(
+                    future.setDate(future.getDate() + 30)
+                ).format('MMMM Do, YYYY');
+            },
+
+            pricePerUser() {
+                return this.type === 'annually' ? 60.0 : 6.0;
             }
         },
 
@@ -343,6 +381,14 @@
                 }.bind(this);
 
                 reader.readAsDataURL(this.avatar.file);
+            },
+
+            submitPaymentDetails() {
+
+            },
+
+            create() {
+
             }
         },
 
