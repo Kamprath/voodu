@@ -89,7 +89,7 @@
                     <div class="control">
                         <button type="button"
                             class="button is-medium is-secondary"
-                            @click="step++">
+                            @click="showPayment">
                             Next
                         </button>
                     </div>
@@ -132,10 +132,14 @@
                         <div id="stripe-card">
                             <!-- Stripe renders input here -->
                         </div>
-                        <div class="input-details">
+                        <div class="input-details" v-if="stripe.error === null">
                             You won’t be charged until <span v-if="isTrial">your trial has ended</span>
                             <span v-else>you’ve finished setting up your team</span>. Payments are handled through
                             <a class="has-text-underline" href="https://stripe.com" target="_blank">Stripe</a>.
+                        </div>
+                        <!-- Stripe error -->
+                        <div class="input-details is-danger shake" v-else>
+                            <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ stripe.error }}
                         </div>
                     </div>
                 </div>
@@ -153,7 +157,7 @@
                         <button type="button"
                                 class="button is-medium is-secondary"
                                 @click="submitPaymentDetails"
-                                :disabled="!stripeToken">
+                                :disabled="!stripe.token">
                             Next
                         </button>
                     </div>
@@ -210,7 +214,7 @@
                     <div class="control">
                         <button type="button"
                                 class="button is-medium is-text"
-                                @click="step--">
+                                @click="showPayment">
                             Back
                         </button>
                     </div>
@@ -277,6 +281,14 @@
         }
     }
 
+    #stripe-card {
+        background-color: @color-white;
+        border-radius: 3px;
+        border: 1px solid @color-gray-light;
+        padding: 0.75rem .5rem .6rem;
+        margin: .25rem;
+    }
+
 </style>
 
 <script>
@@ -291,7 +303,11 @@
             return {
                 step: 1,
                 type: 'monthly',
-                stripeToken: null,
+                stripe: {
+                    card: null,
+                    token: null,
+                    error: null
+                },
                 team: {
                     name: null,
                     size: 2
@@ -389,6 +405,37 @@
 
             create() {
 
+            },
+
+            /**
+             * Display the payment step.
+             */
+            showPayment() {
+                this.step = 2;
+
+                // initialize stripe once view has rendered
+                const intervalId = window.setInterval(() => {
+                    if (document.querySelector('#stripe-card') === null) {
+                        return;
+                    }
+                    window.clearInterval(intervalId);
+                    this.initStripe();
+                }, 50);
+            },
+
+            /**
+             * Render the Stripe card element.
+             */
+            initStripe() {
+                this.stripe.card = Stripe('pk_test_E6SDcp9h0sKSEqHQj2LBUYAc')
+                    .elements()
+                    .create('card');
+
+                this.stripe.card.mount('#stripe-card');
+
+                this.stripe.card.addEventListener('change', (e) => {
+                    this.stripe.error = e.error ? e.error.message : null;
+                });
             }
         },
 
