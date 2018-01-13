@@ -304,6 +304,7 @@
                 step: 1,
                 type: 'monthly',
                 stripe: {
+                    instance: Stripe('pk_test_E6SDcp9h0sKSEqHQj2LBUYAc'),
                     card: null,
                     token: null,
                     error: null
@@ -427,7 +428,7 @@
              * Render the Stripe card element.
              */
             initStripe() {
-                this.stripe.card = Stripe('pk_test_E6SDcp9h0sKSEqHQj2LBUYAc')
+                this.stripe.card = this.stripe.instance
                     .elements()
                     .create('card');
 
