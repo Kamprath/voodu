@@ -156,8 +156,8 @@
                     <div class="control">
                         <button type="button"
                                 class="button is-medium is-secondary"
-                                @click="submitPaymentDetails"
-                                :disabled="!stripe.token">
+                                @click="submitPaymentDetails">
+                                <!--:disabled="!stripe.token"-->
                             Next
                         </button>
                     </div>
@@ -401,11 +401,32 @@
             },
 
             submitPaymentDetails() {
+                // todo: implement Stripe payment
+                    // send payment info
+                    // send order count
+                    // api endpoint should store payment token and create subscription
+                this.create();
 
             },
 
             create() {
+                // submit team data to API
+                axios.post('/', this.team)
+                    .then(response => {
+                        this.handleSaveResponse(response, callback);
+                    })
+                    .catch(this.handleError);
 
+                // receive success response containing team-related data
+                    // associate all user's public boards that have no team ID with the new team
+
+                // store data in vuex
+
+                // update user's team ID
+
+                // update team ID of all team boards
+
+                // show next interface
             },
 
             /**

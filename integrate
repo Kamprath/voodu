@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ $# -ne 2 ]; then
+    echo "usage: $0 <version> <description>"
+    exit 1
+fi
+
+version=$1
+description=$2
+
+npm run production && git add public && git commit -m "Release $1" && git tag -a $1 -m "$2" && git push && git push --tags && git push production
