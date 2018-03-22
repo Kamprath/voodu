@@ -1,13 +1,22 @@
 # Voodu
 
+> A collaborative Kanban tool to help teams track their work effectively.
+
+### Requirements
+
+- PHP 7.2+
+- MySQL 5.7+
+- NPM 5.6+
+- Composer 1.6.3+
+
 ### Setup
 
-1. Copy a `.env` file from an existing environment and configure accordingly.
+1. Create an `.env` file
 
-2. Install NPM packages via `yarn install`.
+2. Install Node packages: `yarn install`
 
-3. Install Composer packages via `composer install`.
+3. Install Composer packages: `composer install`
 
-4. Run database migrations using `php artisan migrate`.
+4. Run database migrations: `php artisan migrate`
 
-5. Run build process via `yarn dev`
+5. Run Mix: `yarn dev`
