@@ -19,4 +19,6 @@
 
 4. Run database migrations: `php artisan migrate`
 
-5. Run Mix: `yarn dev`
+5. Initialize [Passport](https://laravel.com/docs/5.5/passport): `php artisan passport:install`
+
+6. Run Mix: `yarn dev`
