@@ -10,7 +10,7 @@
                       tabindex="1"
                       required
                       rows="2"
-                      maxlength="80"
+                      maxlength="255"
                       v-model="editData.name">
             </textarea>
 
