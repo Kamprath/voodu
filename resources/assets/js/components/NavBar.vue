@@ -3,7 +3,7 @@
     <nav :class="{ 'is-sidebar-open': $store.getters.isSidebarOpen }">
         <div class="nav-content">
             <figure class="avatar">
-                <img src="http://lorempizza.com/40/40">
+                <img src="https://picsum.photos/40/40">
             </figure>
 
             <a href="#" :class="{ 'is-active': isBoardSelected, 'is-selected': $store.state.app.isBoardsActive }" @click="toggleBoards">
@@ -23,7 +23,7 @@
             </a>-->
 
             <figure class="avatar avatar-user">
-                <img src="http://lorempizza.com/35/35">
+                <img src="https://picsum.photos/35/35">
             </figure>
         </div>
 

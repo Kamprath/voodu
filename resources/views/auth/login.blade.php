@@ -8,7 +8,7 @@
             <div class="column is-4 is-offset-4">
                 <div class="box">
                     <figure class="avatar">
-                        <img src="http://lorempizza.com/85/85">
+                        <img src="https://picsum.photos/85/85">
                     </figure>
 
                     <h4 class="title">Voodu</h4>

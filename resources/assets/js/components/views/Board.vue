@@ -8,9 +8,19 @@
                         <p class="board-title">
                             <span>{{ board.name }}</span>
                             <dropdown-list class="is-dark">
-                                <a href="#" class="dropdown-item" v-if="board.created_by === $store.state.users.user.id" @click.prevent="$store.commit('editBoard', board)">Edit</a>
-                                <a href="#" class="dropdown-item" @click.prevent="addColumn">Add column</a>
-                                <a href="#" class="dropdown-item has-text-danger" v-if="board.created_by === $store.state.users.user.id" @click.prevent="$store.dispatch('destroyBoard', board)">Delete</a>
+                                <a href="#"
+                                   class="dropdown-item"
+                                   v-if="board.created_by === $store.state.users.user.id"
+                                   @click.prevent="$store.commit('editBoard', board)">
+                                    Edit
+                                </a>
+
+                                <a href="#"
+                                   class="dropdown-item has-text-danger"
+                                   v-if="board.created_by === $store.state.users.user.id"
+                                   @click.prevent="$store.dispatch('destroyBoard', board)">
+                                    Delete
+                                </a>
                             </dropdown-list>
                         </p>
                         <p v-if="board.purpose" class="purpose">{{ board.purpose }}</p>
@@ -38,6 +48,13 @@
                     @updatePositions="updateColumnPositions"
                     :model="column"
                     :key="column.id" />
+
+                <div class="add-column">
+                    <a class="button" title="Add column" @click.prevent="addColumn">
+                        <i class="fa fa-columns"></i>&nbsp;
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </div>
             </div>
 
             <!-- Render each swimlane -->
@@ -48,6 +65,8 @@
                         :key="column.id"
                         :swimlane="swimlane"
                         :column="column" />
+
+                    <div class="add-column-placeholder"></div>
                 </div>
             </div>
         </div>
@@ -124,6 +143,35 @@
         max-width: 33%;
         animation: fadeIn;
         animation-duration: 175ms;
+    }
+
+    .add-column {
+        align-self: flex-start;
+        width: 3.5rem;
+
+        .fa {
+            color: #bbb;
+            transition: color 100ms linear;
+        }
+
+        &:hover {
+            .fa {
+                color: @color-blue;
+            }
+        }
+
+        .fa-plus {
+            font-size: .8rem;
+        }
+
+        .fa-columns {
+            font-size: 1.15rem;
+        }
+    }
+
+    .add-column-placeholder {
+        align-self: flex-start;
+        width: 3.5rem;
     }
 </style>
 
