@@ -241,8 +241,10 @@
              */
             board(board) {
                 if (!board) {
-                    this.goToFirstBoard();
+                    return this.goToFirstBoard();
                 }
+
+                document.title = `${board.name} • Voodu`;
             }
         },
 
@@ -250,7 +252,10 @@
             // redirect if selected board doesn't exist
             if (!this.board) {
                 this.goToFirstBoard();
+                return;
             }
+
+            document.title = `${this.board.name} • Voodu`;
         },
 
         components: {

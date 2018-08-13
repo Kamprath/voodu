@@ -40,9 +40,6 @@ router.beforeEach((to, from, next) => {
     // hide any open sidebars
     store.dispatch('hideSidebar');
 
-    // set page title to route name
-    document.querySelector('title').text = !to.name ? 'Voodu' : to.name + ' | Voodu';
-
     next();
 });
 
