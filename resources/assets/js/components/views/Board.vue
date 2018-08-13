@@ -141,6 +141,7 @@
 
     .column {
         max-width: 33%;
+        min-width: 180px;
         animation: fadeIn;
         animation-duration: 175ms;
     }

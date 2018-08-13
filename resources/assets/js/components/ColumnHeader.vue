@@ -58,6 +58,7 @@
         align-self: flex-start;
         border-radius: 2px;
         background-color: @color-gray-dark;
+        min-width: 180px;
     }
     .title {
         color: white;
