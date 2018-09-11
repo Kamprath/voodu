@@ -77,6 +77,8 @@
         font-family: Lato, Helvetica, sans-serif;
         margin-bottom: .4rem;
         line-height: 1rem;
+        color: #555;
+        font-size: .95em;
     }
 
     a {
