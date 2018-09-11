@@ -187,10 +187,23 @@
              * Navigate to the first board
              */
             goToFirstBoard() {
-                const firstBoard = this.$store.state.boards.models[0];
+                // use last-viewed board if it exists
+                let board = this.getLastViewedBoard();
+
+                // use first board if last-viewed board doesn't exist
+                board = board ? board : this.$store.state.boards.models[0];
+
                 this.$router.replace({
-                    name: !firstBoard ? 'Welcome' : 'Board',
-                    params: !firstBoard ? null : { id: firstBoard.id }
+                    name: !board ? 'Welcome' : 'Board',
+                    params: !board ? null : { id: board.id }
+                });
+            },
+
+            getLastViewedBoard() {
+                const lastViewedId = parseInt(localStorage.getItem('last_viewed_id'));
+
+                return this.$store.state.boards.models.find(board => {
+                    return board.id === lastViewedId;
                 });
             },
 
@@ -245,6 +258,9 @@
                 }
 
                 document.title = `${board.name} • Voodu`;
+
+                // store board ID in local storage
+                localStorage.setItem('last_viewed_id', this.board.id);
             }
         },
 
@@ -256,6 +272,9 @@
             }
 
             document.title = `${this.board.name} • Voodu`;
+
+            // store board ID in local storage
+            localStorage.setItem('last_viewed_id', this.board.id);
         },
 
         components: {
