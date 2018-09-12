@@ -18,7 +18,7 @@
                                 <a href="#"
                                    class="dropdown-item has-text-danger"
                                    v-if="board.created_by === $store.state.users.user.id"
-                                   @click.prevent="$store.dispatch('destroyBoard', board)">
+                                   @click.prevent="destroy(board)">
                                     Delete
                                 </a>
                             </dropdown-list>
@@ -229,6 +229,13 @@
 
                 // submit API request
                 axios.post('/api/columns/positions/' + this.board.id, positions);
+            },
+
+            destroy(board) {
+                if (!window.confirm('This board will be permanently removed' + (board.is_public ? ' for all users' : '') + '.'))
+                    return;
+
+                this.$store.dispatch('destroyBoard', board);
             }
         },
 

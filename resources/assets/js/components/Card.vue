@@ -152,6 +152,12 @@
 
             timeAgo() {
                 return moment(this.model.created_at).fromNow();
+            },
+
+            board() {
+                return this.$store.state.boards.models.find(board => {
+                    return board.id === this.model.board_id;
+                });
             }
         },
 
@@ -177,6 +183,9 @@
             },
 
             destroy() {
+                if (!window.confirm('This card will be permanently removed' + (this.board.is_public ? ' for all users' : '') + '.'))
+                    return;
+
                 this.model.destroy(() => {
                     this.$emit('removeCard', this.model);
                 });

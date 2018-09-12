@@ -117,6 +117,12 @@
             style() {
                 const hex = !this.isEditing ? this.model.color : this.editData.color;
                 return !hex ? '' : 'background-color: #' + hex;
+            },
+
+            board() {
+                return this.$store.state.boards.models.find(board => {
+                    return board.id === this.model.board_id;
+                });
             }
         },
 
@@ -145,6 +151,9 @@
             },
 
             destroy() {
+                if (!window.confirm('This column will be permanently removed' + (this.board.is_public ? ' for all users' : '') + '.'))
+                    return;
+
                 this.model.destroy(() => {
                     this.$emit('removeColumn', this.model);
                 });

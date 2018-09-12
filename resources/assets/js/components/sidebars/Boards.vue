@@ -171,6 +171,9 @@
 
         methods: {
             destroy(board) {
+                if (!window.confirm('This board will be permanently removed' + (board.is_public ? ' for all users' : '') + '.'))
+                    return;
+
                 board.destroy(() => {
                     this.$store.commit('removeBoard', board);
                 });
