@@ -46,10 +46,13 @@
         &.is-light {
             .fa {
                 color: @color-gray-lighter;
+                transition: opacity 150ms linear, color 150ms linear;
+                opacity: .5;
             }
 
             a:hover .fa {
                 color: @color-white;
+                opacity: 1;
             }
         }
 
@@ -63,7 +66,12 @@
                 color: @primary;
             }
         }
-
+        &.is-light.is-active {
+            .fa {
+                color: @color-white;
+                opacity: 1;
+            }
+        }
         .icon.is-small {
             font-size: .8rem;
         }
