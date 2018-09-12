@@ -52,7 +52,7 @@
     .card {
         font-size: 0.9rem;
         border-radius: 2px;
-        padding: 0.5rem .75rem 1.1rem;
+        padding: 0.5rem 1.25rem 1.1rem .75rem;
         min-height: 3.75rem;
         position: relative;
         margin-bottom: .3rem;
