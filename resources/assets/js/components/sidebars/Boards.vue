@@ -9,8 +9,8 @@
                  xmlns:xlink="http://www.w3.org/1999/xlink"
                  x="0px"
                  y="0px"
-                 width="20px"
-                 height="20px"
+                 width="19px"
+                 height="19px"
                  viewBox="0 0 357 357"
                  style="enable-background:new 0 0 357 357;opacity: .45;"
                  xml:space="preserve">
