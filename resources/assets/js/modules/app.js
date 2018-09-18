@@ -15,7 +15,9 @@ export default {
             isActive: false,
             title: null,
             message: null
-        }
+        },
+
+        selectedCardId: 0
     },
 
     getters: {
@@ -45,6 +47,10 @@ export default {
 
         hideSidebar(state) {
     	    state.isBoardsActive = false;
+        },
+
+        selectCard(state, id) {
+    	    state.selectedCardId = id;
         }
     },
 
@@ -67,6 +73,10 @@ export default {
 
         hideSidebar(context) {
 		    context.commit('hideSidebar');
+        },
+
+        selectCard(context, id) {
+		    context.commit('selectCard', id);
         }
     }
 

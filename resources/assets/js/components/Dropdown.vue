@@ -3,8 +3,7 @@
     <span :class="{ 'dropdown': true, 'is-active': isActive }">
         <span class="dropdown-trigger">
             <a class="icon is-small"
-               href="#"
-               @click.prevent="isActive = !isActive"
+               @click.stop="isActive = !isActive"
                aria-haspopup="true">
                 <i class="fa fa-angle-down" aria-hidden="true"></i>
             </a>

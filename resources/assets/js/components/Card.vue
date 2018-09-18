@@ -1,6 +1,6 @@
 <template>
 
-    <div :class="{ 'card': true, 'is-editing': isEditing, 'is-draggable': !isEditing, 'is-new': !model.id }" @keyup.esc="cancel">
+    <div :class="{ 'card': true, 'is-editing': isEditing, 'is-draggable': !isEditing, 'is-new': !model.id, 'is-selected': isSelected }" @keyup.esc="cancel" @click="select()">
         <form v-if="isEditing" @submit.prevent="save">
             <!-- Edit name -->
             <textarea class="textarea edit-title is-autosize"
@@ -57,6 +57,8 @@
         position: relative;
         margin-bottom: .3rem;
         cursor: grab;
+        border: 1px solid white;
+        transition: border 85ms linear, box-shadow 85ms linear;
 
         &:hover .dropdown, .dropdown.is-active {
             opacity: 1;
@@ -70,6 +72,11 @@
         &.is-new {
             animation: fadeIn;
             animation-duration: 125ms;
+        }
+
+        &.is-selected {
+            border: 1px solid @color-blue;
+            box-shadow: 0px 1px 5px 0px @color-blue;
         }
     }
 
@@ -158,6 +165,11 @@
                 return this.$store.state.boards.models.find(board => {
                     return board.id === this.model.board_id;
                 });
+            },
+
+            isSelected() {
+                // todo: return true if this card is marked as selected in state data
+                return this.$store.state.app.selectedCardId === this.model.id;
             }
         },
 
@@ -190,6 +202,14 @@
                     this.$emit('removeCard', this.model);
                 });
             },
+
+            select() {
+                this.$store.dispatch('selectCard', this.model.id);
+                // set selected card ID in state
+                // todo: create CardDetails component that displays when a card is set as selected in state data
+                // todo: create a property which indicates that the card is selected. Add a class that highlights it
+                // when the property contains a value indicating that the card is selected
+            }
         },
 
         mounted() {

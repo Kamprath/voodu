@@ -10,13 +10,13 @@
                 <i class="fa fa-columns fa-2x" aria-hidden="true"></i>
             </a>
 
-            <router-link to="/queue">
+            <!--<router-link to="/queue">
                 <i class="fa fa-list-alt fa-2x" aria-hidden="true"></i>
-            </router-link>
+            </router-link>-->
 
-            <a href="#" class="button-search">
+            <!--<a href="#" class="button-search">
                 <i class="fa fa-search fa-2x" aria-hidden="true"></i>
-            </a>
+            </a>-->
 
             <!--<a href="#" class="button-add">
                 <i class="fa fa-plus-circle fa-2x" aria-hidden="true"></i>
